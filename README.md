@@ -1,5 +1,5 @@
 # tinyOS
-a very basic / bare bones operating system / kernal
+a very basic / bare bones operating system / kernel
 
 <h1>RECOURSES</h1>
 
