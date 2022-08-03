@@ -1,6 +1,4 @@
-;gdt in assembly tutorial: http://web.archive.org/web/20190424213806/http://www.osdever.net/tutorials/view/the-world-of-protected-mode
-
-gdt:
+gdt_start:
 
 gdt_null:
    dq 0
@@ -26,8 +24,14 @@ gdt_data:
 
    db 0
 
-gdt_end
+gdt_end:
 
-gtd_desc:
-   db gdt_end - gdt
-   dw gdt
+gdt_desc:
+   ;first we define 16 bits as the gdt size and then 32 bits as the gdt address
+   dw gdt_end - gdt_start - 1; should be 1 less than the true size as defined by intel: "Because segment descriptors are always 8 bytes long, the GDT limit should always be one less than an integral multiple of eight (that is, 8N – 1)"
+   dd gdt_start
+
+
+data_seg equ gdt_data-gdt_start
+code_seg equ gdt_code-gdt_start
+

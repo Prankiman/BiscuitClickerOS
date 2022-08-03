@@ -5,7 +5,7 @@
 ;mov [BOOT_DRIVE] , dl ; BIOS stores our boot drive in DL , so it ’s
 ; best to remember this for later.
 
-xor ax, ax   ; make ax 0 (xor faster than mov instruction i think)
+xor ax, ax   ; make ax 0 (xor more efficient than mov instruction in this context i think)
 mov ds, ax   ; DS=0
 mov ss, ax   ; stack starts at 0
 mov sp, 0x8000 ; safly out of the way of the boot sector
