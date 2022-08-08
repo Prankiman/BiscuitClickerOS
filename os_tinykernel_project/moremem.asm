@@ -12,7 +12,7 @@ mov sp, 0x8000 ; safly out of the way of the boot sector
 
 mov bx , 0x9000 ; Load 5 sectors to 0x0000 ( ES ):0x9000 ( BX )
 mov dh , 5 ; from the boot disk.
-;mov dl , [BOOT_DRIVE]
+mov dl , [BOOT_DRIVE]
 call disk_load
 mov dx , [0x9000] ; Print out the first loaded word , which
 call print_hex ; we expect to be 0xdada , stored
@@ -28,7 +28,7 @@ jmp $
 
 ; Include our new disk_load function
 ; Global variables
-;BOOT_DRIVE: db 0x00
+BOOT_DRIVE: db 0x80
 ; Bootsector padding
 times 510-($-$$) db 0x00
 dw 0xaa55

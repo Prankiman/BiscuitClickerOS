@@ -1,3 +1,4 @@
+[SECTION .text] ;text --> executable text, bss --> declare variables, data --> constants
 [bits 16]
 [org 0x7c00]
 
