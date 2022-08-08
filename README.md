@@ -1,34 +1,34 @@
 # tinyOS
 a very basic / bare bones operating system / kernel
 
-#RECOURSES
+## RECOURSES
 
-##OSDEV.org:
+## OSDEV.org:
 
-###homepage:
+### homepage:
 https://wiki.osdev.org/Main_Page
 
-###osdev.org's babysteps series:
+### osdev.org's babysteps series:
 https://wiki.osdev.org/Babystep1
 
-##os developer:
+## os developer:
 
-###creating the gdt table in assembly:
+### creating the gdt table in assembly:
 http://web.archive.org/web/20190424213806/http://www.osdever.net/tutorials/view/the-world-of-protected-mode
 
-##Tutorialspoint assembly programming series:
+## Tutorialspoint assembly programming series:
 https://www.tutorialspoint.com/assembly_programming/
 
-##Intel's developer manuals:
+## Intel's developer manuals:
 https://www.intel.com/content/www/us/en/developer/articles/technical/intel-sdm.html
 
-##Nick Blundell's How To Write an Operating System :
+## Nick Blundell's How To Write an Operating System :
 https://www.cs.bham.ac.uk/~exr/lectures/opsys/10_11/lectures/os-dev.pdf
 
-##Netwide Assembler documentation:
+## Netwide Assembler documentation:
 
 https://www.nasm.us/docs.php
 
-##GNU Assembler manual:
+## GNU Assembler manual:
 
 https://sourceware.org/binutils/docs/as/
