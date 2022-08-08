@@ -1,3 +1,4 @@
+[bits 16]
 [org 0x7c00]
 kernel_offset equ 0x1000
 
@@ -21,16 +22,15 @@ jmp enter_pm
 ;include files
 %include "print_string.asm"
 %include "load_disk.asm"
-%include "gdt.asm"
+%include "gdt_seg.asm"
 %include "print_protected.asm"
-%include "enter_pm.asm"
+%include "enter_pm_seg.asm"
 
 
-[bits 16]
+
 load_kernel:
 
     mov bx, kernel_msg
-    call print
 
     mov dh, 15;number of sectors to read
     mov dl, [boot_drive]
@@ -52,9 +52,9 @@ jmp $
 
 ;variables
 boot_drive db 0x80
-real_msg db "real ", 0
-protected_msg db "protected ", 0
-kernel_msg db "kernel ", 0
+real_msg db "real"
+protected_msg db "protected"
+kernel_msg db "kernel"
 
 
 times 510-($-$$) db 0x0

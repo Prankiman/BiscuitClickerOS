@@ -1,5 +1,5 @@
 int main(){
-    char* vid_mem = (char*) 0xb8000;
-    *vid_mem = 'X';
-    return 0;
+    char* video_memory = (char*) 0xb8000;
+    *video_memory = 'X';
+    //return 0;
 }
