@@ -2,7 +2,7 @@
 ; Read some sectors from the boot disk using our disk_read function
 [bits 16]
 [org 0x7c00]
-;mov [BOOT_DRIVE] , dl ; BIOS stores our boot drive in DL , so it ’s
+mov [BOOT_DRIVE] , dl ; BIOS stores our boot drive in DL , so it ’s
 ; best to remember this for later.
 
 xor ax, ax   ; make ax 0 (xor more efficient than mov instruction in this context i think)

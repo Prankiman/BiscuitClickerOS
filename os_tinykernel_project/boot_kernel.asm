@@ -1,11 +1,12 @@
+[bits 16]
 [org 0x7c00]
 kernel_offset equ 0x1000
-
-mov [boot_drive], dl
 
 xor ax, ax
 mov ds, ax
 mov ss, ax
+
+mov [boot_drive], dl
 
 mov bp, 0x9000
 mov sp, bp
@@ -18,6 +19,8 @@ call load_kernel
 
 jmp enter_pm
 
+;jmp $
+
 ;include files
 %include "print_string.asm"
 %include "load_disk.asm"
@@ -27,11 +30,13 @@ jmp enter_pm
 
 
 [bits 16]
+
 load_kernel:
 
     mov bx, kernel_msg
     call print
 
+    mov bx, kernel_offset
     mov dh, 15;number of sectors to read
     mov dl, [boot_drive]
     call disk_load
@@ -59,6 +64,3 @@ kernel_msg db "kernel ", 0
 
 times 510-($-$$) db 0x0
 dw 0xaa55
-
-
-;times 15*256 dw 0x0
