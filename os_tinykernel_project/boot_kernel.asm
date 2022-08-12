@@ -45,6 +45,7 @@ load_kernel:
 
 
 [bits 32]
+;[extern main]
 
 begin:
 
@@ -52,13 +53,14 @@ begin:
     call print_pm
 
     call kernel_offset ;jump to kernel address
+    ;call main
 
 jmp $
 
 ;variables
 boot_drive db 0x80
 real_msg db "real ", 0
-protected_msg db "protected ", 0
+protected_msg db " protected ", 0
 kernel_msg db "kernel ", 0
 
 

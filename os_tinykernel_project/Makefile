@@ -1,14 +1,19 @@
-kernel.bin: kernel_entry.o kernel.o
-	ld -o kernel.bin -Ttext 0x1000 $^ --oformat binary
+C_SOURCES = $(wildcard *.c)
+HEADERS = $(wildcard *.h)
 
-kernel.o : kernel.c
+OBJ = ${C_SOURCES:.c=.o}
+
+os-image: boot_kernel.bin kernel.bin
+	cat $^ > os-img
+
+kernel.bin: enter_kernel.o ${OBJ}
+	ld -o $@ -Ttext 0x1000 $^ --oformat binary
+
+%.o : %.c ${HEADERS}
 	gcc -ffreestanding -c $< -o $@
 
-kernel_entry.o : kernel_entry.asm
-	nasm $< -f elf -o $@
+%.o : %.asm
+	nasm $< -f elf64 -o $@
 
-boot_sect.bin : boot_sect.asm
-	nasm $ < -f bin -o $@
-
-kernel.dis : kernel.bin
-	ndisasm -b 32 $< > $@
+%.bin : %.asm
+	nasm $< -o $@
