@@ -25,6 +25,12 @@ https://www.intel.com/content/www/us/en/developer/articles/technical/intel-sdm.h
 ## Nick Blundell's How To Write an Operating System :
 https://www.cs.bham.ac.uk/~exr/lectures/opsys/10_11/lectures/os-dev.pdf
 
+##  James Molloy's kernel development tutorials
+
+### idt and gdt
+
+https://web.archive.org/web/20160327011227/http://www.jamesmolloy.co.uk/tutorial_html/4.-The%20GDT%20and%20IDT.html
+
 ## Netwide Assembler documentation:
 
 https://www.nasm.us/docs.php

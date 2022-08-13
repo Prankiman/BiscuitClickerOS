@@ -7,8 +7,6 @@ cli
 xor ax, ax
 mov ds, ax ;setting data segment to 0
 
-lidt [idt]
-
 lgdt [gdt_desc] ;tells cpu where to find the gdt and its's size
  
 ;by setting bit 0 in the cr0 register to 1 we enter protected mode
