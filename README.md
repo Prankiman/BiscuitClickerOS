@@ -16,6 +16,11 @@ https://wiki.osdev.org/Babystep1
 ### creating the gdt table in assembly:
 http://web.archive.org/web/20190424213806/http://www.osdever.net/tutorials/view/the-world-of-protected-mode
 
+### creating the idt:
+http://web.archive.org/web/20210515200857/http://www.osdever.net/bkerndev/Docs/idt.htm
+
+http://web.archive.org/web/20211226232232/http://www.osdever.net/bkerndev/Docs/isrs.htm
+
 ## Tutorialspoint assembly programming series:
 https://www.tutorialspoint.com/assembly_programming/
 

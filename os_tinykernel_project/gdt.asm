@@ -8,7 +8,7 @@ gdt_code:
 
    ;segment descriptor
    db 0         ;base continuation (i start the bit counting for the segment descriptor bits here)
-   db 10011010b ;bits: 8 -> access flag, 9 -> read, 10 -> conforming, 11 -> code or data segment, 12 -> code or data segment, 13-14 -> privilage level, 15 -> present flag
+   db 10011010b ;bits: 8 -> access flag, 9 -> read, 10 -> conforming, 11 -> code or data segment(yes/no), 12 -> code or data segment(code/data), 13-14 -> privilage level, 15 -> present flag
    db 11001111b ; bits 16-19 -> last bits in segment limit, bit 20 -> available to system programmers flag (ignored by cpu), bit 21 -> always 0, bit 22 -> size (1 for 32 bit and 0 for 16-bit), 23 -> multiply segment limit by 4kb
    db 0
 
