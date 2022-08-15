@@ -1,29 +1,22 @@
 C_SOURCES = $(wildcard *.c)
 HEADERS = $(wildcard *.h)
 
-OBJ = ${C_SOURCES:.c=.o isrs.o}
-#OBJ = ${C_SOURCES:.c=.o}
-
-# Change this if your cross-compiler is somewhere else
-#CC = /usr/local/i386elfgcc/bin/i386-elf-gcc
-#GDB = /usr/local/i386elfgcc/bin/i386-elf-gdb
-# -g: Use debugging symbols in gcc
-#CFLAGS = -g
+OBJ = ${C_SOURCES:.c=.o}
 
 os-image: boot_kernel.bin kernel.bin
 	cat $^ > os-img
 
-kernel.bin: enter_kernel.o ${OBJ}
-	i386-elf-ld -o $@ -Ttext 0x1000 $^ --oformat binary
+kernel.bin: enter_kernel.o ${OBJ} isrs.o
+	ld -melf_i386 -s -o kernel.bin -Ttext 0x1000 $^ --oformat=elf32-i386
 
 %.o : %.c ${HEADERS}
-	i386-elf-gcc -ffreestanding -c $< -o $@
+	gcc -ffreestanding -m32 -c $< -o $@
 
 %.o : %.asm
 	nasm $< -f elf -o $@
 
 %.bin : %.asm
-	nasm $< -o $@
+	nasm $< -f bin -o $@
 
 clean:
 	rm *.o *.bin os-img
