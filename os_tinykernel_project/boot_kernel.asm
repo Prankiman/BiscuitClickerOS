@@ -25,7 +25,6 @@ jmp enter_pm
 %include "print_string.asm"
 %include "load_disk.asm"
 %include "gdt.asm"
-%include "idt.asm"
 %include "print_protected.asm"
 %include "enter_pm.asm"
 
@@ -46,7 +45,6 @@ load_kernel:
 
 
 [bits 32]
-;[extern main]
 
 begin:
 

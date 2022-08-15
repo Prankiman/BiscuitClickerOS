@@ -1,6 +1,12 @@
 # tinyOS
 a very basic / bare bones operating system / kernel
 
+## Requirements
+
+`i386-elf-gcc and i386-elf-binutils` (can be downloaded from the AUR or homebrew)
+
+`nasm`
+
 ## RECOURSES
 
 ## OSDEV.org:
@@ -29,6 +35,9 @@ https://www.intel.com/content/www/us/en/developer/articles/technical/intel-sdm.h
 
 ## Nick Blundell's How To Write an Operating System :
 https://www.cs.bham.ac.uk/~exr/lectures/opsys/10_11/lectures/os-dev.pdf
+
+## Cfenollosa's os-tutorial project:
+https://github.com/cfenollosa/os-tutorial
 
 ##  James Molloy's kernel development tutorials
 

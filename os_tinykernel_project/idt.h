@@ -1,53 +1,35 @@
-// A struct describing an interrupt gate.
-struct idt_entry_struct
-{
-   unsigned short base_lo;             // The lower 16 bits of the address to jump to when this interrupt fires.
-   unsigned short sel;                 // Kernel segment selector.
-   unsigned char  always0;             // This must always be zero.
-   unsigned char  flags;               // More flags. See documentation.
-   unsigned short base_hi;             // The upper 16 bits of the address to jump to.
-} __attribute__((packed));
-typedef struct idt_entry_struct idt_entry_t;
+#ifndef IDT_H
+#define IDT_H
 
-// A struct describing a pointer to an array of interrupt handlers.
-// This is in a format suitable for giving to 'lidt'.
-struct idt_ptr_struct
-{
-   unsigned short limit;
-   unsigned int base;                // The address of the first element in our idt_entry_t array.
-} __attribute__((packed));
-typedef struct idt_ptr_struct idt_ptr_t;
+#include "types.h"
 
-// These extern directives let us access the addresses of our ASM ISR handlers.
-extern void isr0();
-extern void isr1();
-extern void isr2();
-extern void isr3();
-extern void isr4();
-extern void isr5();
-extern void isr6();
-extern void isr7();
-extern void isr8();
-extern void isr9();
-extern void isr10();
-extern void isr11();
-extern void isr12();
-extern void isr13();
-extern void isr14();
-extern void isr15();
-extern void isr16();
-extern void isr17();
-extern void isr18();
-extern void isr19();
-extern void isr20();
-extern void isr21();
-extern void isr22();
-extern void isr23();
-extern void isr24();
-extern void isr25();
-extern void isr26();
-extern void isr27();
-extern void isr28();
-extern void isr29();
-extern void isr30();
-extern void isr31();
+/* Segment selectors */
+#define KERNEL_CS 0x08 // same as in enter_pm.asm
+
+/* How every interrupt gate (handler) is defined */
+typedef struct {
+    u16 low_offset; /* Lower 16 bits of handler function address */
+    u16 sel; /* Kernel segment selector */
+    u8 always0;
+    /* First byte
+     * Bit 7: "Interrupt is present"
+     * Bits 6-5: Privilege level of caller (0=kernel..3=user)
+     * Bit 4: Set to 0 for interrupt gates
+     * Bits 3-0: bits 1110 = decimal 14 = "32 bit interrupt gate" */
+    u8 flags;
+    u16 high_offset; /* Higher 16 bits of handler function address */
+} __attribute__((packed)) idt_gate_t;
+
+/* A pointer to the array of interrupt handlers.
+ * Assembly instruction 'lidt' will read it */
+typedef struct {
+    u16 limit;
+    u32 base;
+} __attribute__((packed)) idt_register_t;
+
+
+/* Functions implemented in idt.c */
+void set_idt_gate(s32 n, u32 handler);
+void set_idt();
+
+#endif
