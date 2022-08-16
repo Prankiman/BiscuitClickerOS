@@ -11,7 +11,7 @@ int main() {
     char *video_address = (char*)0xb8000;
     *video_address = 'X';
     for(int i = 0; i < 10; i++){
-        video_address += 0xb01;
+        video_address += 0xb1;
         *video_address = 'X';
     }
 
