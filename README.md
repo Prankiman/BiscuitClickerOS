@@ -1,12 +1,6 @@
 # tinyOS
 a very basic / bare bones operating system / kernel
 
-## Requirements
-
-`i386-elf-gcc and i386-elf-binutils` (can be downloaded from the AUR or homebrew)
-
-`nasm`
-
 ## RECOURSES
 
 ## OSDEV.org:

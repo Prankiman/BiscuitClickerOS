@@ -29,7 +29,7 @@ typedef struct {
 
 
 /* Functions implemented in idt.c */
-void set_idt_gate(s32 n, u32 handler);
+void set_idt_gate(int n, u32 handler);
 void set_idt();
 
 #endif
