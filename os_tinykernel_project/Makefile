@@ -7,13 +7,14 @@ os-image: boot_kernel.bin kernel.bin
 	cat $^ > os-img
 
 kernel.bin: enter_kernel.o ${OBJ}
-	ld -o $@ -Ttext 0x1000 $^ --oformat binary
+	ld -m elf_i386 -o $@ -Ttext 0x1000 $^ --oformat binary
 
 %.o: %.c ${HEADERS}
-	gcc -ffreestanding -c $< -o $@
+	gcc -m32 -Wall -O -fstrength-reduce -fomit-frame-pointer -finline-functions -nostdinc -fno-builtin -c $< -o $@
+	#gcc -ffreestanding -c $< -o $@
 
 %.o: %.asm
-	nasm $< -f elf64 -o $@
+	nasm $< -f elf32 -o $@
 
 %.bin: %.asm
 	nasm $< -o $@
