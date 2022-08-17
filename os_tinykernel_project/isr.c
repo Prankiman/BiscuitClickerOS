@@ -2,6 +2,9 @@
 #include "idt.h"
 #include "isr.h"
 
+
+#define MAX_COLS 80 //temporary
+
 void isr_install() {
     set_idt_gate(0, (u32)isr0);
     set_idt_gate(1, (u32)isr1);
@@ -79,6 +82,17 @@ char *exception_messages[] = {
 };
 
 
+//temporary until i fix a proper screen driver
+
+int char_off(int x){return 2 * x;}
+
 void isr_handler(registers_t r) {
-    //print error msg
+    char *video_address = (char*)0xb8000;
+    //print error msg____________________
+    video_address[0] = 'i';//address[1] sets forground and background color of character
+    video_address[2] = 'n';
+    video_address[4] = 't';
+
+    video_address[6] = ':';
+    video_address[8] = r.int_no+'0';
 }
