@@ -6,18 +6,18 @@ OBJ = ${C_SOURCES:.c=.o}
 os-image: boot_kernel.bin kernel.bin
 	cat $^ > os-img
 
-#kernel.bin: enter_kernel.o ${OBJ} isrs.o
 kernel.bin: enter_kernel.o ${OBJ}
-	ld -melf_i386 -s -o kernel.bin -Ttext 0x1000 $^ --oformat=elf32-i386
+	ld -m elf_i386 -o $@ -Ttext 0x1000 $^ --oformat binary
 
 %.o: %.c ${HEADERS}
-	gcc -ffreestanding -m32 -s -c $< -o $@
+	gcc -march=i386 -elf_i386 -m32 -std=c11 -O2 -g -Wall -Wextra -Wpedantic -Wstrict-aliasing -Wno-pointer-arith -Wno-unused-parameter -nostdlib -nostdinc -ffreestanding -fno-pie -fno-stack-protector -fno-builtin-function -fno-builtin -c $< -o $@
+	#gcc -ffreestanding -c $< -o $@
 
 %.o: %.asm
-	nasm $< -f elf -o $@
+	nasm $< -f elf32 -o $@
 
 %.bin: %.asm
-	nasm $< -f bin -o $@
+	nasm $< -o $@
 
 clean:
 	rm *.o *.bin os-img

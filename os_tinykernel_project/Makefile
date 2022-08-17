@@ -10,7 +10,7 @@ kernel.bin: enter_kernel.o ${OBJ}
 	ld -m elf_i386 -o $@ -Ttext 0x1000 $^ --oformat binary
 
 %.o: %.c ${HEADERS}
-	gcc -elf_i386 -m32 -nostdlib -nostdinc -Wall -ffreestanding -fno-pie -c $< -o $@
+	gcc -march=i386 -elf_i386 -m32 -std=c11 -O2 -g -Wall -Wextra -Wpedantic -Wstrict-aliasing -Wno-pointer-arith -Wno-unused-parameter -nostdlib -nostdinc -ffreestanding -fno-pie -fno-stack-protector -fno-builtin-function -fno-builtin -c $< -o $@
 	#gcc -ffreestanding -c $< -o $@
 
 %.o: %.asm

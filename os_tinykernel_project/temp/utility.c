@@ -1,6 +1,6 @@
 #include "utility.h"
 
-void memcpy(s8 *source, s8 *dest, s32 nbytes) {
+void memcpy(char *source, char *dest, s32 nbytes) {
     int i;
     for (i = 0; i < nbytes; i++) {
         *(dest + i) = *(source + i);
