@@ -4,7 +4,7 @@
 #include "types.h"
 
 /* Segment selectors */
-#define KERNEL_CS 0x08 // same as in enter_pm.asm
+#define KERNEL_CS 0x08 //defining the kernel segment selector
 
 /* How every interrupt gate (handler) is defined */
 typedef struct {

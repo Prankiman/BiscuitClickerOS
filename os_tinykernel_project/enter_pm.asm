@@ -14,8 +14,8 @@ mov eax, cr0
 or eax, 0x1
 mov cr0, eax
 
-jmp code_seg:start_pm ;make far jump and flush cache of instructions
-;jmp 0x08:start_pm ;make far jump and flush cache of instructions
+;jmp code_seg:start_pm ;make far jump and flush cache of instructions
+jmp 0x08:start_pm ;make far jump and flush cache of instructions
 
 [bits 32]
 

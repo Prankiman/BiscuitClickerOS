@@ -1,8 +1,8 @@
 #include "utility.h"
 
-void memcpy(char *source, char *dest, s32 nbytes) {
+void memcpy(char *source, char *dest, s32 numbytes) {
     int i;
-    for (i = 0; i < nbytes; i++) {
+    for (i = 0; i < numbytes; i++) {
         *(dest + i) = *(source + i);
     }
 }

@@ -41,43 +41,44 @@ void isr_install() {
 
 /* To print the message which defines every exception */
 char *exception_messages[] = {
-    "Division By Zero",
-    "Debug",
-    "Non Maskable Interrupt",
-    "Breakpoint",
-    "Into Detected Overflow",
-    "Out of Bounds",
-    "Invalid Opcode",
-    "No Coprocessor",
+    "zero division",
+    "debug",
+    "non maskable interrupt",
+    "breakpoint",
+    "into detected overflow",
+    "out of bounds",
+    "invalid opcode",
+    "no coprocessor",
 
-    "Double Fault",
-    "Coprocessor Segment Overrun",
-    "Bad TSS",
-    "Segment Not Present",
-    "Stack Fault",
-    "General Protection Fault",
-    "Page Fault",
-    "Unknown Interrupt",
+    "double fault",
+    "coprocessor segment overrun",
+    "bad TSS",
+    "segment not present",
+    "stack fault",
+    "general protection fault",
+    "page fault",
+    "unknown interrupt",
 
-    "Coprocessor Fault",
-    "Alignment Check",
-    "Machine Check",
-    "Reserved",
-    "Reserved",
-    "Reserved",
-    "Reserved",
-    "Reserved",
+    "coprocessor fault",
+    "alignment check",
+    "machine check",
+    "reserved",
+    "reserved",
+    "reserved",
+    "reserved",
+    "reserved",
 
-    "Reserved",
-    "Reserved",
-    "Reserved",
-    "Reserved",
-    "Reserved",
-    "Reserved",
-    "Reserved",
-    "Reserved"
+    "reserved",
+    "reserved",
+    "reserved",
+    "reserved",
+    "reserved",
+    "reserved",
+    "reserved",
+    "reserved"
 };
 
+
 void isr_handler(registers_t r) {
-   //do something
+    //print error msg
 }
