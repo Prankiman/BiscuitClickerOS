@@ -6,7 +6,7 @@ OBJ = ${C_SOURCES:.c=.o}
 os-image: boot_kernel.bin kernel.bin
 	cat $^ > os-img
 
-kernel.bin: enter_kernel.o ${OBJ} isrs.o
+kernel.bin: enter_kernel.o ${OBJ} isrs.o irqs.o
 	ld -m elf_i386 -o $@ -Ttext 0x1000 $^ --oformat binary
 
 %.o: %.c ${HEADERS}

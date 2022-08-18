@@ -2,6 +2,9 @@ gdt_start:
 
 gdt_null:
    dq 0
+
+
+; offset 0x8 (8 bytes)
 gdt_code:
    dw 0xffff    ;setting the limit
    dw 0         ;base address to 0
@@ -12,6 +15,7 @@ gdt_code:
    db 11001111b ; bits 16-19 -> last bits in segment limit, bit 20 -> available to system programmers flag (ignored by cpu), bit 21 -> always 0, bit 22 -> size (1 for 32 bit and 0 for 16-bit), 23 -> multiply segment limit by 4kb
    db 0
 
+; offset 0x10 (16 bytes)
 gdt_data:
    dw 0xffff
    dw 0

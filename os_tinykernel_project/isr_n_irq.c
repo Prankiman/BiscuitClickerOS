@@ -1,6 +1,8 @@
+#include "io.h"
 #include "utility.h"
 #include "idt.h"
 #include "isr.h"
+#include "pic.h"
 
 
 #define MAX_COLS 80 //temporary
@@ -38,6 +40,28 @@ void isr_install() {
     set_idt_gate(29, (u32)isr29);
     set_idt_gate(30, (u32)isr30);
     set_idt_gate(31, (u32)isr31);
+
+    PIC_remap(32, 40);//master pic offset is at 0x20 or 32 (where the irqs start) and the slave pick offset is ay 0x28 or 40 (where irq 8 starts)
+
+
+    // Install the IRQs
+    set_idt_gate(32, (u32)irq0);
+    set_idt_gate(33, (u32)irq1);
+    set_idt_gate(34, (u32)irq2);
+    set_idt_gate(35, (u32)irq3);
+    set_idt_gate(36, (u32)irq4);
+    set_idt_gate(37, (u32)irq5);
+    set_idt_gate(38, (u32)irq6);
+    set_idt_gate(39, (u32)irq7);
+    set_idt_gate(40, (u32)irq8);
+    set_idt_gate(41, (u32)irq9);
+    set_idt_gate(42, (u32)irq10);
+    set_idt_gate(43, (u32)irq11);
+    set_idt_gate(44, (u32)irq12);
+    set_idt_gate(45, (u32)irq13);
+    set_idt_gate(46, (u32)irq14);
+    set_idt_gate(47, (u32)irq15);
+
 
     set_idt(); // Load with ASM
 }
@@ -95,4 +119,9 @@ void isr_handler(registers_t r) {
 
     video_address[6] = ':';
     video_address[8] = r.int_no+'0';
+}
+
+void irq_handler(registers_t r){
+    /*sending EOI to the PICs*/
+    PIC_sendEOI(r.int_no-32);
 }
