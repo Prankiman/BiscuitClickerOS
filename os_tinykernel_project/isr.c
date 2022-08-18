@@ -88,7 +88,7 @@ int char_off(int x){return 2 * x;}
 
 void isr_handler(registers_t r) {
     char *video_address = (char*)0xb8000;
-    //print error msg____________________
+    //print interrupt num____________
     video_address[0] = 'i';//address[1] sets forground and background color of character
     video_address[2] = 'n';
     video_address[4] = 't';
