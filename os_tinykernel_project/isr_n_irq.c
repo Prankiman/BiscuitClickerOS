@@ -105,7 +105,6 @@ char *exception_messages[] = {
     "reserved"
 };
 
-
 //temporary until i fix a proper screen driver
 
 int char_off(int x){return 2 * x;}
@@ -121,7 +120,10 @@ void isr_handler(registers_t r) {
     video_address[8] = r.int_no+'0';
 }
 
+/*TODO
+ make irqs do something*/
 void irq_handler(registers_t r){
     /*sending EOI to the PICs*/
     PIC_sendEOI(r.int_no-32);
+
 }

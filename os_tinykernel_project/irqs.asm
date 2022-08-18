@@ -1,4 +1,3 @@
-;in -> read from port, out, write to port,
 ; Defined in isr.c
 [extern irq_handler]
 
