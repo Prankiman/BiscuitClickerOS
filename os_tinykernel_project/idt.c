@@ -19,5 +19,15 @@ void set_idt() {
     idt_reg.base = (u32) &idt;
     idt_reg.limit = IDT_ENTRIES * sizeof(idt_gate_t) - 1;
 
-    __asm__ __volatile__("lidt (%0)" : : "r" (&idt_reg));
+    __asm__ __volatile__("lidt (%0)" : : "r" (&idt_reg));//if written in assembly would be something like: lidt[idtr] where idtr is the location of the idt regiter
 }
+
+/*static inline void lidt(void* base, uint16_t size)
+{   // This function works in 32 and 64bit mode
+    struct {
+        uint16_t length;
+        void*    base;
+    } __attribute__((packed)) IDTR = { size, base };
+
+    asm ( "lidt %0" : : "m"(IDTR) );  // let the compiler choose an addressing mode
+}*/

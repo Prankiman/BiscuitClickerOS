@@ -1,6 +1,7 @@
 #include "isr.h"
 #include "idt.h"
 #include "utility.h"
+#include "pic.h"
 
 void main() {
     isr_install();  //"install" the interrupt service registers
