@@ -1,19 +1,25 @@
+#include "idt.h"
 #include "io.h"
 #include "isr.h"
 #include "pic.h"
 
-void *irq_routines[16] =
-{
-    0, 0, 0, 0, 0, 0, 0, 0,
-    0, 0, 0, 0, 0, 0, 0, 0
-};
+void (*irq_routines[256])(registers_t *regs) = { 0 };
 
-void PIC_sendEOI(unsigned char irq)
+void  PIC_sendEOI(unsigned char irq)
 {
-	if(irq >= 8)
+	if(irq >= 40)
 		outb(PIC2_COMMAND,PIC_EOI);
 
 	outb(PIC1_COMMAND,PIC_EOI);
+}
+
+void stub(registers_t *regs) {
+    if (regs->int_no <= 47 && regs->int_no >= 32) {
+        if (irq_routines[regs->int_no]) {
+            irq_routines[regs->int_no](regs);
+        }
+    }
+    PIC_sendEOI(regs->int_no);
 }
 
 /*
@@ -105,11 +111,28 @@ u16 pic_get_isr(void)
 /* This installs a custom IRQ handler for the given IRQ */
 void irq_install_handler(int irq, void (*handler)(registers_t *r))
 {
+    __asm__ __volatile__("cli");;//clear interrupt flags
     irq_routines[irq] = handler;
+    __asm__ __volatile__("sti");//set interrupt flags
 }
 
 /* This clears the handler for a given IRQ */
 void irq_uninstall_handler(int irq)
 {
     irq_routines[irq] = 0;
+}
+
+/*TODO
+ make irqs do something*/
+void irq_handler(registers_t *r){
+    /*sending EOI to the PICs*/
+
+    /*char *video_address = (char*)0xb8000;
+    video_address[0] = 'i';//address[1] sets forground and background color of character
+    video_address[2] = 'i';
+    video_address[4] = 'i';
+
+    video_address[6] = ':';
+    video_address[8] = r.int_no+'0';*/
+    stub(r);
 }

@@ -41,7 +41,7 @@ void isr_install() {
     set_idt_gate(30, (u32)isr30);
     set_idt_gate(31, (u32)isr31);
 
-    PIC_remap(32, 40);//master pic offset is at 0x20 or 32 (where the irqs start) and the slave pick offset is ay 0x28 or 40 (where irq 8 starts)
+    PIC_remap(0x20, 0x28);//master pic offset is at 0x20 or 32 (where the irqs start) and the slave pick offset is ay 0x28 or 40 (where irq 8 starts)
 
 
     // Install the IRQs
@@ -109,21 +109,14 @@ char *exception_messages[] = {
 
 int char_off(int x){return 2 * x;}
 
-void isr_handler(registers_t r) {
+void isr_handler(registers_t *r) {
+    if(r->int_no < 32){
     char *video_address = (char*)0xb8000;
     //print interrupt num____________
     video_address[0] = 'i';//address[1] sets forground and background color of character
     video_address[2] = 'n';
     video_address[4] = 't';
-
     video_address[6] = ':';
-    video_address[8] = r.int_no+'0';
-}
-
-/*TODO
- make irqs do something*/
-void irq_handler(registers_t r){
-    /*sending EOI to the PICs*/
-    PIC_sendEOI(r.int_no-32);
-
+    video_address[8] = r->int_no+'0';//note 2 digit values will be represented with corresponding ascii character for example int number 13 will be represented as "="
+    }
 }

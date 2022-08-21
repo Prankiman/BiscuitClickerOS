@@ -4,6 +4,7 @@
 ; Common IRQ code. Identical to ISR code except for the 'call'
 ; and the 'pop ebx'
 irq_common_stub:
+irq_common_stub:
     pusha
     mov ax, ds
     push eax
@@ -12,15 +13,17 @@ irq_common_stub:
     mov es, ax
     mov fs, ax
     mov gs, ax
+    push esp
+    cld
     call irq_handler ; Different than the ISR code
     pop ebx  ; Different than the ISR code
+    pop ebx
     mov ds, bx
     mov es, bx
     mov fs, bx
     mov gs, bx
     popa
     add esp, 8
-    sti
     iret
 
 ; IRQs
@@ -46,7 +49,7 @@ global irq15
 irq0:
 	cli
 	push byte 0
-	push byte 32
+	push byte 32;pushing the parameter to irq handler
 	jmp irq_common_stub
 
 irq1:

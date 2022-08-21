@@ -1,4 +1,8 @@
+#ifndef PIC_H
+#define PIC_H
+
 #include "io.h"
+#include "isr.h"
 
 #define PIC1_CMD                    0x20
 #define PIC1_DATA                   0x21
@@ -45,3 +49,9 @@ u16 pic_get_irr(void);
 
 /* Returns the combined value of the cascaded PICs in-service register */
 u16 pic_get_isr(void);
+
+void irq_install_handler(int irq, void (*handler)(registers_t *r));
+
+void irq_uninstall_handler(int irq);
+
+#endif
