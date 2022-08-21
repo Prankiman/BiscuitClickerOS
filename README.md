@@ -14,6 +14,9 @@ https://wiki.osdev.org/Inline_assembly
 ### osdev.org's babysteps series:
 https://wiki.osdev.org/Babystep1
 
+### SANiKs mouse driver:
+https://forum.osdev.org/viewtopic.php?t=10247
+
 ## Tutorialspoint assembly programming series:
 https://www.tutorialspoint.com/assembly_programming/
 

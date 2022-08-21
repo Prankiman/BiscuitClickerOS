@@ -22,5 +22,5 @@ u8 inb(u16 port)
 
 void io_wait(void)
 {
-    outb(0x80, 0);
+    outb(0x80, 0);//basically a no-op
 }

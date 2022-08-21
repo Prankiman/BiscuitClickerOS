@@ -17,5 +17,5 @@ void keyboard_handler(registers_t *regs) {
 }
 
 void keyboard_init() {
-    irq_install_handler(IRQ1, keyboard_handler);
+    irq_install_handler(IRQ1, keyboard_handler);//irq 1 is reserved for keyboard input
 }

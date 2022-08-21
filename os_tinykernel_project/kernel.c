@@ -19,7 +19,7 @@ void keypressmsg(){
 void main() {
     isr_install();  ///initializes the interrupt service registers
     /* Test the interrupts */
-    __asm__ __volatile__("sti");
+    //__asm__ __volatile__("sti");
     keyboard_init();
     __asm__ __volatile__("int $2");
     //__asm__ __volatile__("int $3");
