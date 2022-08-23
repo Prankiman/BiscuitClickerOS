@@ -125,14 +125,5 @@ void irq_uninstall_handler(int irq)
 /*TODO
  make irqs do something*/
 void irq_handler(registers_t *r){
-    /*sending EOI to the PICs*/
-
-    /*char *video_address = (char*)0xb8000;
-    video_address[0] = 'i';//address[1] sets forground and background color of character
-    video_address[2] = 'i';
-    video_address[4] = 'i';
-
-    video_address[6] = ':';
-    video_address[8] = r.int_no+'0';*/
     stub(r);
 }

@@ -1,4 +1,4 @@
-//wip, heavily based on SANiK's mouse driver
+//heavily based on SANiK's mouse driver
 
 #include "isr.h"
 #include "utility.h"
@@ -31,6 +31,18 @@ void mouse_handler(registers_t *r) //struct regs *a_r (not used but just there)
       mouse_y=mouse_byte[2];
       mouse_cycle=0;
       break;
+  }
+  if(mouse_byte[0] & 1){
+    char *video_address = (char*)0xb8050;
+    video_address[0] = 'L';//address[1] sets forground and background color of character
+    video_address[2] = 'e';
+    video_address[4] = 'f';
+    video_address[6] = 't';
+    video_address[8] = '-';
+    video_address[10] = 'c';
+    video_address[12] = 'l';
+    video_address[14] = 'i';
+    video_address[16] = 'c';
   }
 }
 
@@ -107,5 +119,5 @@ void mouse_install()
   mouse_read();  //Acknowledge
 
   //Setup the mouse handler
-  irq_install_handler(12, mouse_handler);
+  irq_install_handler(IRQ12, mouse_handler);
 }

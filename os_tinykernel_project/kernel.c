@@ -2,6 +2,7 @@
 #include "idt.h"
 #include "utility.h"
 #include "keyboard.h"
+#include "mouse.h"
 
 void keypressmsg(){
          char *video_address = (char*)0xb8000;
@@ -21,16 +22,11 @@ void main() {
     /* Test the interrupts */
     //__asm__ __volatile__("sti");
     keyboard_init();
+    mouse_install();
     __asm__ __volatile__("int $2");
     //__asm__ __volatile__("int $3");
-    char *video_address = (char*)0xb800a;
+    char *video_address = (char*)0xb8010;
     *video_address = '_';
-    for(int i = 0; i < 10; i++){
-        video_address ++;
-        *video_address = (char)0xe1;//blue on yellow
-        video_address ++;
-        *video_address = '#';
-    }
 }
 
 
