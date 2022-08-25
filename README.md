@@ -11,8 +11,11 @@ https://wiki.osdev.org/Main_Page
 ### inline assembly:
 https://wiki.osdev.org/Inline_assembly
 
-### osdev.org's babysteps series:
+### babysteps series:
 https://wiki.osdev.org/Babystep1
+
+### VGA:
+https://wiki.osdev.org/VGA_Resources
 
 ### SANiK's mouse driver:
 https://forum.osdev.org/viewtopic.php?t=10247
@@ -26,7 +29,7 @@ https://github.com/tuhdo/os01
 ## Intel's developer manuals:
 https://www.intel.com/content/www/us/en/developer/articles/technical/intel-sdm.html
 
-## os developer:
+## os dever:
 
 ### creating the gdt table in assembly:
 http://web.archive.org/web/20190424213806/http://www.osdever.net/tutorials/view/the-world-of-protected-mode
@@ -35,6 +38,9 @@ http://web.archive.org/web/20190424213806/http://www.osdever.net/tutorials/view/
 http://web.archive.org/web/20210515200857/http://www.osdever.net/bkerndev/Docs/idt.htm
 
 http://web.archive.org/web/20211226232232/http://www.osdever.net/bkerndev/Docs/isrs.htm
+
+### FREE VGA:
+http://www.osdever.net/FreeVGA/home.htm
 
 ## Nick Blundell's How To Write an Operating System :
 https://www.cs.bham.ac.uk/~exr/lectures/opsys/10_11/lectures/os-dev.pdf
