@@ -16,7 +16,7 @@ call print
 
 
 call load_kernel
-;call vga_mode ;uncomment if you want to use vga 8-bit color mode
+call vga_mode ;uncomment if you want to use vga 8-bit color mode
 
 jmp enter_pm
 

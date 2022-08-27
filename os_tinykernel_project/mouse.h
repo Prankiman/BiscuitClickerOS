@@ -8,7 +8,6 @@ extern u8 mouse_byte[];    //signed char
 extern u8 mouse_x;         //signed char
 extern u8 mouse_y;         //signed char
 
-
 //Mouse functions
 void mouse_handler(registers_t *r); //struct regs *a_r (not used but just there);
 

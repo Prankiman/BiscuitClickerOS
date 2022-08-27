@@ -6,10 +6,10 @@
 #define VGA_OFFSET_LOW 0x0f
 #define VGA_OFFSET_HIGH 0x0e
 
+#define vid_mem 0xa0000
+
 #include "types.h"
 
-//void InitVideo(unsigned short ScreenWidth, unsigned short ScreenHeight, unsigned char BitsPerPixel);
-
-//void SetPixel(unsigned short X, unsigned short Y, unsigned Colour);
+void disp_char(char c, u8 xx, u8 yy, u8 cc);
 
 #endif

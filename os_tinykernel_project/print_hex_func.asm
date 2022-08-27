@@ -6,7 +6,7 @@ print_hex:
     mov cx, 0x4 ;16 bit hex values only contains 4 characters and thus we will use cx to convert each hex digit to corresponding ascii value for set digit
 
 hex_to_ascii:
-    sub cx, 0x1 ;decrement cx by 1
+    dec cx ;decrement cx by 1
 
     mov ax, dx  ;copy dx into ax
     shr dx, 0x4 ; shift dx by 4 bits i.e remove the right most digit for example 0x1fb6 >> 0x4 becomes 0x01fb
