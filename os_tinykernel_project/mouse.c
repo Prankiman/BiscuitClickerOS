@@ -33,7 +33,7 @@ void mouse_handler(registers_t *r) //struct regs *a_r (not used but just there)
       break;
   }
   if(mouse_byte[0] & 1){
-    char *video_address = (char*)0xb8050;
+    /*char *video_address = (char*)0xb8050;
     video_address[0] = 'L';//address[1] sets forground and background color of character
     video_address[2] = 'e';
     video_address[4] = 'f';
@@ -42,7 +42,8 @@ void mouse_handler(registers_t *r) //struct regs *a_r (not used but just there)
     video_address[10] = 'c';
     video_address[12] = 'l';
     video_address[14] = 'i';
-    video_address[16] = 'c';
+    video_address[16] = 'c';*/
+    left_clickmsg();
   }
 }
 
