@@ -2,6 +2,7 @@
 [extern isr_handler]
 
 ; Common ISR code
+; how subroutines receive there parameters is defined by the calling convention used, and since GCC uses the System_V_ABI calling convention, that is the calling convention we must follow
 isr_common_stub:
     ; 1. Save CPU state
 	pusha ; Pushes edi,esi,ebp,esp,ebx,edx,ecx,eax
@@ -14,7 +15,7 @@ isr_common_stub:
 	mov gs, ax
 	push esp ; registers_t *r
     ; 2. Call C handler
-    cld ; C code following the sysV ABI requires DF to be clear on function entry
+    cld ; C code following the sysV ABI calling convention requires DF to be clear on function entry https://wiki.osdev.org/System_V_ABI
 	call isr_handler
 
     ; 3. Restore state

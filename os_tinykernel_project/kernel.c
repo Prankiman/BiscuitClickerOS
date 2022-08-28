@@ -4,6 +4,7 @@
 #include "keyboard.h"
 #include "mouse.h"
 #include "screen.h"
+#include "pic.h"
 
 void keypressmsg(){
         /* char *video_address = (char*)0xb8000;
@@ -18,8 +19,9 @@ void keypressmsg(){
         video_address[14] = 'e';
         video_address[16] = 'd';*/
         for(u8 i = 0; i < 20; i++){
-            disp_char('A', i, 0, 15);
+            disp_char('A', i, 0, 0x6f);
         }
+
 }
 void left_clickmsg(){
         /* char *video_address = (char*)0xb8000;
@@ -34,23 +36,22 @@ void left_clickmsg(){
         video_address[14] = 'e';
         video_address[16] = 'd';*/
         for(u8 i = 0; i < 20; i++){
-            disp_char('L', i, 4, 15);
+            disp_char('L', i, 4, 0x6f);
         }
 }
 
 void main() {
     isr_install();  ///initializes the interrupt service registers
     /* Test the interrupts */
-    //__asm__ __volatile__("sti");
+    for(int i = 0; i < 2; i++)
+        mouse_install();//something goes wrong when installing mouse handler but calling the install function 2 times seems to solve it
     keyboard_init();
-    mouse_install();
-
     //__asm__ __volatile__("int $2");
     //__asm__ __volatile__("int $3");
     //char *video_address = (char*)0xb8010;
     //*video_address = '_';
 
-    /*u8 *VGA = (u8*)0xA0000;
+    u8 *VGA = (u8*)0xA0000;
     u16 offset;
 
      for (int x = 0; x <= 320; x++){
@@ -62,7 +63,7 @@ void main() {
             VGA[offset] = color;//working as intended yaaay
         }
 
-    }*/
+    }
 }
 
 

@@ -6,19 +6,35 @@
 #include "pic.h"
 #include "keyboard.h"
 #include "kernel.h"
+#include "screen.h"
 
-u8 mouse_cycle=0;     //unsigned char
-u8 mouse_byte[3];    //signed char
-u8 mouse_x=0;         //signed char
-u8 mouse_y=0;         //signed char
+u8 mouse_cycle=0;
+u8 mouse_byte[3];
+s8 mouse_x=0;
+s8 mouse_y=0;
+
+u8 ysign=0;
+u8 xsign=0;
+u8 xover=0;
+u8 yover=0;
+
+u8 overflowx = 64;//0b01000000;
+u8 overflowy = 128;//0b10000000;
+u8 signx = 16;//0b00010000;
+u8 signy = 32;//0b00100000;
 
 //Mouse functions
-void mouse_handler(registers_t *r) //struct regs *a_r (not used but just there)
+void mouse_handler(registers_t *r)
 {
+
   switch(mouse_cycle)
   {
     case 0:
       mouse_byte[0]=inb(0x60);
+      ysign = mouse_byte[0] & signy;
+      xsign = mouse_byte[0] & signx;
+      yover = mouse_byte[0] & overflowy;
+      xover = mouse_byte[0] & overflowx;
       mouse_cycle++;
       break;
     case 1:
@@ -27,12 +43,26 @@ void mouse_handler(registers_t *r) //struct regs *a_r (not used but just there)
       break;
     case 2:
       mouse_byte[2]=inb(0x60);
-      mouse_x=mouse_byte[1];
-      mouse_y=mouse_byte[2];
+      mouse_x += mouse_byte[1]*(1-2*xsign);
+      mouse_y -= mouse_byte[2]*(1-2*ysign);
       mouse_cycle=0;
       break;
   }
-  if(mouse_byte[0] & 1){
+    u8 *VGA = (u8*)0xA0000;
+    u16 offset;
+
+     for (int x = 0; x <= 320; x++){
+        for (int y = 0; y <= 200; y++){
+            offset = x + 320 * y;
+
+            u8 color = y;
+
+            VGA[offset] = color;//working as intended yaaay
+        }
+
+    }
+  disp_char_absolute('@', mouse_x, mouse_y, 0x6f);
+  //if(1){//if mouse does anything
     /*char *video_address = (char*)0xb8050;
     video_address[0] = 'L';//address[1] sets forground and background color of character
     video_address[2] = 'e';
@@ -44,7 +74,7 @@ void mouse_handler(registers_t *r) //struct regs *a_r (not used but just there)
     video_address[14] = 'i';
     video_address[16] = 'c';*/
     left_clickmsg();
-  }
+  //}
 }
 
 void mouse_wait(u8 a_type) //unsigned char
@@ -120,5 +150,6 @@ void mouse_install()
   mouse_read();  //Acknowledge
 
   //Setup the mouse handler
+
   irq_install_handler(IRQ12, mouse_handler);//might only work for ps/2 mice
 }

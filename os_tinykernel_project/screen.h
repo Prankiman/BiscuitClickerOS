@@ -11,5 +11,6 @@
 #include "types.h"
 
 void disp_char(char c, u8 xx, u8 yy, u8 cc);
+void disp_char_absolute(char c, u8 xx, u8 yy, u8 cc);
 
 #endif
