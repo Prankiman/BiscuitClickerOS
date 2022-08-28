@@ -5,6 +5,8 @@ kernel_offset equ 0x1000
 xor ax, ax
 mov ds, ax
 mov ss, ax
+mov gs, ax
+mov es, ax
 
 mov [boot_drive], dl
 
@@ -16,11 +18,9 @@ call print
 
 
 call load_kernel
-call vga_mode ;uncomment if you want to use vga 8-bit color mode
+call vga_mode
 
 jmp enter_pm
-
-;jmp $
 
 ;include files
 %include "print_string.asm"
@@ -75,7 +75,7 @@ begin:
 jmp $
 
 ;variables
-boot_drive db 0x80
+boot_drive db 0x00
 real_msg db "real ", 0
 protected_msg db " protected ", 0
 kernel_msg db "kernel ", 0

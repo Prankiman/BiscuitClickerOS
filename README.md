@@ -1,6 +1,11 @@
 # tinyOS
 a very basic / bare bones operating system / kernel
 
+## running
+run `make iso` to create the image file
+
+if running on real hardware make sure usb emulation type is set to hard drive
+
 ## RECOURSES
 
 ## OSDEV.org:

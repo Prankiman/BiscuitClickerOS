@@ -45,12 +45,12 @@ void main() {
     keyboard_init();
     mouse_install();
 
-    __asm__ __volatile__("int $2");
+    //__asm__ __volatile__("int $2");
     //__asm__ __volatile__("int $3");
     //char *video_address = (char*)0xb8010;
     //*video_address = '_';
 
-    u8 *VGA = (u8*)0xA0000;
+    /*u8 *VGA = (u8*)0xA0000;
     u16 offset;
 
      for (int x = 0; x <= 320; x++){
@@ -62,7 +62,7 @@ void main() {
             VGA[offset] = color;//working as intended yaaay
         }
 
-    }
+    }*/
 }
 
 

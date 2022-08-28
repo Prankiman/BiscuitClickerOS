@@ -5,7 +5,10 @@ enter_pm:
 cli
 
 xor ax, ax
-mov ds, ax ;setting data segment to 0
+mov ds, ax ;setting data segment to
+mov ss, ax
+mov es, ax,
+mov gs, ax
 
 lgdt [gdt_desc] ;tells cpu where to find the gdt and its's size
  

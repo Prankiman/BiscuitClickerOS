@@ -8,6 +8,11 @@
 
 ; load DH sectors to ES : BX from drive DL
 disk_load:
+
+    mov ah, 42
+    int 0x13
+    jnc done
+
     push cx
     push dx
     ;push dx ; Store DX on stack so later we can recall
@@ -33,6 +38,7 @@ attempt:
 
     pop cx
 
+done:
     ret
 
 retry:
