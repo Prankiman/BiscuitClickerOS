@@ -61,7 +61,7 @@ void mouse_handler(registers_t *r)
         }
 
     }
-  disp_char_absolute('@', mouse_x, mouse_y, 0x6f);
+  disp_char_absolute('+', mouse_x, mouse_y, 0x6f);
   //if(1){//if mouse does anything
     /*char *video_address = (char*)0xb8050;
     video_address[0] = 'L';//address[1] sets forground and background color of character
@@ -77,9 +77,9 @@ void mouse_handler(registers_t *r)
   //}
 }
 
-void mouse_wait(u8 a_type) //unsigned char
+void mouse_wait(u8 a_type)
 {
-  u32 _time_out=100000; //unsigned int
+  u32 _time_out=100000;//sizeof(u32);
   if(a_type==0)
   {
     while(_time_out--) //Data
