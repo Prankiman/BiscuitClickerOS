@@ -43,9 +43,8 @@ void left_clickmsg(){
 void main() {
     isr_install();  ///initializes the interrupt service registers
     /* Test the interrupts */
-    for(int i = 0; i < 2; i++)
-        mouse_install();//something goes wrong when installing mouse handler but calling the install function 2 times seems to solve it
     keyboard_init();
+    mouse_install();
     //__asm__ __volatile__("int $2");
     //__asm__ __volatile__("int $3");
     //char *video_address = (char*)0xb8010;
