@@ -10,8 +10,8 @@
 
 u8 mouse_cycle=0;
 u8 mouse_byte[3];
-u8 mouse_x=0;
-u8 mouse_y=0;
+s8 mouse_x=0;
+s8 mouse_y=0;
 
 u8 ysign=0;
 u8 xsign=0;
@@ -30,25 +30,25 @@ void mouse_handler(registers_t *r)
   switch(mouse_cycle)
   {
     case 0:
+      mouse_byte[0]=inb(0x60);
       ysign = mouse_byte[0] & signy;
       xsign = mouse_byte[0] & signx;
       yover = mouse_byte[0] & overflowy;
       xover = mouse_byte[0] & overflowx;
-      mouse_byte[mouse_cycle]=inb(0x60);
       mouse_cycle++;
       break;
     case 1:
-      mouse_byte[mouse_cycle]=inb(0x60);
+      mouse_byte[1]=inb(0x60);
       mouse_cycle++;
       break;
     case 2:
-      mouse_byte[mouse_cycle]=inb(0x60);
-      mouse_x += mouse_byte[1];
-      mouse_y -= mouse_byte[2];
+      mouse_byte[2]=inb(0x60);
+      mouse_x += mouse_byte[1]*(1-2*xsign);
+      mouse_y -= mouse_byte[2]*(1-2*ysign);
       mouse_cycle=0;
       break;
   }
-    /*u8 *VGA = (u8*)0xA0000;
+    u8 *VGA = (u8*)0xA0000;
     u16 offset;
 
      for (int x = 0; x <= 320; x++){
@@ -60,7 +60,7 @@ void mouse_handler(registers_t *r)
             VGA[offset] = color;//working as intended yaaay
         }
 
-    }*/
+    }
   disp_char_absolute('+', mouse_x, mouse_y, 0x6f);
   //if(1){//if mouse does anything
     /*char *video_address = (char*)0xb8050;

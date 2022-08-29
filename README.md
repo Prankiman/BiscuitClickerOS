@@ -66,3 +66,6 @@ https://www.nasm.us/docs.php
 ## GNU Assembler manual:
 
 https://sourceware.org/binutils/docs/as/
+
+## LWN net, Linux Device Drivers:
+https://lwn.net/Kernel/LDD3/
