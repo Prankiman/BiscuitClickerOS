@@ -141,6 +141,21 @@ void mouse_install()
   mouse_wait(1);
   outb(0x60, _status);
 
+  //__some shit i found__
+  mouse_write(0xE8);
+  mouse_read();
+
+  mouse_write(0x00);
+  mouse_read();
+
+  mouse_write(0xF3);
+  mouse_read();
+
+  mouse_write(200);
+  mouse_read();
+  //
+
+
   //Tell the mouse to use default settings
   mouse_write(0xF6);
   mouse_read();  //Acknowledge
@@ -150,6 +165,6 @@ void mouse_install()
   mouse_read();  //Acknowledge
 
   //Setup the mouse handler
-
+  IRQ_clear_mask(IRQ12);
   irq_install_handler(IRQ12, mouse_handler);//might only work for ps/2 mice
 }

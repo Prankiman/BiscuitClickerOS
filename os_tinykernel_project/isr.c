@@ -3,6 +3,7 @@
 #include "idt.h"
 #include "isr.h"
 #include "pic.h"
+#include "screen.h"
 
 
 #define MAX_COLS 80 //temporary
@@ -68,41 +69,41 @@ void isr_install() {
 
 /* To print the message which defines every exception */
 char *exception_messages[] = {
-    "zero division",
-    "debug",
-    "non maskable interrupt",
-    "breakpoint",
-    "into detected overflow",
-    "out of bounds",
-    "invalid opcode",
-    "no coprocessor",
+    "zero division              ",
+    "debug                      ",
+    "non maskable interrupt     ",
+    "breakpoint                 ",
+    "into detected overflow     ",
+    "out of bounds              ",
+    "invalid opcode             ",
+    "no coprocessor             ",
 
-    "double fault",
+    "double fault               ",
     "coprocessor segment overrun",
-    "bad TSS",
-    "segment not present",
-    "stack fault",
-    "general protection fault",
-    "page fault",
-    "unknown interrupt",
+    "bad TSS                    ",
+    "segment not present        ",
+    "stack fault                ",
+    "general protection fault   ",
+    "page fault                 ",
+    "unknown interrupt          ",
 
-    "coprocessor fault",
-    "alignment check",
-    "machine check",
-    "reserved",
-    "reserved",
-    "reserved",
-    "reserved",
-    "reserved",
+    "coprocessor fault          ",
+    "alignment check            ",
+    "machine check              ",
+    "reserved                   ",
+    "reserved                   ",
+    "reserved                   ",
+    "reserved                   ",
+    "reserved                   ",
 
-    "reserved",
-    "reserved",
-    "reserved",
-    "reserved",
-    "reserved",
-    "reserved",
-    "reserved",
-    "reserved"
+    "reserved                   ",
+    "reserved                   ",
+    "reserved                   ",
+    "reserved                   ",
+    "reserved                   ",
+    "reserved                   ",
+    "reserved                   ",
+    "reserved                   "
 };
 
 //temporary until i fix a proper screen driver
@@ -110,7 +111,7 @@ char *exception_messages[] = {
 int char_off(int x){return 2 * x;}
 
 void isr_handler(registers_t *r) {
-    if(r->int_no < 32){
+    /*if(r->int_no < 32){
     char *video_address = (char*)0xb8000;
     //print interrupt num____________
     video_address[0] = 'i';//address[1] sets forground and background color of character
@@ -118,5 +119,11 @@ void isr_handler(registers_t *r) {
     video_address[4] = 't';
     video_address[6] = ':';
     video_address[8] = r->int_no+'0';//note 2 digit values will be represented with corresponding ascii character for example int number 13 will be represented as "="
+    }*/
+    char *errormsg = exception_messages[r->int_no];
+
+
+    for(u8 i = 0; i < 27;  i ++){
+        disp_char((errormsg[i]), i, 4, 0x67);
     }
 }
