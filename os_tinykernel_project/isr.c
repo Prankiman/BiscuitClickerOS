@@ -68,42 +68,40 @@ void isr_install() {
 }
 
 /* To print the message which defines every exception */
-char *exception_messages[] = {
-    "zero division              ",
-    "debug                      ",
-    "non maskable interrupt     ",
-    "breakpoint                 ",
-    "into detected overflow     ",
-    "out of bounds              ",
-    "invalid opcode             ",
-    "no coprocessor             ",
+static const char *exception_messages[32] = {
+    "zero division",
+    "debug",
+    "non maskable interrupt",
+    "breakpoint",
+    "into detected overflow",
+    "out of bounds",
+    "invalid opcode",
+    "no coprocessor",
 
-    "double fault               ",
+    "double faul",
     "coprocessor segment overrun",
-    "bad TSS                    ",
-    "segment not present        ",
-    "stack fault                ",
-    "general protection fault   ",
-    "page fault                 ",
-    "unknown interrupt          ",
-
-    "coprocessor fault          ",
-    "alignment check            ",
-    "machine check              ",
-    "reserved                   ",
-    "reserved                   ",
-    "reserved                   ",
-    "reserved                   ",
-    "reserved                   ",
-
-    "reserved                   ",
-    "reserved                   ",
-    "reserved                   ",
-    "reserved                   ",
-    "reserved                   ",
-    "reserved                   ",
-    "reserved                   ",
-    "reserved                   "
+    "bad TSS",
+    "segment not present",
+    "stack fault",
+    "general protection fault",
+    "page fault ",
+    "unknown interrupt",
+    "coprocessor fault",
+    "alignment check  ",
+    "machine check ",
+    "reserved",
+    "reserved",
+    "reserved",
+    "reserved",
+    "reserved",
+    "reserved",
+    "reserved",
+    "reserved",
+    "reserved",
+    "reserved",
+    "reserved",
+    "reserved",
+    "reserved"
 };
 
 //temporary until i fix a proper screen driver
@@ -120,10 +118,13 @@ void isr_handler(registers_t *r) {
     video_address[6] = ':';
     video_address[8] = r->int_no+'0';//note 2 digit values will be represented with corresponding ascii character for example int number 13 will be represented as "="
     }*/
-    char *errormsg = exception_messages[r->int_no];
 
-
-    for(u8 i = 0; i < 27;  i ++){
-        disp_char((errormsg[i]), i, 4, 0x67);
-    }
+        //const char *errormsg = exception_messages[r->int_no];
+        const char *str = exception_messages[r->int_no];//"honey";
+        char c = 0;
+        int x = 0;
+        while ((c = *str++) != 0){
+            disp_char(c, x, 6, 0x67);
+            x++;
+        }
 }

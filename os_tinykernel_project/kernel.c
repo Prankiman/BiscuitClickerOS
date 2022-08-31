@@ -36,7 +36,7 @@ void left_clickmsg(){
         video_address[14] = 'e';
         video_address[16] = 'd';*/
         for(u8 i = 0; i < 20; i++){
-            disp_char('L', i, 4, 0x6f);
+            disp_char('a', i, 4, 0x6f);
         }
 }
 
@@ -55,7 +55,7 @@ void main() {
     //char *video_address = (char*)0xb8010;
     //*video_address = '_';
 
-    u8 *VGA = (u8*)0xA0000;
+    /*u8 *VGA = (u8*)0xA0000;
     u16 offset;
 
      for (int x = 0; x <= 320; x++){
@@ -67,8 +67,8 @@ void main() {
             VGA[offset] = color;//working as intended yaaay
         }
 
-    }
-    __asm__ __volatile__("int $2");
+    }*/
+    __asm__ __volatile__("int $19");
 }
 
 
