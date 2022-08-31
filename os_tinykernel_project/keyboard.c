@@ -18,5 +18,5 @@ void keyboard_handler(registers_t *regs) {
 
 void keyboard_init() {
     irq_install_handler(IRQ1, keyboard_handler);//irq 1 is reserved for keyboard input
-    outb(60, 0xae);//enable ps/2 keyboard
+    //outb(60, 0xae);//enable ps/2 keyboard
 }

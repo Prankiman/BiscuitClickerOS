@@ -45,23 +45,22 @@ extern void wait1();
 void main() {
 
 
-    isr_install();  ///initializes the interrupt service registers
-    /* Test the interrupts */
-    //outb(60, 0xa7);//disable ps/2 mouse
-    //outb(60, 0xad);//disabled ps/2 keyboard
-
-
     //give computer some time before initializing the drivers(mouse driver didnt work on my laptop without it)
-      for(int i = 0; i < 99999999; i++){
+      for(int i = 0; i < 299999999; i++){
         //__asm__(".intel_syntax noprefix");
         __asm__("nop");
         //__asm__(".att_syntax prefix");
     }
+    isr_install();  ///initializes the interrupt service registers
+    //outb(60, 0xa7);//disable ps/2 mouse
+    //outb(60, 0xad);//disabled ps/2 keyboard
+
     keyboard_init();
     mouse_install();
-
+    /* Test the interrupts */
     //__asm__ __volatile__("int $2");
     //__asm__ __volatile__("int $3");
+
     //char *video_address = (char*)0xb8010;
     //*video_address = '_';
 
@@ -78,7 +77,7 @@ void main() {
         }
 
     }*/
-    __asm__ __volatile__("int $19");
+    //__asm__ __volatile__("int $19");
 }
 
 
