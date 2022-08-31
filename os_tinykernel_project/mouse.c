@@ -166,5 +166,7 @@ void mouse_install()
 
   //Setup the mouse handler
   irq_install_handler(IRQ12, mouse_handler);//might only work for ps/2 mice
+  irq_install_handler(IRQ4, mouse_handler);//testing stuff
+  irq_install_handler(IRQ7, mouse_handler);//testing stuff
   outb(60, 0xa8);//enable ps/2 mouse
 }
