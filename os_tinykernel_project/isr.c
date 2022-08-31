@@ -124,7 +124,7 @@ void isr_handler(registers_t *r) {
         char c = 0;
         int x = 0;
         while ((c = *str++) != 0){
-            disp_char(c, x, 6, 0x67);
+            disp_char(c, x, r->int_no, 0x67);
             x++;
         }
 }

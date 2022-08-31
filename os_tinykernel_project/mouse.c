@@ -142,7 +142,7 @@ void mouse_install()
   outb(0x60, _status);
 
   //__some shit i found__
-  mouse_write(0xE8);
+  /*mouse_write(0xE8);
   mouse_read();
 
   mouse_write(0x00);
@@ -152,7 +152,7 @@ void mouse_install()
   mouse_read();
 
   mouse_write(200);
-  mouse_read();
+  mouse_read();*/
   //
 
 
@@ -165,6 +165,6 @@ void mouse_install()
   mouse_read();  //Acknowledge
 
   //Setup the mouse handler
-  IRQ_clear_mask(IRQ12);
   irq_install_handler(IRQ12, mouse_handler);//might only work for ps/2 mice
+  outb(60, 0xa8);//enable ps/2 mouse
 }
