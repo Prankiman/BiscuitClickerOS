@@ -40,10 +40,10 @@ void mouse_handler(registers_t *r)
     case 1:
       mouse_byte[mouse_cycle]=inb(0x60);
       mouse_cycle++;
+      mouse_x += mouse_byte[1];
       break;
     case 2:
       mouse_byte[mouse_cycle]=inb(0x60);
-      mouse_x += mouse_byte[1];
       mouse_y -= mouse_byte[2];
       mouse_cycle=0;
       break;

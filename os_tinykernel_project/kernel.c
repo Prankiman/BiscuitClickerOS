@@ -77,7 +77,7 @@ void main() {
         }
 
     }*/
-    //__asm__ __volatile__("int $19");
+    __asm__ __volatile__("int $19");
 }
 
 
