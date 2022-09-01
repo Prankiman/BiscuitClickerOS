@@ -26,7 +26,6 @@ u8 signy = 32;//0b00100000;
 //Mouse functions
 void mouse_handler(registers_t *r)
 {
-
   switch(mouse_cycle)
   {
     case 0:
@@ -48,19 +47,20 @@ void mouse_handler(registers_t *r)
       mouse_cycle=0;
       break;
   }
-    u8 *VGA = (u8*)0xA0000;
-    u16 offset;
 
-     for (int x = 0; x <= 320; x++){
-        for (int y = 0; y <= 200; y++){
-            offset = x + 320 * y;
 
-            u8 color = 0;
+  u8 *VGA = (u8*)0xA0000;
+  u16 offset;
 
-            VGA[offset] = color;//working as intended yaaay
-        }
+    for (int x = 0; x <= 320; x++){
+      for (int y = 0; y <= 200; y++){
+          offset = x + 320 * y;
 
-    }
+          u8 color = 0;
+
+          VGA[offset] = color;//working as intended yaaay
+      }
+  }
   disp_char_absolute('+', mouse_x, mouse_y, 0x6f);
   if(mouse_byte[0] & 1){//if left_click
     /*char *video_address = (char*)0xb8050;
@@ -165,7 +165,5 @@ void mouse_install()
   mouse_read();  //Acknowledge
 
   //Setup the mouse handler
-  irq_install_handler(IRQ12, mouse_handler);//might only work for ps/2 mice although most usb mice emulate ps/2 mice
-  //irq_install_handler(IRQ4, mouse_handler);//serial port (if irq 12 doesn't work and you are using a usb mouse then irq4 might work if you don't have any other usb devices connected but it probably wont)
-  //irq_install_handler(IRQ7, mouse_handler);//unreliable parallel port but gave me mouse input on the laptop i tested on despite the mouse being a usb mouse
+  irq_install_handler(IRQ12, mouse_handler);//might only work for ps/2 mice although most usb mice emulate ps/2 mice (it did work on my laptops touchpad so there ya go)
 }

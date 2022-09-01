@@ -4,8 +4,10 @@
 #include "pic.h"
 #include "keyboard.h"
 #include "kernel.h"
+#include "mouse.h"
 
 #define ENTER 0x1c
+#define I_code 0x17
 
 void keyboard_handler(registers_t *regs) {
     u8 scancode = inb(0x60);
@@ -13,6 +15,9 @@ void keyboard_handler(registers_t *regs) {
 
     if (scancode == ENTER){
        keypressmsg();
+    }
+    if(scancode == I_code){
+        mouse_install();
     }
 }
 

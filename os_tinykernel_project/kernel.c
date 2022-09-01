@@ -45,12 +45,12 @@ extern void wait1();
 void main() {
 
 
-    //give computer some time before initializing the drivers(mouse driver didnt work on my laptop without it)
-      for(int i = 0; i < 299999999; i++){
-        //__asm__(".intel_syntax noprefix");
+    //give computer some time before initializing the drivers(perhaps bad)
+    /*for(int i = 0; i < 299999999; i++){
+    //__asm__(".intel_syntax noprefix");
         __asm__("nop");
         //__asm__(".att_syntax prefix");
-    }
+    }*/
     isr_install();  ///initializes the interrupt service registers
     //outb(60, 0xa7);//disable ps/2 mouse
     //outb(60, 0xad);//disabled ps/2 keyboard
