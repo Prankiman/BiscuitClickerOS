@@ -10,7 +10,14 @@
 
 #include "types.h"
 
+typedef struct Sprite{
+    u8 z_level;
+    u8 img[1][1];
+}sprite;
+
 void disp_char(char c, u8 xx, u8 yy, u8 cc);
 void disp_char_absolute(char c, u8 xx, u8 yy, u8 cc);
+void clear_screen(u8 color);
+void draw_screen(sprite sp, ...);
 
 #endif

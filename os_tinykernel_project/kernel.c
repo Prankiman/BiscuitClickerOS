@@ -40,44 +40,27 @@ void left_clickmsg(){
         }
 }
 
-extern void wait1();
+//extern void wait1();
+
+void main_loop(){
+    while(1){
+        clear_screen(0);
+        disp_char_absolute('+', mouse_x, mouse_y, 0x6f);
+    }
+}
+
 
 void main() {
 
+    isr_install();
 
-    //give computer some time before initializing the drivers(perhaps bad)
-    /*for(int i = 0; i < 299999999; i++){
-    //__asm__(".intel_syntax noprefix");
-        __asm__("nop");
-        //__asm__(".att_syntax prefix");
-    }*/
-    isr_install();  ///initializes the interrupt service registers
-    //outb(60, 0xa7);//disable ps/2 mouse
-    //outb(60, 0xad);//disabled ps/2 keyboard
 
     keyboard_init();
     mouse_install();
-    /* Test the interrupts */
-    //__asm__ __volatile__("int $2");
-    //__asm__ __volatile__("int $3");
 
-    //char *video_address = (char*)0xb8010;
-    //*video_address = '_';
-
-    /*u8 *VGA = (u8*)0xA0000;
-    u16 offset;
-
-     for (int x = 0; x <= 320; x++){
-        for (int y = 0; y <= 200; y++){
-            offset = x + 320 * y;
-
-            u8 color = y;
-
-            VGA[offset] = color;//working as intended yaaay
-        }
-
-    }*/
     __asm__ __volatile__("int $19");
+
+    main_loop();
 }
 
 

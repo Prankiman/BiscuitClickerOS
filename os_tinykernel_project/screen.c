@@ -145,7 +145,7 @@ void disp_char(char c, u8 xx, u8 yy, u8 cc){
 		}
 	}
 }
-void disp_char_absolute(char c, u8 xx, u8 yy, u8 cc){
+void disp_char_absolute(char c, u8 xx, u8 yy, u8 color){
 	u8 *VGA = (u8*)0xA0000;
 
 	const u8 *char_to_disp = font8x8_basic[(u8) c];
@@ -153,8 +153,21 @@ void disp_char_absolute(char c, u8 xx, u8 yy, u8 cc){
 		for (u8 x = 0; x < 8; x++){
 			if(char_to_disp[y] & (1 << x)){//if pixel is 1 or 0
 				int offset = (xx+x) + 320 * (yy+y);
-				VGA[offset] = cc;
+				VGA[offset] = color;
 			}
 		}
 	}
+}
+
+void clear_screen(u8 color){
+    u8 *VGA = (u8*)0xA0000;
+    for (u16 i = 0; i < 64000; i++){
+        VGA[i] = color;
+    }
+
+}
+
+
+void draw_screen(sprite sp, ...){
+
 }
