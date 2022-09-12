@@ -49,7 +49,7 @@ void mouse_handler(registers_t *r)
   }
 
 
-  u8 *VGA = (u8*)0xA0000;
+  /*u8 *VGA = (u8*)0xA0000;
   u16 offset;
 
     for (int x = 0; x <= 320; x++){
@@ -60,8 +60,10 @@ void mouse_handler(registers_t *r)
 
           VGA[offset] = color;//working as intended yaaay
       }
-  }
-  disp_char_absolute('+', mouse_x, mouse_y, 0x6f);
+  }*/
+  lclik = 0;
+  keypress = 0;
+  //disp_char_absolute('+', mouse_x, mouse_y, 0x6f);
   if(mouse_byte[0] & 1){//if left_click
     /*char *video_address = (char*)0xb8050;
     video_address[0] = 'L';//address[1] sets forground and background color of character

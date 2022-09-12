@@ -120,7 +120,7 @@ void isr_handler(registers_t *r) {
     }*/
 
         //const char *errormsg = exception_messages[r->int_no];
-        const char *str = exception_messages[r->int_no];//"honey";
+        const char *str = exception_messages[r->int_no];
         char c = 0;
         int x = 0;
         while ((c = *str++) != 0){

@@ -1,5 +1,8 @@
-#include "types.h"
 #include "screen.h"
+
+
+static u8 *front_buff = (u8 *)vid_mem;
+static u8 *back_buff = (u8 *)0x1fffff;//somewhere in memory which isnt being used
 
 static const u8 font8x8_basic[128][8] = {
     { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00},   // U+0000 (nul)
@@ -133,41 +136,44 @@ static const u8 font8x8_basic[128][8] = {
 };
 
 void disp_char(char c, u8 xx, u8 yy, u8 cc){
-	u8 *VGA = (u8*)0xA0000;
+	//u8 *VGA = (u8*)vid_mem;
 
 	const u8 *char_to_disp = font8x8_basic[(u8) c];
 	for(u8 y = 0; y < 8; y++){
 		for (u8 x = 0; x < 8; x++){
 			if(char_to_disp[y] & (1 << x)){//if pixel is 1 or 0
 				int offset = (8*xx+x) + 320 * (8*yy+y);
-				VGA[offset] = cc;
+				//VGA[offset] = cc;
+                back_buff[offset] = cc;
 			}
 		}
 	}
 }
 void disp_char_absolute(char c, u8 xx, u8 yy, u8 color){
-	u8 *VGA = (u8*)0xA0000;
+	//u8 *VGA = (u8*)vid_mem;
 
 	const u8 *char_to_disp = font8x8_basic[(u8) c];
 	for(u8 y = 0; y < 8; y++){
 		for (u8 x = 0; x < 8; x++){
 			if(char_to_disp[y] & (1 << x)){//if pixel is 1 or 0
 				int offset = (xx+x) + 320 * (yy+y);
-				VGA[offset] = color;
+				//VGA[offset] = color;
+                back_buff[offset] = color;
 			}
 		}
 	}
 }
 
 void clear_screen(u8 color){
-    u8 *VGA = (u8*)0xA0000;
+    /*u8 *VGA = (u8*)vid_mem;
     for (u16 i = 0; i < 64000; i++){
         VGA[i] = color;
-    }
+    }*/
+    memset(back_buff, color, 64000);//size should be screensize&
 
 }
 
 
-void draw_screen(sprite sp, ...){
-
+void draw_screen(){
+    memcpy(back_buff, front_buff, 64000);
 }
