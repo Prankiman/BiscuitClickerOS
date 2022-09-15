@@ -2,7 +2,7 @@
 
 
 static u8 *front_buff = (u8 *)vid_mem;
-static u8 *back_buff = (u8 *)0x1fffff;//somewhere in memory which isnt being used
+static u8 *back_buff = (u8 *)0xf000;//somewhere in memory which isnt being used
 
 static const u8 font8x8_basic[128][8] = {
     { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00},   // U+0000 (nul)

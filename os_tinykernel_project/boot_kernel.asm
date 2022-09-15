@@ -2,6 +2,12 @@
 [org 0x7c00]
 kernel_offset equ 0x1000
 
+xor ax, ax
+mov ds, ax
+mov ss, ax
+mov gs, ax
+mov es, ax
+
 mov [boot_drive], dl
 
 mov bp, 0x9000
