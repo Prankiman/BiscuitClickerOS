@@ -9,6 +9,7 @@ mov ds, ax ;setting data segment to
 mov ss, ax
 mov es, ax,
 mov gs, ax
+mov fs, ax
 
 lgdt [gdt_desc] ;tells cpu where to find the gdt and its's size
  

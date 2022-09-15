@@ -149,6 +149,17 @@ void disp_char(char c, u8 xx, u8 yy, u8 cc){
 		}
 	}
 }
+
+void disp_string(char *ch, u8 y){
+    const char *str = ch;
+    char c = 0;
+    int x = 0;
+    while ((c = *str++) != 0){
+        disp_char(c, x,y, 0x67);
+        x++;
+    }
+}
+
 void disp_char_absolute(char c, u8 xx, u8 yy, u8 color){
 	//u8 *VGA = (u8*)vid_mem;
 

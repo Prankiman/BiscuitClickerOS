@@ -2,12 +2,6 @@
 [org 0x7c00]
 kernel_offset equ 0x1000
 
-xor ax, ax
-mov ds, ax
-mov ss, ax
-mov gs, ax
-mov es, ax
-
 mov [boot_drive], dl
 
 mov bp, 0x9000
@@ -34,16 +28,35 @@ jmp enter_pm
 
 load_kernel:
 
-    mov bx, kernel_msg
-    call print
+    packet:
+        db 0x10 ;packet size (16 bytes)
+        db 0    ;always 0
+    block_count:
+        dw 16  ; num sectors
+    trans_buff: ;transfer buffer (segment & offset)
+        dw kernel_offset    ; memory buffer destination address (0:1000)
+        dw 0
+    lba:
+        dd 1    ; put the lba to read in this spot (lba1)
+        dd 0    ; more storage bytes if lba number exceeds 4 bytes
 
-    mov bx, kernel_offset
-    mov dh, 15;number of sectors to read
-    mov dl, [boot_drive]
-    call disk_load
+    ;______________________________________________
+    mov si, packet
+    mov ah, 0x42
+    mov dl, [boot_drive]    ;set dl to drive num of bootable device
+
+    int 0x13
+    ;______________________________________________
+
+    jc load_ah2  ;if carry flag set (error occured) load disk using ah=2h
 
     ret
 
+load_ah2:
+    mov dh, 15  ;number of sectors to read
+    call disk_load
+
+    ret
 
 [bits 16]
 vga_mode:
@@ -91,5 +104,8 @@ protected_msg db " protected ", 0
 kernel_msg db "kernel ", 0
 
 
-times 510-($-$$) db 0x0
+
+times 510-($-$$) db  0
 dw 0xaa55
+
+
