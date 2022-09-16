@@ -150,13 +150,43 @@ void disp_char(char c, u8 xx, u8 yy, u8 cc){
 	}
 }
 
-void disp_string(char *ch, u8 y){
+void disp_string_absolute(char *ch, u8 x, u8 y, u8 cc){
     const char *str = ch;
     char c = 0;
-    int x = 0;
+    int xx = 0;
     while ((c = *str++) != 0){
-        disp_char(c, x,y, 0x67);
-        x++;
+        disp_char_absolute(c, 8*xx+x, y, cc);
+        xx++;
+    }
+}
+void disp_string(char *ch, u8 x, u8 y, u8 cc){
+    const char *str = ch;
+    char c = 0;
+    int xx = 0;
+    while ((c = *str++) != 0){
+        disp_char(c, (xx+x), y, cc);
+        xx++;
+    }
+}
+
+void disp_int(u32 n, u8 x, u8 y, u8 cc){
+    u32 num = n;
+    u32 tmp = n;
+
+    u8 num_digits = 0;
+
+    while (tmp > 0){
+        tmp *= 0.1f;
+        num_digits++;
+    }
+
+    u8 digit;
+    u8 xx = num_digits;
+    while (num > 0) {
+        digit = num % 10;
+        num *= 0.1f;
+        disp_char_absolute(digit+'0', x+xx*8, y, cc);
+        xx--;
     }
 }
 

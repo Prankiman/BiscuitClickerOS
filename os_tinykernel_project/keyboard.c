@@ -14,7 +14,7 @@ void keyboard_handler(registers_t *regs) {
 
 
     if (scancode == ENTER){
-       keypressmsg();
+       keypressed();
     }
     if(scancode == I_code){
         mouse_install();

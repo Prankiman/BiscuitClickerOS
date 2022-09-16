@@ -35,6 +35,10 @@ void mouse_handler(registers_t *r)
       xover = mouse_byte[0] & overflowx;
       mouse_byte[mouse_cycle]=inb(0x60);
       mouse_cycle++;
+
+      if(mouse_byte[0] & 1){//if left_click
+        left_click();
+      }
       break;
     case 1:
       mouse_byte[mouse_cycle]=inb(0x60);
@@ -48,35 +52,10 @@ void mouse_handler(registers_t *r)
       break;
   }
 
-
-  /*u8 *VGA = (u8*)0xA0000;
-  u16 offset;
-
-    for (int x = 0; x <= 320; x++){
-      for (int y = 0; y <= 200; y++){
-          offset = x + 320 * y;
-
-          u8 color = 0;
-
-          VGA[offset] = color;//working as intended yaaay
-      }
-  }*/
   lclik = 0;
   keypress = 0;
   //disp_char_absolute('+', mouse_x, mouse_y, 0x6f);
-  if(mouse_byte[0] & 1){//if left_click
-    /*char *video_address = (char*)0xb8050;
-    video_address[0] = 'L';//address[1] sets forground and background color of character
-    video_address[2] = 'e';
-    video_address[4] = 'f';
-    video_address[6] = 't';
-    video_address[8] = '-';
-    video_address[10] = 'c';
-    video_address[12] = 'l';
-    video_address[14] = 'i';
-    video_address[16] = 'c';*/
-    left_clickmsg();
-  }
+
 }
 
 void mouse_wait(u8 a_type)
