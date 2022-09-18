@@ -21,5 +21,8 @@ void clear_screen(u8 color);
 void draw_screen();
 
 
+void disp_biscuit(u8 xx, u8 yy, u8 background, u8 forground);
+
+
 
 #endif

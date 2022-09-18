@@ -24,6 +24,7 @@ clean:
 	rm *.o *.bin boot.iso
 
 iso: all
+	#cat $(BOOT) $(KERN) > boot.iso
 	dd if=/dev/zero of=boot.iso bs=512 count=2880
 	dd if=./$(BOOT) of=boot.iso conv=notrunc bs=512 seek=0 count=1
 	dd if=./$(KERN) of=boot.iso conv=notrunc bs=512 seek=1 count=2048

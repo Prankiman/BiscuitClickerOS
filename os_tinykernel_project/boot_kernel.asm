@@ -38,7 +38,7 @@ load_kernel:
         db 0x10 ;packet size (16 bytes)
         db 0    ;always 0
     block_count:
-        dw 16  ; num sectors
+        dw 40  ; num sectors
     trans_buff: ;transfer buffer (segment & offset)
         dw kernel_offset    ; memory buffer destination address (0:1000)
         dw 0
@@ -59,7 +59,7 @@ load_kernel:
     ret
 
 load_ah2:
-    mov dh, 15  ;number of sectors to read
+    mov dh, 40 ;number of sectors to read
     call disk_load
 
     ret

@@ -40,7 +40,8 @@ void left_click(){
 
 void main_loop(){
     while(1){
-        clear_screen(0x0e);
+        clear_screen(0);
+        disp_biscuit(128, 68, 0, 0x06);
         if(keypress)    disp_string("keyboard working bre", 1, 2, 0x67);
         disp_char_absolute('+', mouse_x, mouse_y, 0x6f);
         disp_string("score:", 1, 3, 0x6f);
