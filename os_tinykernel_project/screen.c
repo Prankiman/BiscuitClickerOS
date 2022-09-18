@@ -227,7 +227,7 @@ void draw_screen(){
 
 
 
-static const u8 biscuit_sprite_bw[68][8] = {{0x00,0x00,0x00,0x7f,0xfe,0x00,0x00,0x00},
+static const u8 biscuit_sprite_bw[69][8] = {{0x00,0x00,0x00,0x7f,0xfe,0x00,0x00,0x00},
                                             {0x00,0x00,0x07,0xff,0xff,0xe0,0x00,0x00},
                                             {0x00,0x00,0x1f,0xe7,0xff,0xf8,0x00,0x00},
                                             {0x00,0x00,0x7f,0x83,0xfc,0x3e,0x00,0x00},
@@ -305,7 +305,7 @@ void disp_biscuit(u8 xx, u8 yy, u8 background, u8 forground){
 
     u32 offset = 0;
 
-    for(u8 row = 8; row < 68; row++){
+    for(u8 row = 8; row < 69; row++){
         for(u8 sec = 0; sec < 8; sec++){
             for (u8 x = 0; x < 8; x++){
                 offset = (xx+x+sec*8) + 320*(yy+row);
