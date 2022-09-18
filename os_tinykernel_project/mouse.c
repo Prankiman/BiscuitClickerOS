@@ -38,7 +38,7 @@ void mouse_handler(registers_t *r)
 
       if(mouse_byte[0] & 1){//if left_click
         left_click();
-      }
+      }else lclick = 0;
       break;
     case 1:
       mouse_byte[mouse_cycle]=inb(0x60);
@@ -51,8 +51,6 @@ void mouse_handler(registers_t *r)
       mouse_cycle=0;
       break;
   }
-
-  lclik = 0;
   keypress = 0;
   //disp_char_absolute('+', mouse_x, mouse_y, 0x6f);
 
