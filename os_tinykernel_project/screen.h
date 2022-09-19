@@ -22,6 +22,7 @@ void draw_screen();
 
 
 void disp_biscuit(u8 xx, u8 yy, u8 background, u8 forground);
+void disp_biscuit_large(u8 xx, u8 yy, u8 background, u8 forground);
 
 
 
