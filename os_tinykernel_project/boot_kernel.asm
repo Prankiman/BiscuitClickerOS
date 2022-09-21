@@ -8,6 +8,8 @@ mov ss, ax
 mov gs, ax
 mov es, ax
 
+sti
+
 mov [boot_drive], dl
 
 mov bp, 0x9000
@@ -106,7 +108,7 @@ jmp $
 ;variables
 boot_drive db 0x00
 real_msg db "real ", 0
-protected_msg db " protected ", 0
+protected_msg db "vga 80x25 text mode (were in protected mode baby)", 0
 kernel_msg db "kernel ", 0
 
 

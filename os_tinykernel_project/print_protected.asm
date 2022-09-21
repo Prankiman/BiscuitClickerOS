@@ -2,6 +2,7 @@
 ; Define some constants
 video_memory equ 0xb8000
 white_on_black equ 0x0f
+white_on_black equ 0x0f
 ; prints a null - terminated string pointed to by EDX
 print_pm:
     pusha

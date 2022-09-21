@@ -1,6 +1,7 @@
 #include "types.h"
 #include "io.h"
 
+ //in -> read from port, out -> write to port,
 void outb(u16 port, u8 val)
 {
     __asm__ __volatile__ ("outb %0, %1" : : "a"(val), "Nd"(port) );
@@ -13,7 +14,7 @@ void outb(u16 port, u8 val)
 u8 inb(u16 port)
 {
     u8 ret;
-    //in -> read from port, out, write to port,
+
     __asm__ __volatile__ ( "inb %1, %0"
                    : "=a"(ret)
                    : "Nd"(port) );

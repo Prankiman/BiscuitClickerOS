@@ -210,7 +210,7 @@ void clear_screen(u8 color){
     for (u16 i = 0; i < 64000; i++){
         VGA[i] = color;
     }*/
-    memset(back_buff, color, 64000);//size should be screensize&
+    memset(back_buff, color, 64000);//size should be screensize*bytesperpixel
 
 }
 

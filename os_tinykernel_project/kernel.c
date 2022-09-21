@@ -9,7 +9,8 @@
 
 u8 lclick = 0;
 u8 keypress = 0;
-u32 clicks = 0;
+
+u8 clicks = 0;
 
 void keypressed(){
         keypress = 1;
@@ -23,16 +24,20 @@ void left_click(){
 
 void main_loop(){
     while(1){
-        clear_screen(0);
+        clear_screen(0xb9);
         switch(lclick){
             case 1:
-                disp_biscuit_large(108, 48, 0, 0x06);
+                disp_biscuit_large(108, 48, 0xb9, 0x06);
                 break;
             default:
-                disp_biscuit(120, 60, 0, 0x06);
+                disp_biscuit(120, 60, 0xb9, 0x06);
                 break;
         }
-        if(keypress)    disp_string("keyboard working bre", 1, 2, 0x67);
+        if(keypress){
+            if(lclick)clicks = inb(0x03);
+            disp_string("saving...", 1, 2, 0x67);
+            outb(0x03, clicks); // 0x03 used for Count Register channel 1/5
+        }
         disp_char_absolute('+', mouse_x, mouse_y, 0x6f);
         disp_string("score:", 1, 3, 0x6f);
         disp_int(clicks, 48, 24, 0x6f);
@@ -42,6 +47,8 @@ void main_loop(){
 
 
 void main() {
+
+    clicks = inb(0x03);
 
     isr_install();
 

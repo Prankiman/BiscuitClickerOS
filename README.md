@@ -25,14 +25,24 @@ https://wiki.osdev.org/VGA_Resources
 ### SANiK's mouse driver:
 https://forum.osdev.org/viewtopic.php?t=10247
 
+### ISA DMA:
+https://wiki.osdev.org/ISA_DMA
+
+
 ## Tutorialspoint assembly programming series:
 https://www.tutorialspoint.com/assembly_programming/
+
+
 
 ## To Do Huangs Operating System from 0 to 1 github page:
 https://github.com/tuhdo/os01
 
+
+
 ## Intel's developer manuals:
 https://www.intel.com/content/www/us/en/developer/articles/technical/intel-sdm.html
+
+
 
 ## os dever:
 
@@ -47,11 +57,17 @@ http://web.archive.org/web/20211226232232/http://www.osdever.net/bkerndev/Docs/i
 ### FREE VGA:
 http://www.osdever.net/FreeVGA/home.htm
 
+
+
 ## Nick Blundell's How To Write an Operating System :
 https://www.cs.bham.ac.uk/~exr/lectures/opsys/10_11/lectures/os-dev.pdf
 
+
+
 ## Cfenollosa's os-tutorial project:
 https://github.com/cfenollosa/os-tutorial
+
+
 
 ##  James Molloy's kernel development tutorials
 
@@ -63,9 +79,13 @@ https://web.archive.org/web/20160327011227/http://www.jamesmolloy.co.uk/tutorial
 
 https://www.nasm.us/docs.php
 
+
+
 ## GNU Assembler manual:
 
 https://sourceware.org/binutils/docs/as/
+
+
 
 ## LWN net, Linux Device Drivers:
 https://lwn.net/Kernel/LDD3/
