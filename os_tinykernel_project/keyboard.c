@@ -17,7 +17,8 @@ void keyboard_handler(registers_t *regs) {
        keypressed();
     }
     if(scancode == I_code){
-        mouse_install();
+        //mouse_install();
+        keypressed();
     }
 }
 

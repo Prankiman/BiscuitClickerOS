@@ -22,6 +22,7 @@ void left_click(){
         }
 }
 
+
 void main_loop(){
     while(1){
         clear_screen(0xb9);
@@ -34,9 +35,9 @@ void main_loop(){
                 break;
         }
         if(keypress){
-            if(lclick)clicks = inb(0x03);
-            disp_string("saving...", 1, 2, 0x67);
-            outb(0x03, clicks); // 0x03 used for Count Register channel 1/5
+            //if(lclick)clicks = inb(0x03);
+            disp_string("keybawd...", 1, 2, 0x67);
+            //outb (0x03, clicks); // 0x03 used for Count Register channel 1/5
         }
         disp_char_absolute('+', mouse_x, mouse_y, 0x6f);
         disp_string("score:", 1, 3, 0x6f);
@@ -48,7 +49,8 @@ void main_loop(){
 
 void main() {
 
-    clicks = inb(0x03);
+    //clicks = inb(0x03);
+    //__asm__ __volatile__ ("mov %0, %1" : : "r"(0xa0), "r"(clicks) );
 
     isr_install();
 
