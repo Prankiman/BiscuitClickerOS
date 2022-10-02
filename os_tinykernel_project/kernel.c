@@ -10,7 +10,7 @@
 u8 lclick = 0;
 u8 keypress = 0;
 
-u8 clicks = 0;
+u16* clicks = (u16 *)0xa000;
 
 void keypressed(){
         keypress = 1;
@@ -18,9 +18,14 @@ void keypressed(){
 void left_click(){
         if(!lclick){
             lclick = 1;
-            clicks++;
+            (*clicks)++;
         }
 }
+
+//__defined in ata.asm__
+void ata_lba_read();
+void ata_lba_write();
+//______________________
 
 
 void main_loop(){
@@ -36,12 +41,16 @@ void main_loop(){
         }
         if(keypress){
             //if(lclick)clicks = inb(0x03);
+            __asm__ __volatile__ ("mov $0xa000, %edi");
+            __asm__ __volatile__ ("mov $0x29, %eax");
+            __asm__ __volatile__ ("mov $1, %cl");
+            ata_lba_write();
             disp_string("keybawd...", 1, 2, 0x67);
             //outb (0x03, clicks); // 0x03 used for Count Register channel 1/5
         }
         disp_char_absolute('+', mouse_x, mouse_y, 0x6f);
         disp_string("score:", 1, 3, 0x6f);
-        disp_int(clicks, 48, 24, 0x6f);
+        disp_int(*clicks, 48, 24, 0x6f);
         draw_screen();
     }
 }
@@ -49,6 +58,11 @@ void main_loop(){
 
 void main() {
 
+
+    __asm__ __volatile__ ("mov $0xa000, %edi");
+    __asm__ __volatile__ ("mov $0x29, %eax");
+    __asm__ __volatile__ ("mov $1, %cl");
+    ata_lba_read();
     //clicks = inb(0x03);
     //__asm__ __volatile__ ("mov %0, %1" : : "r"(0xa0), "r"(clicks) );
 

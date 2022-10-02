@@ -1,3 +1,5 @@
+//https://wiki.osdev.org/ATA_PIO_Mode
+
 /* The default and seemingly universal sector size for CD-ROMs. */
 #define ATAPI_SECTOR_SIZE 2048
 
