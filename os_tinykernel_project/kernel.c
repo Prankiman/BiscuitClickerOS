@@ -46,7 +46,7 @@ void main_loop(){
                 __asm__ __volatile__ ("mov $1, %cl");
                 ata_lba_read();
                 __asm__ __volatile__ ("pause");*/
-                read_28((u8)1,(u32)0x38, (u8) 0x80, clicks);
+                read_28((u8)1,(u32)0x10, (u8) 0x80, clicks);
                 //read_48((u8)1,(u8)0, (u64)0x38, (u8) 0x81, clicks);
                 //read_48((u8)1,(u8)0, (u64)0x38, (u8) 0x80, clicks);
             }
@@ -56,7 +56,7 @@ void main_loop(){
                 __asm__ __volatile__ ("mov $1, %cl");
                 ata_lba_write();
                 __asm__ __volatile__ ("pause");*/
-                write_28((u8)1,(u32)0x38, (u8) 0x80, clicks);
+                write_28((u8)1,(u32)0x10, (u8) 0x80, clicks);
                 //write_48((u8)1,(u8)0, (u64)0x38, (u8) 0x81, clicks);
                 //write_48((u8)1,(u8)0, (u64)0x38, (u8) 0x80, clicks);
             }
@@ -93,7 +93,7 @@ void main() {
     ata_lba_read();
     __asm__ __volatile__ ("pause");*/
 
-    read_28((u8)1,(u32)0x38, (u8) 0x80, clicks);
+    read_28((u8)1,(u32)0x10, (u8) 0x80, clicks);
     //read_48((u8)1,(u8)0, (u64)0x38, (u8) 0x81, clicks);
     //read_48((u8)1,(u8)0, (u64)0x38, (u8) 0x80, clicks);
 
