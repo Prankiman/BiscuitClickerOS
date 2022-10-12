@@ -8,11 +8,16 @@
 ; @return None
 ;=============================================================================
 
+
+;0x20 -> read, 0x30 28bit lba write, 0x34 48bit lba write
+
+
 global ata_lba_read
 global ata_lba_write
 
 ata_lba_read:
-               pusha
+               pushfd
+               pushfd
                and eax, 0x0FFFFFFF
                push eax
                push ebx
@@ -67,7 +72,8 @@ ata_lba_read:
                pop ecx
                pop ebx
                pop eax
-               popa
+               popfd
+               popfd
                ret
 
 
@@ -82,7 +88,8 @@ ata_lba_read:
 ;=============================================================================
 
 ata_lba_write:
-    pusha
+    pushfd
+    pushfd
     and eax, 0x0FFFFFFF
     push eax
     push ebx
@@ -120,9 +127,9 @@ ata_lba_write:
     mov al, 0x30         ; Write with retry.
     out dx, al
 
-.still_going:  in al, dx
+.still_going2:  in al, dx
     test al, 8           ; the sector buffer requires servicing.
-    jz .still_going      ; until the sector buffer is ready.
+    jz .still_going2     ; until the sector buffer is ready.
 
     mov eax, 256         ; to read 256 words = 1 sector
     xor bx, bx
@@ -138,7 +145,6 @@ ata_lba_write:
     pop ecx
     pop ebx
     pop eax
-    popa
+    popfd
+    popfd
     ret
-
-
