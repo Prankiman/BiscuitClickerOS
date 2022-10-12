@@ -10,7 +10,7 @@
 u8 lclick = 0;
 u8 keypress = 0;
 
-u16* clicks = (u16 *)0xa000;
+static u16* clicks = (u16 *)0xa000;
 
 void keypressed(){
         keypress = 1;
@@ -46,9 +46,9 @@ void main_loop(){
                 __asm__ __volatile__ ("mov $1, %cl");
                 ata_lba_read();
                 __asm__ __volatile__ ("pause");*/
-                //read_28((u8)1,(u32)0x38, (u8) 0x80, clicks);
+                read_28((u8)1,(u32)0x38, (u8) 0x80, clicks);
                 //read_48((u8)1,(u8)0, (u64)0x38, (u8) 0x81, clicks);
-                read_48((u8)1,(u8)0, (u64)0x38, (u8) 0x80, clicks);
+                //read_48((u8)1,(u8)0, (u64)0x38, (u8) 0x80, clicks);
             }
             else{
                 /*__asm__ __volatile__ ("mov $0xa000, %edi");
@@ -56,9 +56,9 @@ void main_loop(){
                 __asm__ __volatile__ ("mov $1, %cl");
                 ata_lba_write();
                 __asm__ __volatile__ ("pause");*/
-                //write_28((u8)1,(u32)0x38, (u8) 0x80, clicks);
+                write_28((u8)1,(u32)0x38, (u8) 0x80, clicks);
                 //write_48((u8)1,(u8)0, (u64)0x38, (u8) 0x81, clicks);
-                write_48((u8)1,(u8)0, (u64)0x38, (u8) 0x80, clicks);
+                //write_48((u8)1,(u8)0, (u64)0x38, (u8) 0x80, clicks);
             }
             disp_string("keybawd...", 1, 2, 0x67);
             //outb (0x03, clicks); // 0x03 used for Count Register channel 1/5
@@ -71,6 +71,9 @@ void main_loop(){
 }
 
 void main() {
+    for(u32 i = 0; i < 0xffffff; i++) {
+        __asm__("pause");
+    }
     //clicks = inb(0x03);
     //__asm__ __volatile__ ("mov %0, %1" : : "r"(0xa0), "r"(clicks) );
 
@@ -90,9 +93,9 @@ void main() {
     ata_lba_read();
     __asm__ __volatile__ ("pause");*/
 
-    //read_28((u8)1,(u32)0x38, (u8) 0x80, clicks);
+    read_28((u8)1,(u32)0x38, (u8) 0x80, clicks);
     //read_48((u8)1,(u8)0, (u64)0x38, (u8) 0x81, clicks);
-    read_48((u8)1,(u8)0, (u64)0x38, (u8) 0x80, clicks);
+    //read_48((u8)1,(u8)0, (u64)0x38, (u8) 0x80, clicks);
 
     main_loop();
 }

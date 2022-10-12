@@ -1,24 +1,13 @@
 //http://www.osdever.net/tutorials/view/lba-hdd-access-via-pio
+//https://wiki.osdev.org/ATA_PIO_Mode
 #include "atapio.h"
 
-
-
-
-  /*  Send a NULL byte to port 0x1F1: outb(0x1F1, 0x00);
-
-    Send a sector count to port 0x1F2: outb(0x1F2, 0x01);
-
-    Send the low 8 bits of the block address to port 0x1F3: outb(0x1F3, (unsigned char)addr);
-
-    Send the next 8 bits of the block address to port 0x1F4: outb(0x1F4, (unsigned char)(addr >> 8);
-
-    Send the next 8 bits of the block address to port 0x1F5: outb(0x1F5, (unsigned char)(addr >> 16);
-
-    Send the drive indicator, some magic bits, and highest 4 bits of the block address to port 0x1F6: outb(0x1F6, 0xE0 | (drive << 4) | ((addr >> 24) & 0x0F));
-
-    Send the command (0x20) to port 0x1F7: outb(0x1F7, 0x20);*/
+/**/
 
 void read_28(u8 sectors, u32 addr, u8 drive, u16 * buffer){
+     //drive indicator and some magic bits to port 0x1F6
+    outb(0x1F6, 0xE0 | (drive << 4) | ((addr >> 24) & 0x0F));
+
     //send two NULL byte
     outb(0x1F1, 0x00);
 
@@ -33,9 +22,6 @@ void read_28(u8 sectors, u32 addr, u8 drive, u16 * buffer){
 
     //next 8 bits of the block address to port 0x1F5
     outb(0x1F5, (u8)(addr >> 16));
-
-    //drive indicator and some magic bits to port 0x1F6
-    outb(0x1F6, 0xE0 | (drive << 4) | ((addr >> 24) & 0x0F));
 
     //read command(0x20) to port 0x1F7
     outb(0x1F7, 0x20);
@@ -56,6 +42,9 @@ void read_28(u8 sectors, u32 addr, u8 drive, u16 * buffer){
 }
 
 void write_28(u8 sectors, u32 addr, u8 drive, u16 * buffer){
+    //drive indicator and some magic bits to port 0x1F6
+    outb(0x1F6, 0xE0 | (drive << 4) | ((addr >> 24) & 0x0F));
+
     //send two NULL byte
     outb(0x1F1, 0x00);
 
@@ -71,9 +60,6 @@ void write_28(u8 sectors, u32 addr, u8 drive, u16 * buffer){
     //next 8 bits of the block address to port 0x1F5
     outb(0x1F5, (u8)(addr >> 16));
 
-    //drive indicator and some magic bits to port 0x1F6
-    outb(0x1F6, 0xE0 | (drive << 4) | ((addr >> 24) & 0x0F));
-
     //write command(0x30) to port 0x1F7
     outb(0x1F7, 0x30);
 
@@ -88,10 +74,16 @@ void write_28(u8 sectors, u32 addr, u8 drive, u16 * buffer){
         outw(0x1F0, tmpword);
 
     }
+
+    outb(0x1F7, 0xE7);//cache flush
 }
 
 
 void read_48(u8 secl, u8 sech, u64 addr, u8 drive, u16 * buffer){
+    //drive indicator and some magic bits to port 0x1F6
+    outb(0x1F6, 0x40 | (drive << 4));
+
+
     //send two NULL bytes
     outb(0x1F1, 0x00);
     outb(0x1F1, 0x00);
@@ -117,9 +109,6 @@ void read_48(u8 secl, u8 sech, u64 addr, u8 drive, u16 * buffer){
 
     //bits 16-23 to port 0x1F5
     outb(0x1F5, (u8)(addr >> 16));
-
-    //drive indicator and some magic bits to port 0x1F6
-    outb(0x1F6, 0x40 | (drive << 4));
 
     //read command(0x24) to port 0x1F7
     outb(0x1F7, 0x24);
@@ -140,6 +129,9 @@ void read_48(u8 secl, u8 sech, u64 addr, u8 drive, u16 * buffer){
 }
 
 void write_48(u8 secl, u8 sech, u64 addr, u8 drive, u16 * buffer){
+    //drive indicator and some magic bits to port 0x1F6
+    outb(0x1F6, 0x40 | (drive << 4));
+
     //send two NULL bytes
     outb(0x1F1, 0x00);
     outb(0x1F1, 0x00);
@@ -166,9 +158,6 @@ void write_48(u8 secl, u8 sech, u64 addr, u8 drive, u16 * buffer){
     //bits 16-23 to port 0x1F5
     outb(0x1F5, (u8)(addr >> 16));
 
-    //drive indicator and some magic bits to port 0x1F6
-    outb(0x1F6, 0x40 | (drive << 4));
-
     //write command(0x34) to port 0x1F7
     outb(0x1F7, 0x34);
 
@@ -183,6 +172,7 @@ void write_48(u8 secl, u8 sech, u64 addr, u8 drive, u16 * buffer){
         outw(0x1F0, tmpword);
 
     }
+    outb(0x1F7, 0xE7);//cache flush
 }
 
 
