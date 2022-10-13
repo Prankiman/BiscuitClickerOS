@@ -66,6 +66,11 @@ void main_loop(){
         disp_char_absolute('+', mouse_x, mouse_y, 0x6f);
         disp_string("score:", 1, 3, 0x6f);
         disp_int(*clicks, 48, 24, 0x6f);
+
+        /*if(master_cont_exists())
+             disp_string("master controller exists", 1, 5, 0x6f);*/
+
+
         draw_screen();
     }
 }
