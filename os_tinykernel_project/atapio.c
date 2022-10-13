@@ -2,7 +2,7 @@
 //https://wiki.osdev.org/ATA_PIO_Mode
 #include "atapio.h"
 
-//works in qemu but when I tested on hardware the primary and secondary buses are not detected, could be do to the computer being AHCI only
+//works in qemu but when I tested on hardware the primary and secondary buses are not detected, I might have to enumerate the PCI bus: "The actual control registers and IRQs for each bus can often be determined by enumerating the PCI bus, finding all the disk controllers, and reading the information from each controller's PCI Configuration Space. So, technically, PCI enumeration should be done before ATA device detection. However, this method is not exactly reliable. "
 
 /* Floating Bus
 
