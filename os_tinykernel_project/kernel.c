@@ -46,9 +46,8 @@ void main_loop(){
                 __asm__ __volatile__ ("mov $1, %cl");
                 ata_lba_read();
                 __asm__ __volatile__ ("pause");*/
-                read_28((u8)1,(u32)0x10, (u8) 0x80, clicks);
-                //read_48((u8)1,(u8)0, (u64)0x38, (u8) 0x81, clicks);
-                //read_48((u8)1,(u8)0, (u64)0x38, (u8) 0x80, clicks);
+                //read_28((u8)1,(u32)0x10, (u8) 0x0, clicks);
+                read_48((u8)1,(u8)0, (u64)0x38, (u8) 0x0, clicks);
             }
             else{
                 /*__asm__ __volatile__ ("mov $0xa000, %edi");
@@ -56,9 +55,8 @@ void main_loop(){
                 __asm__ __volatile__ ("mov $1, %cl");
                 ata_lba_write();
                 __asm__ __volatile__ ("pause");*/
-                write_28((u8)1,(u32)0x10, (u8) 0x80, clicks);
-                //write_48((u8)1,(u8)0, (u64)0x38, (u8) 0x81, clicks);
-                //write_48((u8)1,(u8)0, (u64)0x38, (u8) 0x80, clicks);
+                //write_28((u8)1,(u32)0x10, (u8) 0x0, clicks);
+                write_48((u8)1,(u8)0, (u64)0x38, (u8) 0x0, clicks);
             }
             disp_string("keybawd...", 1, 2, 0x67);
             //outb (0x03, clicks); // 0x03 used for Count Register channel 1/5
@@ -98,9 +96,8 @@ void main() {
     ata_lba_read();
     __asm__ __volatile__ ("pause");*/
 
-    read_28((u8)1,(u32)0x10, (u8) 0x80, clicks);
-    //read_48((u8)1,(u8)0, (u64)0x38, (u8) 0x81, clicks);
-    //read_48((u8)1,(u8)0, (u64)0x38, (u8) 0x80, clicks);
+    // read_28((u8)1,(u32)0x10, (u8) 0x0, clicks);
+    read_48((u8)1,(u8)0, (u64)0x38, (u8) 0x0, clicks);
 
     main_loop();
 }
