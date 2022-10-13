@@ -2,12 +2,13 @@
 //https://wiki.osdev.org/ATA_PIO_Mode
 #include "atapio.h"
 
-//Error on real hardware do to floating bus (works in qemu for now)
+//works in qemu but when I tested on hardware the primary and secondary buses are not detected, could be do to the computer being AHCI only
+
 /* Floating Bus
 
 The disk that was selected last (by the BIOS, during boot) is supposed to maintain control of the electrical values on each IDE bus. If there is no disk connected to the bus at all, then the electrical values on the bus will all go "high" (to +5 volts). A computer will read this as an 0xFF byte -- this is a condition called a "floating" bus. This is an excellent way to find out if there are no drives on a bus. Before sending any data to the IO ports, read the Regular Status byte. The value 0xFF is an illegal status value, and indicates that the bus has no drives. The reason to read the port before writing anything is that the act of writing can easily cause the voltages of the wires to go screwy for a millisecond (since there may be nothing attached to the wires to control the voltages!), and mess up any attempt to measure "float". */
 
-u8 primary_drive_present(){
+u8 primary_bus_present(){
     outb(0x1f6, 0xa0);
     __asm__("pause");
     u8 tmp = inb(0x1f7);
@@ -27,7 +28,7 @@ u8 master_cont_exists(){
 
 void read_28(u8 sectors, u32 addr, u8 drive, u16 * buffer){
 
-    if(!primary_drive_present() || !master_cont_exists())
+    if(!primary_bus_present() || !master_cont_exists())
         return;
 
      //drive indicator and some magic bits to port 0x1F6
@@ -71,7 +72,7 @@ void read_28(u8 sectors, u32 addr, u8 drive, u16 * buffer){
 
 void write_28(u8 sectors, u32 addr, u8 drive, u16 * buffer){
 
-    if(!primary_drive_present() || !master_cont_exists())
+    if(!primary_bus_present() || !master_cont_exists())
         return;
 
     //drive indicator and some magic bits to port 0x1F6
@@ -116,7 +117,7 @@ void write_28(u8 sectors, u32 addr, u8 drive, u16 * buffer){
 
 void read_48(u8 secl, u8 sech, u64 addr, u8 drive, u16 * buffer){
 
-    if(!primary_drive_present() || !master_cont_exists())
+    if(!primary_bus_present() || !master_cont_exists())
         return;
 
     //drive indicator and some magic bits to port 0x1F6
@@ -171,7 +172,7 @@ void read_48(u8 secl, u8 sech, u64 addr, u8 drive, u16 * buffer){
 
 void write_48(u8 secl, u8 sech, u64 addr, u8 drive, u16 * buffer){
 
-    if(!primary_drive_present() || !master_cont_exists())
+    if(!primary_bus_present() || !master_cont_exists())
         return;
 
     //drive indicator and some magic bits to port 0x1F6
