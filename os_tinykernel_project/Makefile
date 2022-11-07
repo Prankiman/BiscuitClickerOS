@@ -8,7 +8,7 @@ BOOT=boot_kernel.bin
 
 all: kernel.bin boot_kernel.bin
 
-kernel.bin: enter_kernel.o ${OBJ} isrs.o irqs.o #ata.o
+kernel.bin: enter_kernel.o ${OBJ} isrs.o irqs.o v8086.o int32.o#ata.o
 	ld -m elf_i386 -o $@ -Ttext 0x1000 $^ --oformat binary #-g option if you want to debug with gdb
 
 %.o: %.c ${HEADERS}

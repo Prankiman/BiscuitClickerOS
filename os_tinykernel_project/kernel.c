@@ -6,6 +6,7 @@
 #include "screen.h"
 #include "pic.h"
 #include "atapio.h"
+#include "int32_test.h"
 
 u8 lclick = 0;
 u8 keypress = 0;
@@ -21,6 +22,10 @@ void left_click(){
             (*clicks)++;
         }
 }
+
+//__defined in v8086.asm__
+extern void enter_v86();
+extern void vga_mode();
 
 //__defined in ata.asm__
 //extern void ata_lba_read();
@@ -47,7 +52,8 @@ void main_loop(){
                 ata_lba_read();
                 __asm__ __volatile__ ("pause");*/
                 //read_28((u8)1,(u32)0x10, (u8) 0x0, clicks);
-                read_48((u8)1,(u8)0, (u64)0x38, (u8) 0x0, clicks);
+                softreset();
+                read_48((u8)1,(u8)0, (u64)0x10, (u8) 0x0, clicks);
             }
             else{
                 /*__asm__ __volatile__ ("mov $0xa000, %edi");
@@ -56,7 +62,7 @@ void main_loop(){
                 ata_lba_write();
                 __asm__ __volatile__ ("pause");*/
                 //write_28((u8)1,(u32)0x10, (u8) 0x0, clicks);
-                write_48((u8)1,(u8)0, (u64)0x38, (u8) 0x0, clicks);
+                write_48((u8)1,(u8)0, (u64)0x10, (u8) 0x0, clicks);
             }
             disp_string("keybawd...", 1, 2, 0x67);
             //outb (0x03, clicks); // 0x03 used for Count Register channel 1/5
@@ -74,9 +80,12 @@ void main_loop(){
 }
 
 void main() {
+
     for(u32 i = 0; i < 0xffffff; i++) {
         __asm__("pause");
     }
+
+    //int32_test();//works meaning virtual 8086 mode is possible
     //clicks = inb(0x03);
     //__asm__ __volatile__ ("mov %0, %1" : : "r"(0xa0), "r"(clicks) );
 
@@ -97,8 +106,10 @@ void main() {
     __asm__ __volatile__ ("pause");*/
 
     // read_28((u8)1,(u32)0x10, (u8) 0x0, clicks);
-    read_48((u8)1,(u8)0, (u64)0x38, (u8) 0x0, clicks);
+    read_48((u8)1,(u8)0, (u64)0x10, (u8) 0x0, clicks);
 
+    //__asm__("int $0x10");
+    
     main_loop();
 }
 

@@ -25,6 +25,13 @@ u8 master_cont_exists(){
     return 0;
 }
 
+void softreset(){
+    outb(0x376, 0x4);
+    __asm__("pause");
+    __asm__("pause");
+    outb(0x376, 0);
+}
+
 
 void read_28(u8 sectors, u32 addr, u8 drive, u16 * buffer){
 
@@ -34,7 +41,7 @@ void read_28(u8 sectors, u32 addr, u8 drive, u16 * buffer){
      //drive indicator and some magic bits to port 0x1F6
     outb(0x1F6, 0xE0 | (drive << 4) | ((addr >> 24) & 0x0F));
 
-    //send two NULL byte
+    //send NULL byte
     outb(0x1F1, 0x00);
 
     //sector count
@@ -148,6 +155,8 @@ void read_48(u8 secl, u8 sech, u64 addr, u8 drive, u16 * buffer){
 
     //bits 16-23 to port 0x1F5
     outb(0x1F5, (u8)(addr >> 16));
+
+    outb(0x1F7, 0xA0);
 
     //read command(0x24) to port 0x1F7
     outb(0x1F7, 0x24);

@@ -42,7 +42,8 @@ https://github.com/tuhdo/os01
 ## Intel's developer manuals:
 https://www.intel.com/content/www/us/en/developer/articles/technical/intel-sdm.html
 
-
+## Napalms virtual 8086 code:
+http://www.rohitab.com/discuss/topic/35103-switch-between-real-mode-and-protected-mode/
 
 ## os dever:
 
