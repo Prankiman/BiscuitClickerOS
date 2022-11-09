@@ -19,9 +19,9 @@ void int32_test()
 		vidmem[y*2+1] = 0x10;//black_on_blue
 		vidmem[2*y] = *(temp++);
 	}
-	// wait for key
-	regs.ax = 0x0000;
-	int32(0x16, &regs);
+	// wait for key (buggy on hardware but works most of the time)
+	//regs.ax = 0x0000;
+	//int32(0x16, &regs);
 
 	// switch to 320x200x256 graphics mode
 	regs.ax = 0x0013;

@@ -83,9 +83,9 @@ void main() {
 
 
 
-    for(u32 i = 0; i < 0xffffff; i++) {
-        __asm__("pause");
-    }
+    //for(u32 i = 0; i < 0xffffff; i++)
+    //    __asm__("pause");
+
 
     int32_test();//works meaning virtual 8086 mode is possible
 
