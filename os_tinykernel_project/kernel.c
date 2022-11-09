@@ -81,15 +81,21 @@ void main_loop(){
 
 void main() {
 
+
+
     for(u32 i = 0; i < 0xffffff; i++) {
         __asm__("pause");
     }
 
-    //int32_test();//works meaning virtual 8086 mode is possible
-    //clicks = inb(0x03);
-    //__asm__ __volatile__ ("mov %0, %1" : : "r"(0xa0), "r"(clicks) );
+    int32_test();//works meaning virtual 8086 mode is possible
 
     isr_install();
+    //clicks = inb(0x03);
+    //__asm__ __volatile__ ("mov %0, %1" : : "r"(0xa0), "r"(clicks) );
+      /*for(u32 i = 0; i < 0xffffff; i++) {
+        __asm__("pause");
+    }*/
+
 
 
     keyboard_init();
@@ -109,7 +115,7 @@ void main() {
     read_48((u8)1,(u8)0, (u64)0x10, (u8) 0x0, clicks);
 
     //__asm__("int $0x10");
-    
+
     main_loop();
 }
 

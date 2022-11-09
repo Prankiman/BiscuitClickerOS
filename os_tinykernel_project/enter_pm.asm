@@ -5,9 +5,9 @@ enter_pm:
 cli
 
 xor ax, ax
-mov ds, ax ;setting data segment to
+mov ds, ax
 mov ss, ax
-mov es, ax,
+mov es, ax
 mov gs, ax
 mov fs, ax
 
@@ -24,7 +24,7 @@ jmp 0x08:start_pm ;make far jump and flush cache of instructions
 [bits 32]
 
 start_pm:
-;change all segment registers to the data_seg constant defined in the  gdt_seg.asm file
+;change all segment registers to the data_seg constant defined in the  gdt.asm file
 	mov ax, data_seg
 	mov ss, ax
 	mov ds, ax
