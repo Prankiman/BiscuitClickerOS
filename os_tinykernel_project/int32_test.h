@@ -1,6 +1,8 @@
 #ifndef INT32_TESTH
 #define INT32_TESTH
 
+#include "types.h"
+
 // define our structure
 typedef struct __attribute__ ((packed)) {
 	unsigned short di, si, bp, sp, bx, dx, cx, ax;

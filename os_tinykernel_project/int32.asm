@@ -28,6 +28,22 @@
 ;   int32(0x10, &regs);
 ; 
 ; 
+
+
+;8086 emulation: chapter 20 section 3A Intels Developer Manuals
+
+;The processor tests the VM flag under three general conditions:
+;•
+; When loading segment registers, to determine whether to use 8086-style address translation.
+;•
+; When decoding instructions, to determine which instructions are not supported in virtual-8086 mode and which
+;instructions are sensitive to IOPL.
+;20-6 Vol. 3B
+;•
+;8086 EMULATION
+;When checking privileged instructions, on page accesses, or when performing other permission checks.
+;(Virtual-8086 mode always executes at CPL 3.)
+
 [bits 32]
 
 global int32, _int32
@@ -48,7 +64,7 @@ struc regs16_t
 	.ef resw 1
 endstruc
 
-%define INT32_BASE                             0x9000;0x7C00
+%define INT32_BASE                             0x9000; 0x7c00
 %define REBASE(x)                              (((x) - reloc) + INT32_BASE)
 %define GDTENTRY(x)                            ((x) << 3)
 %define CODE32                                 GDTENTRY(1)	; 0x08
@@ -221,5 +237,3 @@ section .text
 		dd gdt16_base                          ; table base address
 		
 	int32_end:                                 ; end marker (so we can copy the code)
-	
-	

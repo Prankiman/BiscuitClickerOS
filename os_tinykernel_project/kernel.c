@@ -23,6 +23,9 @@ void left_click(){
         }
 }
 
+
+u8* boot_drive = (u8 *)0x7d94; //the location of the bootdrive variable in boot_kernel.asm
+
 //__defined in v8086.asm__
 extern void enter_v86();
 extern void vga_mode();
@@ -52,8 +55,10 @@ void main_loop(){
                 ata_lba_read();
                 __asm__ __volatile__ ("pause");*/
                 //read_28((u8)1,(u32)0x10, (u8) 0x0, clicks);
-                softreset();
-                read_48((u8)1,(u8)0, (u64)0x10, (u8) 0x0, clicks);
+                //softreset();
+                //read_48((u8)1,(u8)0, (u64)0x10, *boot_drive, clicks); //**
+                read_48((u8)1,(u8)0, (u64)0x10, (u8) 0x81, clicks);
+
             }
             else{
                 /*__asm__ __volatile__ ("mov $0xa000, %edi");
@@ -62,7 +67,8 @@ void main_loop(){
                 ata_lba_write();
                 __asm__ __volatile__ ("pause");*/
                 //write_28((u8)1,(u32)0x10, (u8) 0x0, clicks);
-                write_48((u8)1,(u8)0, (u64)0x10, (u8) 0x0, clicks);
+                //write_48((u8)1,(u8)0, (u64)0x10, *boot_drive, clicks); //**
+                write_48((u8)1,(u8)0, (u64)0x10, (u8) 0x81, clicks);
             }
             disp_string("keybawd...", 1, 2, 0x67);
             //outb (0x03, clicks); // 0x03 used for Count Register channel 1/5
@@ -112,8 +118,8 @@ void main() {
     __asm__ __volatile__ ("pause");*/
 
     // read_28((u8)1,(u32)0x10, (u8) 0x0, clicks);
-    read_48((u8)1,(u8)0, (u64)0x10, (u8) 0x0, clicks);
-
+    //read_48((u8)1,(u8)0, (u64)0x10, *boot_drive, clicks); // **
+    read_48((u8)1,(u8)0, (u64)0x10, (u8) 0x81, clicks);
     //__asm__("int $0x10");
 
     main_loop();

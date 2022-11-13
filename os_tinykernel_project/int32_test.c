@@ -30,7 +30,4 @@ void int32_test()
 	// full screen with blue color (1)
 	memset((char *)0xA0000, 1, (320*200));
 
-
-	
-
 }

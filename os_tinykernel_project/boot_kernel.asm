@@ -18,6 +18,13 @@ mov sp, bp
 mov bx, real_msg
 call print
 
+;get boot_drive location____
+;mov dx, boot_drive
+;call print_hex
+
+;jmp $
+;____________
+
 
 call load_kernel
 call vga_mode
@@ -26,6 +33,7 @@ jmp enter_pm
 
 ;include files
 %include "print_string.asm"
+;%include "print_hex_func.asm"
 %include "load_disk.asm"
 %include "gdt.asm"
 %include "print_protected.asm"
