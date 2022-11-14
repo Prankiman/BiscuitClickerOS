@@ -7,15 +7,17 @@ run `make iso` to create the image file
 if running on real hardware make sure usb emulation type is set to hard drive (note that the os stores data to the boot drive using ATAPIO which won't work if booting from usb and not a ATA complient device i.e hdds)
 
 if running on qemu ~~make sure to set boot disk storage type as usb and enable usbmouse~~ (currently not implemented usb storage and mouse driver)
-```bash
-    qemu86  -drive if=none,id=usbstick,format=raw,file=./boot.iso   \
+~~```bash~~
+~~    qemu86  -drive if=none,id=usbstick,format=raw,file=./boot.iso   \~~
+~~    -usb                                                        \~~
+~~    -device usb-ehci,id=ehci                                    \~~
+~~    -device usb-storage,bus=ehci.0,drive=usbstick               \~~
+~~    -device usb-mouse,pcap=mouse.pcap~~
+~~```~~
 
+```bash
+qemu86  -drive if=none,id=usbstick,format=raw,file=./boot.iso
 ```
-##
-    ~~-usb                                                        \~~
-    ~~-device usb-ehci,id=ehci                                    \~~
-    ~~-device usb-storage,bus=ehci.0,drive=usbstick               \~~
-    ~~-device usb-mouse,pcap=mouse.pcap~~
 
 ## RECOURSES
 
