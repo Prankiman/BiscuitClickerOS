@@ -8,10 +8,10 @@ if running on real hardware make sure usb emulation type is set to hard drive (n
 
 if running on qemu ~~make sure to set boot disk storage type as usb and enable usbmouse~~ (currently not implemented usb storage and mouse driver)
 ```qemu86  -drive if=none,id=usbstick,format=raw,file=./boot.iso   \
-    <del>-usb                                                        \
+    -usb                                                        \
     -device usb-ehci,id=ehci                                    \
     -device usb-storage,bus=ehci.0,drive=usbstick               \
-    -device usb-mouse,pcap=mouse.pcap</del>
+    -device usb-mouse,pcap=mouse.pcap
 ```
 
 ## RECOURSES
