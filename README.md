@@ -10,7 +10,8 @@ if running on qemu ~~make sure to set boot disk storage type as usb and enable u
 ```bash
     qemu86  -drive if=none,id=usbstick,format=raw,file=./boot.iso   \
 
-``
+```
+##
     ~~-usb                                                        \~~
     ~~-device usb-ehci,id=ehci                                    \~~
     ~~-device usb-storage,bus=ehci.0,drive=usbstick               \~~
