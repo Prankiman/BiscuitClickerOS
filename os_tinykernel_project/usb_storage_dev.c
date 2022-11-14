@@ -1,0 +1,40 @@
+#include "usb_storage_dev.h"
+
+/*https://wiki.osdev.org/USB_Flash_Memory#For_the_EHCI_controller
+ * for ehci:
+ *  Initialize the controller
+
+After finding the controller, you have to initialize it. Implementations may vary from OS to OS, but the basic line is the same.
+
+    Enable Bus Master and Memory Space
+    Save Base Address
+    Save Operational Base Address
+    Save Extended Capabilities Pointer
+    Check if Extended Capabilities Pointer < 40; if true, skip this step
+        Check if BIOS owns the controller; if true, get ownership
+    Stop and reset the controller (but not start)
+    Setup Queue Head
+    Start the controller
+
+Find devices
+
+    Scan USB ports for connected devices; if false, go to next port
+    Check if low speed; if true, go to next port (mass-storage devices are hi-speed)
+    Reset and enable the port which contains the device.
+
+Prepare devices
+
+    Get device-configuration-interface-endpoint descriptors.
+        Check if the device is mass-storage class
+        Check if the device responds to SCSI commands
+        Check if the protocol is Bulk-Only
+        If all above true, proceed
+    Assign unique USB address and use it from now
+    Assign device configuration (usually got from configuration descriptor)
+    Get and use endpoints from endpoint descriptor
+    Send Inquiry Command
+    Send Test Unit Ready Command
+    Send Read Capacity Command
+
+Read/write
+ */
