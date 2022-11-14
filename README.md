@@ -1,7 +1,8 @@
 # tinyOS
 a very basic / bare bones operating system / kernel
 
-![biscuitclicker](https://user-images.githubusercontent.com/69918769/201751859-4fd30712-8ec2-48a8-b30e-12484c9cedc4.png)
+![biscuitclicker](https://user-images.githubusercontent.com/69918769/201752838-3da92659-7ad7-473a-9193-e31258258d02.png)
+
 
 ## running
 run `make iso` to create the image file
