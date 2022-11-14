@@ -122,8 +122,7 @@ void irq_uninstall_handler(int irq)
     irq_routines[irq] = 0;
 }
 
-/*TODO
- make irqs do something*/
+
 void irq_handler(registers_t *r){
     stub(r);
 }

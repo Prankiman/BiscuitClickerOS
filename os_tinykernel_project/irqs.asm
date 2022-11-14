@@ -1,4 +1,4 @@
-; Defined in isr.c
+; Defined in pic.c
 [extern irq_handler]
 
 ; Common IRQ code. Identical to ISR code except for the 'call'
