@@ -10,8 +10,11 @@
 
 u8 mouse_cycle=0;
 u8 mouse_byte[3];
-u8 mouse_x=0;
-u8 mouse_y=0;
+u16 mouse_x=160;
+u16 mouse_y=100;
+
+u8 mx = 0;
+u8 my = 0;
 
 u8 ysign=0;
 u8 xsign=0;
@@ -42,17 +45,19 @@ void mouse_handler(registers_t *r)
       break;
     case 1:
       mouse_byte[mouse_cycle]=inb(0x60);
+      mx  += mouse_byte[1];
       mouse_cycle++;
-      mouse_x += mouse_byte[1];
       break;
     case 2:
       mouse_byte[mouse_cycle]=inb(0x60);
-      mouse_y -= mouse_byte[2];
+      my -= mouse_byte[2];
       mouse_cycle=0;
       break;
   }
+  mouse_y = my;
+  mouse_x = mx*320/255;
   keypress = 0;
-  //disp_char_absolute('+', mouse_x, mouse_y, 0x6f);
+  disp_char_absolute('+', mouse_x, mouse_y, 0x6f);
 
 }
 

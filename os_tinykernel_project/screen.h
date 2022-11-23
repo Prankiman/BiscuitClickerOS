@@ -12,8 +12,8 @@
 #include "utility.h"
 
 void disp_char(char c, u8 xx, u8 yy, u8 cc);
-void disp_char_absolute(char c, u8 xx, u8 yy, u8 cc);
-void disp_string_absolute(char *ch, u8 x, u8 y, u8 cc);
+void disp_char_absolute(char c, u16 xx, u16 yy, u8 cc);
+void disp_string_absolute(char *ch, u16 x, u16 y, u8 cc);
 void disp_string(char *ch, u8 x, u8 y, u8 cc);
 void disp_int(u32 n, u8 x, u8 y, u8 cc);
 

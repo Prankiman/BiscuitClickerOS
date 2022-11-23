@@ -150,7 +150,7 @@ void disp_char(char c, u8 xx, u8 yy, u8 cc){
 	}
 }
 
-void disp_char_absolute(char c, u8 xx, u8 yy, u8 color){
+void disp_char_absolute(char c, u16 xx, u16 yy, u8 color){
 	//u8 *VGA = (u8*)vid_mem;
 
 	const u8 *char_to_disp = font8x8_basic[(u8) c];
@@ -165,7 +165,7 @@ void disp_char_absolute(char c, u8 xx, u8 yy, u8 color){
 	}
 }
 
-void disp_string_absolute(char *ch, u8 x, u8 y, u8 cc){
+void disp_string_absolute(char *ch, u16 x, u16 y, u8 cc){
     char *str = ch;
     char c = 0;
     int xx = 0;
