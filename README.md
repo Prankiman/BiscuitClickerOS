@@ -91,6 +91,9 @@ https://github.com/cfenollosa/os-tutorial
 ### idt and gdt
 https://web.archive.org/web/20160327011227/http://www.jamesmolloy.co.uk/tutorial_html/4.-The%20GDT%20and%20IDT.html
 
+## IPXE's github repository:
+https://github.com/ipxe/ipxe/
+
 
 ## Netwide Assembler documentation:
 
