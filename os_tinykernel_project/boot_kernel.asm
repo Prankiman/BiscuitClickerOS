@@ -3,8 +3,6 @@
 
 kernel_offset equ 0x1000
 
-cli
-
 xor ax, ax
 mov ds, ax
 mov ss, ax
