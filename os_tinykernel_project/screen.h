@@ -19,10 +19,10 @@ void disp_int(u32 n, u8 x, u8 y, u8 cc);
 
 void clear_screen(u8 color);
 void draw_screen();
+void init_screen();
 
 
-void disp_biscuit(u8 xx, u8 yy, u8 background, u8 forground);
-void disp_biscuit_large(u8 xx, u8 yy, u8 background, u8 forground);
+void disp_circle(u8 xx, u8 yy, u8 size, u8 background, u8 forground);
 
 
 

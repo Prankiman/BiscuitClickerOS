@@ -7,6 +7,8 @@
 #include "pic.h"
 #include "atapio.h"
 #include "int32_test.h"
+#include "stackalloc.h"
+#include "pci.h"
 
 u8 lclick = 0;
 u8 keypress = 0;
@@ -40,10 +42,18 @@ void main_loop(){
         clear_screen(0xb9);
         switch(lclick){
             case 1:
-                disp_biscuit_large(108, 48, 0xb9, 0x06);
+                disp_circle(108, 48, 52, 0xb9, 0x06);
+                disp_circle(160, 100, 10, 0x06, 0x0);
+                disp_circle(138, 76, 12, 0x06, 0x0);
+                disp_circle(136, 112, 13, 0x06, 0x0);
+                disp_circle(160, 68, 16, 0x06, 0x0);
                 break;
             default:
-                disp_biscuit(120, 60, 0xb9, 0x06);
+                disp_circle(120, 60, 40, 0xb9, 0x06);
+                disp_circle(160, 100, 8, 0x06, 0x0);
+                disp_circle(140, 80, 9, 0x06, 0x0);
+                disp_circle(140, 110, 10, 0x06, 0x0);
+                disp_circle(160, 70, 12, 0x06, 0x0);
                 break;
         }
         if(keypress){
@@ -71,6 +81,7 @@ void main_loop(){
                 //write_48((u8)1,(u8)0, (u64)0x10, (u8) 0x80, clicks);
             }
             disp_string("keybawd...", 1, 2, 0x67);
+            PciInit();
             //outb (0x03, clicks); // 0x03 used for Count Register channel 1/5
         }
         disp_char_absolute('+', mouse_x, mouse_y, 0x6f);
@@ -88,12 +99,12 @@ void main_loop(){
 void main() {
 
 
+    for(u32 i = 0; i < 0xfff; i++)
+        __asm__("pause");
 
-    //for(u32 i = 0; i < 0xffffff; i++)
-    //    __asm__("pause");
+    //clicks = (u16 *)alloc(sizeof(u16));
 
-
-    int32_test();//works meaning virtual 8086 mode is possible
+    //int32_test();//works meaning virtual 8086 mode is possible
 
     isr_install();
     //clicks = inb(0x03);
@@ -107,8 +118,12 @@ void main() {
     keyboard_init();
     mouse_install();
 
+    //init_screen();
+
+
      clear_screen(0xb9);
     //__asm__ __volatile__("int $19");
+
      draw_screen();
 
     /*__asm__ __volatile__ ("mov $0xa000, %edi");

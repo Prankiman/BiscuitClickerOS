@@ -24,6 +24,8 @@ jmp 0x08:start_pm ;make far jump and flush cache of instructions
 [bits 32]
 
 start_pm:
+
+	cli
 ;change all segment registers to the data_seg constant defined in the  gdt.asm file
 	mov ax, data_seg
 	mov ss, ax
@@ -37,7 +39,7 @@ start_pm:
 
 ;500-9ffff, RAM, Free memory (boot sector starts at 7c00)
 
-	mov ebp, 0x90000
+	mov ebp, 0x90000;0x105000
 	mov esp, ebp
 
 jmp begin ;jumping to label defined in the boot assembly file

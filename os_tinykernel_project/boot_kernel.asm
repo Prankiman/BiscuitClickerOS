@@ -1,12 +1,16 @@
 [bits 16]
 [org 0x7c00]
+
 kernel_offset equ 0x1000
+
+cli
 
 xor ax, ax
 mov ds, ax
 mov ss, ax
 mov gs, ax
 mov es, ax
+mov fs, ax
 
 sti
 
@@ -89,19 +93,36 @@ is_A20_on:
 	mov edi,0x112345  ;odd megabyte address.
 	mov esi,0x012345  ;even megabyte address.
 	mov [esi],esi     ;making sure that both addresses contain diffrent values.
-	mov [edi],edi     ;(if A20 line is cleared the two pointers would point to the address 0x012345 that would contain 0x112345 (edi)) 
+	mov [edi],edi     ;(if A20 line is cleared the two pointers would point to the address 0x012345 that would contain 0x112345 (edi))
 	cmpsd             ;compare addresses to see if the're equivalent.
 	popad
 	je enable_A20        ;if not equivalent , A20 line is set.
 	ret               ;if equivalent , the A20 line is cleared.
  
-enable_A20:
-    pusha
-    in al, 0x92
-    or al, 2
-    out 0x92, al
-    popa
-    ret
+;enable_A20: ;fast a20 gate
+;    in al, 0x92
+;    or al, 2
+;    out 0x92, al
+
+enable_A20: ;freeBSD's implementation
+    cli
+
+enable_A20.1:
+    dec cx                      ; Timeout?
+    jz enable_A20.3                       ; Yes
+    in al, 0x64                 ; Get status
+    test al, 0x2                ; Busy?
+    jnz enable_A20.1                      ; Yes
+    mov al, 0xd1                ; Command: write
+    out 0x64, al                ;  output port
+enable_A20.2:
+    in al, 0x64                 ; Get status
+    test al, 0x2                ; Busy?
+    jnz enable_A20.2                      ; Yes
+    mov al, 0xdf                ; Enable
+    out 0x60, al                ;  A20
+
+enable_A20.3:
 
 begin:
 
