@@ -1,6 +1,6 @@
 //The C Programming Language Brian W. Kernighan, Dennis M. Ritchie
 
-#define ALLOCSIZE 10000 /* size of available space */
+#define ALLOCSIZE 0x80000 /* size of available space */
 static char allocbuf[ALLOCSIZE]; /* storage for alloc */
 static char *allocp = allocbuf; /* next free position*/
 

@@ -13,7 +13,7 @@
 u8 lclick = 0;
 u8 keypress = 0;
 
-static u16* clicks = (u16 *)0xa000;
+static u16* clicks = (u16 *)0xe000;
 
 void keypressed(){
         keypress = 1;
@@ -26,7 +26,8 @@ void left_click(){
 }
 
 
-u8* boot_drive = (u8 *)0x7d94; //the location of the bootdrive variable in boot_kernel.asm
+//u8* boot_drive = (u8 *)0x7da7; //the location of the bootdrive variable in boot_kernel.asm
+u8 boot_drive = 0x80;
 
 //__defined in v8086.asm__
 extern void enter_v86();
@@ -66,7 +67,7 @@ void main_loop(){
                 __asm__ __volatile__ ("pause");*/
                 //read_28((u8)1,(u32)0x10, (u8) 0x0, clicks);
                 //softreset();
-                read_48((u8)1,(u8)0, (u64)0x10, *boot_drive, clicks); //**
+                read_48((u8)1,(u8)0, (u64)0x40, boot_drive, clicks); //**
                 //read_48((u8)1,(u8)0, (u64)0x10, (u8) 0x80, clicks);
 
             }
@@ -77,7 +78,7 @@ void main_loop(){
                 ata_lba_write();
                 __asm__ __volatile__ ("pause");*/
                 //write_28((u8)1,(u32)0x10, (u8) 0x0, clicks);
-                write_48((u8)1,(u8)0, (u64)0x10, *boot_drive, clicks); //**
+                write_48((u8)1,(u8)0, (u64)0x40, boot_drive, clicks); //**
                 //write_48((u8)1,(u8)0, (u64)0x10, (u8) 0x80, clicks);
             }
             disp_string("keybawd...", 1, 2, 0x67);
@@ -102,8 +103,6 @@ void main() {
     for(u32 i = 0; i < 0xfff; i++)
         __asm__("pause");
 
-    //clicks = (u16 *)alloc(sizeof(u16));
-
     //int32_test();//works meaning virtual 8086 mode is possible
 
     isr_install();
@@ -118,10 +117,11 @@ void main() {
     keyboard_init();
     mouse_install();
 
+
+
+    clear_screen(0xb9);
+
     //init_screen();
-
-
-     clear_screen(0xb9);
     //__asm__ __volatile__("int $19");
 
      draw_screen();
@@ -133,7 +133,7 @@ void main() {
     __asm__ __volatile__ ("pause");*/
 
     // read_28((u8)1,(u32)0x10, (u8) 0x0, clicks);
-    read_48((u8)1,(u8)0, (u64)0x10, *boot_drive, clicks); // **
+    read_48((u8)1,(u8)0, (u64)0x40, boot_drive, clicks); // ** LBA 0x10 used to work but no longer does as the memory has been taken up by the "operating system"
     //read_48((u8)1,(u8)0, (u64)0x10, (u8) 0x80, clicks);
     //__asm__("int $0x10");
 

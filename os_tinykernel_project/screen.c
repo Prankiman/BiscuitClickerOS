@@ -8,7 +8,7 @@ static u8 *back_buff = (u8 *)0xf000;
 
 
 void init_screen(){
-    back_buff = (u8 *)alloc(320*200);
+    back_buff = alloc(320*200);
 }
 
 static const u8 font8x8_basic[128][8] = {

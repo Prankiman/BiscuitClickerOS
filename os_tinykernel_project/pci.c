@@ -3,6 +3,11 @@
 #include "pci.h"
 #include "screen.h"
 
+
+//_________________________________________________________________________________________
+//pdoane's PCI code, https://github.com/pdoane/osdev/tree/master/pci
+//_______________________________________________________________________________________
+
 const char *PciDeviceName(u32 vendorId, u32 deviceId)
 {
     return "Unknown Device";
