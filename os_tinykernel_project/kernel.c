@@ -103,6 +103,9 @@ void main() {
     for(u32 i = 0; i < 0xfff; i++)
         __asm__("pause");
 
+
+    init_screen();
+
     //int32_test();//works meaning virtual 8086 mode is possible
 
     isr_install();
@@ -117,11 +120,8 @@ void main() {
     keyboard_init();
     mouse_install();
 
-
-
     clear_screen(0xb9);
 
-    //init_screen();
     //__asm__ __volatile__("int $19");
 
      draw_screen();

@@ -37,7 +37,7 @@ start_pm:
 
 ;different addresses correspond to different memory types and has different uses
 
-;500-9ffff, RAM, Free memory (boot sector starts at 7c00)
+;0x500-0x9ffff, RAM, Free memory (boot sector starts at 0x7c00)
 
 	mov ebp, 0x90000;0x105000
 	mov esp, ebp

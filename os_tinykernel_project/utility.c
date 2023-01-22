@@ -1,9 +1,11 @@
 #include "utility.h"
 
-void memcpy(u8 *source, u8 *dest, s32 numbytes) {
+void memcpy(void *source, void *dest, s32 numbytes) {
     int i;
+    u8 *tmpd = (u8 *)dest;
+    u8 *tmps = (u8 *)source;
     for (i = 0; i < numbytes; i++) {
-        *(dest + i) = *(source + i);
+        *(tmpd + i) = *(tmps + i);
     }
 }
 

@@ -1,5 +1,3 @@
-#include "usb_storage_dev.h"
-
 /*https://wiki.osdev.org/USB_Flash_Memory#For_the_EHCI_controller
  * for ehci:
  *  Initialize the controller
