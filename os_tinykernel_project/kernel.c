@@ -7,13 +7,13 @@
 #include "pic.h"
 #include "atapio.h"
 #include "int32_test.h"
-#include "stackalloc.h"
 #include "pci.h"
+#include "stackalloc.h"
 
 u8 lclick = 0;
 u8 keypress = 0;
 
-static u16* clicks = (u16 *)0xe000;
+static u16* clicks;// = (u16 *)0xe000;
 
 void keypressed(){
         keypress = 1;
@@ -58,26 +58,11 @@ void main_loop(){
                 break;
         }
         if(keypress){
-            //if(lclick)clicks = inb(0x03);
             if(lclick)  {
-                /*__asm__ __volatile__ ("mov $0xa000, %edi");
-                __asm__ __volatile__ ("mov $70, %eax");
-                __asm__ __volatile__ ("mov $1, %cl");
-                ata_lba_read();
-                __asm__ __volatile__ ("pause");*/
-                //read_28((u8)1,(u32)0x10, (u8) 0x0, clicks);
-                //softreset();
                 read_48((u8)1,(u8)0, (u64)0x40, boot_drive, clicks); //**
                 //read_48((u8)1,(u8)0, (u64)0x10, (u8) 0x80, clicks);
-
             }
             else{
-                /*__asm__ __volatile__ ("mov $0xa000, %edi");
-                __asm__ __volatile__ ("mov $70, %eax");
-                __asm__ __volatile__ ("mov $1, %cl");
-                ata_lba_write();
-                __asm__ __volatile__ ("pause");*/
-                //write_28((u8)1,(u32)0x10, (u8) 0x0, clicks);
                 write_48((u8)1,(u8)0, (u64)0x40, boot_drive, clicks); //**
                 //write_48((u8)1,(u8)0, (u64)0x10, (u8) 0x80, clicks);
             }
@@ -98,24 +83,20 @@ void main_loop(){
 }
 
 void main() {
-
+	
+	
+    alloc(0x2010);//data in the allocbuf variable defined in stackalloc.c will be overwritten due to some oversight in my code and so I temporarily fix it by increment the allocation pointer
 
     for(u32 i = 0; i < 0xfff; i++)
         __asm__("pause");
-
+	
+    clicks = (u16 *)alloc(1026);
 
     init_screen();
 
     //int32_test();//works meaning virtual 8086 mode is possible
 
     isr_install();
-    //clicks = inb(0x03);
-    //__asm__ __volatile__ ("mov %0, %1" : : "r"(0xa0), "r"(clicks) );
-      /*for(u32 i = 0; i < 0xffffff; i++) {
-        __asm__("pause");
-    }*/
-
-
 
     keyboard_init();
     mouse_install();
@@ -126,16 +107,7 @@ void main() {
 
      draw_screen();
 
-    /*__asm__ __volatile__ ("mov $0xa000, %edi");
-    __asm__ __volatile__ ("mov $70, %eax");
-    __asm__ __volatile__ ("mov $1, %cl");
-    ata_lba_read();
-    __asm__ __volatile__ ("pause");*/
-
-    // read_28((u8)1,(u32)0x10, (u8) 0x0, clicks);
     read_48((u8)1,(u8)0, (u64)0x40, boot_drive, clicks); // ** LBA 0x10 used to work but no longer does as the memory has been taken up by the "operating system"
-    //read_48((u8)1,(u8)0, (u64)0x10, (u8) 0x80, clicks);
-    //__asm__("int $0x10");
 
     main_loop();
 }

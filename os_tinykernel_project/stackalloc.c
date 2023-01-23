@@ -1,10 +1,10 @@
 //The C Programming Language Brian W. Kernighan, Dennis M. Ritchie
 
-#define ALLOCSIZE 0x100000 /* size of available space */
-//static char allocbuf[ALLOCSIZE]; /* storage for alloc */
-static char *allocbuf = (char *) 0xf000; //temporary *fix*
-//static char *allocp = allocbuf; /* next free position*/
-static char *allocp = (char *) 0xf000; //temporary
+#include "stackalloc.h"
+
+#define ALLOCSIZE 300000 /* size of available space */
+static char allocbuf[ALLOCSIZE]; /* storage for alloc */
+static char *allocp = allocbuf; /* next free position*/
 
 char *alloc(int n) /* return pointer to n characters */
 {
