@@ -15,4 +15,8 @@ extern void int32(unsigned char intnum, regs16_t *regs);
 // int32 test
 void int32_test();
 
+void int32write(u16 block_count, u16 write_adress, u32 lba_spot);
+
+void int32read(u16 block_count, u16 read_adress, u32 lba_spot);
+
 #endif

@@ -84,9 +84,6 @@ void main_loop(){
 
 void main() {
 	
-	
-    alloc(0x2010);//data in the allocbuf variable defined in stackalloc.c will be overwritten due to some oversight in my code and so I temporarily fix it by increment the allocation pointer
-
     for(u32 i = 0; i < 0xfff; i++)
         __asm__("pause");
 	
@@ -105,9 +102,10 @@ void main() {
 
     //__asm__ __volatile__("int $19");
 
-     draw_screen();
-
-    read_48((u8)1,(u8)0, (u64)0x40, boot_drive, clicks); // ** LBA 0x10 used to work but no longer does as the memory has been taken up by the "operating system"
+   
+   draw_screen();
+    
+   read_48((u8)1,(u8)0, (u64)0x40, boot_drive, clicks); // ** LBA 0x10 used to work but no longer does as the memory has been taken up by the "operating system"
 
     main_loop();
 }

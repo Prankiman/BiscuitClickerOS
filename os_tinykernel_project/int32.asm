@@ -64,7 +64,7 @@ struc regs16_t
 	.ef resw 1
 endstruc
 
-%define INT32_BASE                             0x9000; 0x7c00
+%define INT32_BASE                             0x9000;0x7c00
 %define REBASE(x)                              (((x) - reloc) + INT32_BASE)
 %define GDTENTRY(x)                            ((x) << 3)
 %define CODE32                                 GDTENTRY(1)	; 0x08

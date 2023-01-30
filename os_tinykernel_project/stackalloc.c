@@ -3,8 +3,8 @@
 #include "stackalloc.h"
 
 #define ALLOCSIZE 300000 /* size of available space */
-static char allocbuf[ALLOCSIZE]; /* storage for alloc */
-static char *allocp = allocbuf; /* next free position*/
+static char *allocbuf = (char *) 0xe000;//allocbuf[ALLOCSIZE]; /* storage for alloc */
+static char *allocp = (char *) 0xe000;//allocbuf; /* next free position*/
 
 char *alloc(int n) /* return pointer to n characters */
 {
