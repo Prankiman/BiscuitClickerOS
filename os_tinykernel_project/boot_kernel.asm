@@ -1,7 +1,9 @@
 [bits 16]
 [org 0x7c00]
 
-kernel_offset equ 0x10000;can currently only be from 0x00000 to 0xfffff due to ah=0x42 int 0x13 uses 2 words for the transfer buffer and I placed the kernel code att the sector right after the boot sector
+kernel_offset equ 0x10000;can currently only be from 0x00000 to 0xfffff due to...
+;... ah=0x42 int 0x13 uses 2 words for the transfer buffer and I placed the kernel code att the sector right after the boot sector...
+;...sector read code found at https://github.com/freebsd/freebsd-src/blob/main/stand/i386/boot2/boot1.S might be able to help with this
 
 section .text
 
@@ -56,9 +58,9 @@ load_kernel:
         db 0x10 ;packet size (16 bytes)
         db 0    ;always 0
     block_count:
-        dw 40  ; num sectors
+        dw 127  ; num sectors
     trans_buff: ;transfer buffer (segment & offset)
-        dw 0   ; memory buffer destination address (0x1000:0)
+        dw 0   ; memory buffer destination address (0x10000:0)
         dw 0x1000
     lba:
         dd 1    ; put the lba to read in this spot (lba1) (lba0 contains our bootloader code)
