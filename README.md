@@ -1,7 +1,7 @@
 # BiscuitClickerOS
 a very basic / bare bones operating system / kernel
 
-![biscuitclicker](https://user-images.githubusercontent.com/69918769/201752838-3da92659-7ad7-473a-9193-e31258258d02.png)
+![biscuitclicker](![image](https://user-images.githubusercontent.com/69918769/217385678-2c8ac08e-1aed-46b6-9159-6a707da9b15a.png))
 
 
 ## running
