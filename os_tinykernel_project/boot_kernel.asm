@@ -1,7 +1,13 @@
 [bits 16]
 [org 0x7c00]
 
-kernel_offset equ 0x1000
+kernel_offset equ 0x10000;can currently only be from 0x00000 to 0xfffff due to ah=0x42 int 0x13 uses 2 words for the transfer buffer and I placed the kernel code att the sector right after the boot sector
+
+section .text
+
+global _start
+
+_start:
 
 xor ax, ax
 mov ds, ax
@@ -52,10 +58,10 @@ load_kernel:
     block_count:
         dw 40  ; num sectors
     trans_buff: ;transfer buffer (segment & offset)
-        dw kernel_offset    ; memory buffer destination address (0:1000)
-        dw 0
+        dw 0   ; memory buffer destination address (0x1000:0)
+        dw 0x1000
     lba:
-        dd 1    ; put the lba to read in this spot (lba1)
+        dd 1    ; put the lba to read in this spot (lba1) (lba0 contains our bootloader code)
         dd 0    ; more storage bytes if lba number exceeds 4 bytes
 
     ;______________________________________________
@@ -138,9 +144,5 @@ real_msg db "real ", 0
 protected_msg db "vga 80x25 text mode (were in protected mode baby)", 0
 kernel_msg db "kernel ", 0
 
-
-
 times 510-($-$$) db  0
 dw 0xaa55
-
-
