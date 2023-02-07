@@ -1,8 +1,6 @@
 # BiscuitClickerOS
 a very basic / bare bones operating system / kernel
-
-![biscuitclicker](![image](https://user-images.githubusercontent.com/69918769/217385678-2c8ac08e-1aed-46b6-9159-6a707da9b15a.png))
-
+![biscuitclicker](https://user-images.githubusercontent.com/69918769/217385973-1b69d2dc-c596-4e31-87b7-47817fbff00b.png)
 
 ## running
 run `make iso` to create the image file
