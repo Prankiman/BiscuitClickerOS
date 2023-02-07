@@ -112,8 +112,3 @@ https://lwn.net/Kernel/LDD3/
 
 ## The little book about OS development by Erik Halin and Adam Renberg
 https://ordoflammae.github.io/littleosbook/#the-bootloader
-
-
-'''
-
-'''
