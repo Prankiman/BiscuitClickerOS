@@ -24,7 +24,7 @@ kernel.bin: enter_kernel.o ${OBJ} isrs.o irqs.o v8086.o int32.o#ata.o
 	nasm $< -o $@
 
 clean:
-	rm *.o *.bin boot.iso
+	rm *.o *.bin boot.iso *.elf
 
 iso: all
 	#cat $(BOOT) $(KERN) > boot.iso
