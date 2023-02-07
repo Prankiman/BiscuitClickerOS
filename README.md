@@ -22,7 +22,7 @@ if running on qemu ~~make sure to set boot disk storage type as usb and enable u
 qemu-system-i386  -drive if=none,id=usbstick,format=raw,file=./boot.iso
 ```
 
-## RECOURSES
+# RECOURSES
 
 ## OSDEV.org:
 
@@ -112,3 +112,8 @@ https://lwn.net/Kernel/LDD3/
 
 ## The little book about OS development by Erik Halin and Adam Renberg
 https://ordoflammae.github.io/littleosbook/#the-bootloader
+
+
+'''
+
+'''
