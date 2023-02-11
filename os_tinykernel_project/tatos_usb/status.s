@@ -33,20 +33,20 @@ uhci_command:
 	mov dx,[BASEADD]
 	in ax,dx
 	and eax,0xffff
-	STDCALL comregstr1,0,dumpeax
+	;STDCALL comregstr1,0,dumpeax
 
-%if VERBOSEDUMP
+;%if VERBOSEDUMP
 
-	STDCALL comregstr2, 7,1,dumpbitfield  ;MaxPacket
-	STDCALL comregstr3, 6,1,dumpbitfield  ;CF flag
-	STDCALL comregstr4, 5,1,dumpbitfield  ;debug
-	STDCALL comregstr5, 4,1,dumpbitfield  ;global resume
-	STDCALL comregstr6, 3,1,dumpbitfield  ;global suspend
-	STDCALL comregstr7, 2,1,dumpbitfield  ;global reset
-	STDCALL comregstr8, 1,1,dumpbitfield  ;HC reset
-	STDCALL comregstr9, 0,1,dumpbitfield  ;run/stop
+	;STDCALL comregstr2, 7,1,dumpbitfield  ;MaxPacket
+	;STDCALL comregstr3, 6,1,dumpbitfield  ;CF flag
+	;STDCALL comregstr4, 5,1,dumpbitfield  ;debug
+	;STDCALL comregstr5, 4,1,dumpbitfield  ;global resume
+	;STDCALL comregstr6, 3,1,dumpbitfield  ;global suspend
+	;STDCALL comregstr7, 2,1,dumpbitfield  ;global reset
+	;STDCALL comregstr8, 1,1,dumpbitfield  ;HC reset
+	;STDCALL comregstr9, 0,1,dumpbitfield  ;run/stop
 
-%endif
+;%endif
 
 .done:
 	popad
@@ -69,7 +69,7 @@ ehci_command:
 
 	mov esi,[0x5d4]  ;get start of operational registers
 	mov eax,[esi]     ;USBCMD is at opbar+0
-	STDCALL ecomregstr1,0,dumpeax
+	;STDCALL ecomregstr1,0,dumpeax
 
 .done:
 	popad
@@ -117,18 +117,18 @@ uhci_status:
 	in ax,dx
 	and eax,0xffff
 	mov ebx,eax  ;copy
-	STDCALL statstr1,0,dumpeax
+	;STDCALL statstr1,0,dumpeax
 
-%if VERBOSEDUMP
+;%if VERBOSEDUMP
 
-	STDCALL statstr5,  5,1,dumpbitfield  ;halted
-	STDCALL statstr11, 4,1,dumpbitfield  ;Process error
-	STDCALL statstr6,  3,1,dumpbitfield  ;host system error
-	STDCALL statstr12, 2,1,dumpbitfield  ;resume detect
-	STDCALL statstr9,  1,1,dumpbitfield  ;Error Interrupt
-	STDCALL statstr10, 0,1,dumpbitfield  ;Interrupt
+	;STDCALL statstr5,  5,1,dumpbitfield  ;halted
+	;STDCALL statstr11, 4,1,dumpbitfield  ;Process error
+	;STDCALL statstr6,  3,1,dumpbitfield  ;host system error
+	;STDCALL statstr12, 2,1,dumpbitfield  ;resume detect
+	;STDCALL statstr9,  1,1,dumpbitfield  ;Error Interrupt
+	;STDCALL statstr10, 0,1,dumpbitfield  ;Interrupt
 
-%endif
+;%endif
 
 	ret
 
@@ -142,21 +142,21 @@ ehci_status:
 	;dump the entire USB2 status register
 	mov esi,[0x5d4]  ;get start of oper reg
 	mov eax,[esi+4]
-	STDCALL statstr1a,0,dumpeax
+	;STDCALL statstr1a,0,dumpeax
 
-%if VERBOSEDUMP
+;%if VERBOSEDUMP
 
-	STDCALL statstr2, 15,1,dumpbitfield  ;asynch schedule status
-	STDCALL statstr3, 14,1,dumpbitfield  ;periodic schedule status
-	STDCALL statstr4, 13,1,dumpbitfield  ;reclamation
-	STDCALL statstr5, 12,1,dumpbitfield  ;halted
-	STDCALL statstr6,  4,1,dumpbitfield  ;host system error
-	STDCALL statstr7,  3,1,dumpbitfield  ;frame list rollover
-	STDCALL statstr8,  2,1,dumpbitfield  ;port change detect
-	STDCALL statstr9,  1,1,dumpbitfield  ;Error Interrupt
-	STDCALL statstr10, 0,1,dumpbitfield  ;Interrupt 
+	;STDCALL statstr2, 15,1,dumpbitfield  ;asynch schedule status
+	;STDCALL statstr3, 14,1,dumpbitfield  ;periodic schedule status
+	;STDCALL statstr4, 13,1,dumpbitfield  ;reclamation
+	;STDCALL statstr5, 12,1,dumpbitfield  ;halted
+	;STDCALL statstr6,  4,1,dumpbitfield  ;host system error
+	;STDCALL statstr7,  3,1,dumpbitfield  ;frame list rollover
+	;STDCALL statstr8,  2,1,dumpbitfield  ;port change detect
+	;STDCALL statstr9,  1,1,dumpbitfield  ;Error Interrupt
+	;STDCALL statstr10, 0,1,dumpbitfield  ;Interrupt
 
-%endif
+;%endif
 
 	ret
 

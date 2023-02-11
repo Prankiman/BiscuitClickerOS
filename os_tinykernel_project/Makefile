@@ -8,7 +8,7 @@ BOOT=boot_kernel.bin
 
 all: kernel.bin boot_kernel.bin
 
-kernel.bin: enter_kernel.o ${OBJ} isrs.o irqs.o v8086.o int32.o#ata.o
+kernel.bin: enter_kernel.o irqs.o isrs.o v8086.o int32.o tatos_usb/usb.o ${OBJ}
 	ld -m elf_i386 -o $@ -T "link.ld" $^
 
 	ld -m elf_i386 -o kernel.elf -T "link.ld" $^ --oformat elf32-i386 #used for gdb debugging
@@ -24,7 +24,7 @@ kernel.bin: enter_kernel.o ${OBJ} isrs.o irqs.o v8086.o int32.o#ata.o
 	nasm $< -o $@
 
 clean:
-	rm *.o *.bin boot.iso *.elf
+	rm tatos_usb/*.o usb/*.o *.o *.bin boot.iso *.elf
 
 iso: all
 	#cat $(BOOT) $(KERN) > boot.iso

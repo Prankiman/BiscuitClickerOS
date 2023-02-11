@@ -76,7 +76,7 @@ RequestSense:
 
 	;Command Transport
 	;********************
-	STDCALL rsstr1,dumpstr
+	;STDCALL rsstr1,dumpstr
 	push FlashRS_structTD_command
 	call [prepareTDchain]
 	call [runTDchain]
@@ -84,23 +84,23 @@ RequestSense:
 
 	;Data Transport
 	;*****************
-	STDCALL rsstr2,dumpstr
+	;STDCALL rsstr2,dumpstr
 	push FlashRS_structTD_data
 	call [prepareTDchain]
 	call [runTDchain]
 
-	STDCALL 0x5400,18,dumpmem  ;dump the sense bytes
+	;STDCALL 0x5400,18,dumpmem  ;dump the sense bytes
 
 
 
 	;Status Transport
 	;*******************
-	STDCALL rsstr3,dumpstr
+	;STDCALL rsstr3,dumpstr
 	push SCSI_structTD_status
 	call [prepareTDchain]
 	call [runTDchain]
 
-	STDCALL scsiCSW,13,dumpmem  ;dump the Command Status Wrapper returned
+	;STDCALL scsiCSW,13,dumpmem  ;dump the Command Status Wrapper returned
 	call CheckCSWstatus
 
 .done:

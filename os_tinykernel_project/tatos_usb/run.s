@@ -103,19 +103,19 @@ uhci_runTDchain:
 
 .dumpTDstatus:
 	mov eax,[esi]  ;get the td status
-	STDCALL runuhcistr1,0,dumpeax
+	;STDCALL runuhcistr1,0,dumpeax
 
-%if VERBOSEDUMP  ;bitfields in eax, 2nd dword of TD
-	STDCALL tdstatus5, 27,3,dumpbitfield  ;error detection
-	STDCALL tdstatus7, 23,1,dumpbitfield  ;active
-	STDCALL tdstatus8, 22,1,dumpbitfield  ;stalled
-	STDCALL tdstatus9, 21,1,dumpbitfield  ;data buffer error
-	STDCALL tdstatus10,20,1,dumpbitfield  ;babble
-	STDCALL tdstatus15,19,1,dumpbitfield  ;NAK
-	STDCALL tdstatus16,18,1,dumpbitfield  ;CRC/Time out
-	STDCALL tdstatus17,17,1,dumpbitfield  ;bitstuff
-	STDCALL tdstatus18,0,0x7ff,dumpbitfield  ;actual length
-%endif
+;%if VERBOSEDUMP  ;bitfields in eax, 2nd dword of TD
+	;STDCALL tdstatus5, 27,3,dumpbitfield  ;error detection
+	;STDCALL tdstatus7, 23,1,dumpbitfield  ;active
+	;STDCALL tdstatus8, 22,1,dumpbitfield  ;stalled
+	;STDCALL tdstatus9, 21,1,dumpbitfield  ;data buffer error
+	;STDCALL tdstatus10,20,1,dumpbitfield  ;babble
+	;STDCALL tdstatus15,19,1,dumpbitfield  ;NAK
+	;STDCALL tdstatus16,18,1,dumpbitfield  ;CRC/Time out
+	;STDCALL tdstatus17,17,1,dumpbitfield  ;bitstuff
+	;STDCALL tdstatus18,0,0x7ff,dumpbitfield  ;actual length
+;%endif
 
 	add esi,UHCITDSPACING  ;increment to address of next TD status dword
 	dec ecx
@@ -195,23 +195,23 @@ ehci_runTDchain:
 
 .dumpTDstatus:
 	mov eax,[esi]  ;get the td status
-	STDCALL runehcistr1,0,dumpeax
+	;STDCALL runehcistr1,0,dumpeax
 
-%if VERBOSEDUMP  ;bitfields in eax, 3rd dword of TD
-	STDCALL tdstatus2,31,1,dumpbitfield  ;data toggle
-	STDCALL tdstatus3,16,0x7fff,dumpbitfield  ;total bytes 2 xfer
-	STDCALL tdstatus4,12,7,dumpbitfield  ;C_Page current page
-	STDCALL tdstatus5,10,3,dumpbitfield  ;CERR error counter
-	STDCALL tdstatus6, 8,3,dumpbitfield  ;pid code
-	STDCALL tdstatus7, 7,1,dumpbitfield  ;active bit
-	STDCALL tdstatus8, 6,1,dumpbitfield  ;halted bit
-	STDCALL tdstatus9, 5,1,dumpbitfield  ;data buffer error
-	STDCALL tdstatus10,4,1,dumpbitfield  ;babble
-	STDCALL tdstatus11,3,1,dumpbitfield  ;transaction error
-	STDCALL tdstatus12,2,1,dumpbitfield  ;missed microframe
-	STDCALL tdstatus13,1,1,dumpbitfield  ;split transaction state
-	STDCALL tdstatus14,0,1,dumpbitfield  ;ping state
-%endif
+;%if VERBOSEDUMP  ;bitfields in eax, 3rd dword of TD
+	;STDCALL tdstatus2,31,1,dumpbitfield  ;data toggle
+	;STDCALL tdstatus3,16,0x7fff,dumpbitfield  ;total bytes 2 xfer
+	;STDCALL tdstatus4,12,7,dumpbitfield  ;C_Page current page
+	;STDCALL tdstatus5,10,3,dumpbitfield  ;CERR error counter
+	;STDCALL tdstatus6, 8,3,dumpbitfield  ;pid code
+	;STDCALL tdstatus7, 7,1,dumpbitfield  ;active bit
+	;STDCALL tdstatus8, 6,1,dumpbitfield  ;halted bit
+	;STDCALL tdstatus9, 5,1,dumpbitfield  ;data buffer error
+	;STDCALL tdstatus10,4,1,dumpbitfield  ;babble
+	;STDCALL tdstatus11,3,1,dumpbitfield  ;transaction error
+	;STDCALL tdstatus12,2,1,dumpbitfield  ;missed microframe
+	;STDCALL tdstatus13,1,1,dumpbitfield  ;split transaction state
+	;STDCALL tdstatus14,0,1,dumpbitfield  ;ping state
+;%endif
 
 	;ehci TD's are 52 bytes but must be aligned on 32 byte boundary
 	add esi,EHCITDSPACING  ;increment to address of next TD status dword

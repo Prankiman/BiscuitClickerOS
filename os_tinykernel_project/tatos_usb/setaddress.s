@@ -56,7 +56,7 @@ SetAddress:
 
 	;Command Transport
 	;********************
-	STDCALL setaddstr1,dumpstr 
+	;STDCALL setaddstr1,dumpstr
 	mov dword [controltoggle],0
 	push FlashSA_structTD_command
 	call [prepareTDchain]
@@ -70,7 +70,7 @@ SetAddress:
 
 	;Status Transport
 	;******************
-	STDCALL setaddstr2,dumpstr 
+	;STDCALL setaddstr2,dumpstr
 	mov dword [controltoggle],1
 	push FlashSA_structTD_status
 	call [prepareTDchain]
@@ -122,7 +122,7 @@ MouseSetAddress:
 
 	;Command Transport
 	;********************
-	STDCALL msastr1,dumpstr 
+	;STDCALL msastr1,dumpstr
 	mov dword [controltoggle],0
 	push MouseSA_structTD_command
 	call uhci_prepareTDchain
@@ -136,7 +136,7 @@ MouseSetAddress:
 
 	;Status Transport
 	;******************
-	STDCALL msastr2,dumpstr 
+	;STDCALL msastr2,dumpstr
 	mov dword [controltoggle],1
 	push MouseSA_structTD_status
 	call uhci_prepareTDchain

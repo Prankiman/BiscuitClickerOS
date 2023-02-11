@@ -42,8 +42,8 @@ usbmousestr16 db 'USBMOUSEREPORTHAS01BYTE',0
 usbinitmouse:
 
 
-	STDCALL usbmousestr1,putmessage
-	STDCALL usbmousestr1,dumpstr
+	;STDCALL usbmousestr1,putmessage
+	;STDCALL usbmousestr1,dumpstr
 
 
 	;do we have a primary UHCI controller ?
@@ -58,8 +58,8 @@ usbinitmouse:
 	;    Work with primary UHCI controller
 	;*****************************************
 
-	STDCALL usbmousestr5,putmessage
-	STDCALL usbmousestr5,dumpstr
+	;STDCALL usbmousestr5,putmessage
+	;STDCALL usbmousestr5,dumpstr
 
 	call uhci_portdump
 
@@ -88,8 +88,8 @@ usbinitmouse:
 
 .tryUHCIcompanionController:
 
-	STDCALL usbmousestr10,putmessage
-	STDCALL usbmousestr10,dumpstr
+	;STDCALL usbmousestr10,putmessage
+	;STDCALL usbmousestr10,dumpstr
 
 	;do we have any companion uhci controllers ?
 	;detect routine is in /usb/controller.s at the end
@@ -97,7 +97,7 @@ usbinitmouse:
 	jnz .setupUHCIcompanion
 
 	;if we got here we have no UHCI companion controllers - out of luck
-	STDCALL usbmousestr2,putshang
+	;STDCALL usbmousestr2,putshang
 
 .setupUHCIcompanion:
 
@@ -110,12 +110,12 @@ usbinitmouse:
 	jnz .releaseOwnership
 
 	;Fatal-no mouse plugged into ehci port  
-	STDCALL usbmousestr9,putshang
+	;STDCALL usbmousestr9,putshang
 
 .releaseOwnership:
 
-	STDCALL usbmousestr11,putmessage
-	STDCALL usbmousestr11,dumpstr
+	;STDCALL usbmousestr11,putmessage
+	;STDCALL usbmousestr11,dumpstr
 	call ehci_portread      ;eax=portnum
 
 	;if we got here we found a mouse connected to an ehci port
@@ -125,7 +125,7 @@ usbinitmouse:
 	or edi,10000000000000b  ;set bit13 port owner = companion controller
 	mov [esi+44h+eax*4],edi ;write it back
 
-	STDCALL usbmousestr12,dumpstr
+	;STDCALL usbmousestr12,dumpstr
 	call ehci_portread      ;eax=portnum
 
 
@@ -134,7 +134,7 @@ usbinitmouse:
 
 
 	;try the 1st uhci companion controller
-	STDCALL usbmousestr13,dumpstr
+	;STDCALL usbmousestr13,dumpstr
 	push dword [0x5d8]   ;BUS:DEV:FUN of 1st uhci companion
 	call initUHCI
 
@@ -157,7 +157,7 @@ usbinitmouse:
 	jnz .uhciCompanionFailed
 
 
-	STDCALL usbmousestr14,dumpstr
+	;STDCALL usbmousestr14,dumpstr
 	push dword [0x5dc]   ;BUS:DEV:FUN of 1st uhci companion
 	call initUHCI
 
@@ -175,7 +175,7 @@ usbinitmouse:
 .uhciCompanionFailed:
 	;if we got here we failed to find the mouse
 	;on any port of either the 1st or 2nd uhci companion
-	STDCALL usbmousestr15,putshang
+	;STDCALL usbmousestr15,putshang
 
 
 .uhciCompanionSuccess:
@@ -194,11 +194,11 @@ usbinitmouse:
 .doUSBtransactions:
 
 	;returns 18 bytes at 0x5500
-	STDCALL mpdstr14,putmessage
+	;STDCALL mpdstr14,putmessage
 	call MouseGetDeviceDescriptor
 
 	;read just the configuration descriptor to get MOUSEWTOTALLENGTH
-	STDCALL mpdstr15,putmessage
+	;STDCALL mpdstr15,putmessage
 	mov edx,9
 	call MouseGetConfigDescriptor
 
@@ -207,19 +207,19 @@ usbinitmouse:
 	mov dx,[MOUSEWTOTALLENGTH]
 	call MouseGetConfigDescriptor
 
-	STDCALL usbmousestr6,putmessage
+	;STDCALL usbmousestr6,putmessage
 	call MouseGetReportDescriptor
 
-	STDCALL mpdstr16,putmessage
+	;STDCALL mpdstr16,putmessage
 	call MouseSetAddress
 
-	STDCALL usbmousestr7,putmessage
+	;STDCALL usbmousestr7,putmessage
 	call MouseSetProtocol
 
-	STDCALL usbmousestr8,putmessage
+	;STDCALL usbmousestr8,putmessage
 	call MouseSetIdle
 
-	STDCALL mpdstr17,putmessage
+	;STDCALL mpdstr17,putmessage
 	call MouseSetConfiguration
 
 	;ready to conduct usb mouse interrupt IN transactions

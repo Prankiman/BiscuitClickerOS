@@ -85,7 +85,7 @@ Inquiry:
 
 	;Command Transport
 	;********************
-	STDCALL fistr1,dumpstr
+	;STDCALL fistr1,dumpstr
 	push FlashINQ_structTD_command
 	call [prepareTDchain]
 	call [runTDchain]
@@ -94,29 +94,29 @@ Inquiry:
 
 	;Data Transport
 	;*****************
-	STDCALL fistr2,dumpstr
+	;STDCALL fistr2,dumpstr
 	push FlashINQ_structTD_data
 	call [prepareTDchain]
 	call [runTDchain]
 
 
-	STDCALL 0x5200,36,dumpmem  ;dump the inquiry bytes
+	;STDCALL 0x5200,36,dumpmem  ;dump the inquiry bytes
 
 	;a portion of the returned data can be displayed as ASCII
 	mov byte [0x5200+36],0  ;0 terminate offset 36
-	STDCALL 0x5208,dumpstr
+	;STDCALL 0x5208,dumpstr
 
 
 
 	;Status Transport
 	;*******************
-	STDCALL fistr3,dumpstr
+	;STDCALL fistr3,dumpstr
 	push SCSI_structTD_status
 	call [prepareTDchain]
 	call [runTDchain]
 
 
-	STDCALL scsiCSW,13,dumpmem  ;dump the Command Status Wrapper returned
+	;STDCALL scsiCSW,13,dumpmem  ;dump the Command Status Wrapper returned
 	call CheckCSWstatus
 
 

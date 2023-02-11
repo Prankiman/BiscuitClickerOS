@@ -96,7 +96,7 @@ MouseGetReportDescriptor:
 
 	;Command Transport
 	;********************
-	STDCALL mrdstr1,dumpstr
+	;STDCALL mrdstr1,dumpstr
 	mov dword [controltoggle],0
 	push MouseRD_structTD_command
 	call uhci_prepareTDchain
@@ -106,7 +106,7 @@ MouseGetReportDescriptor:
 
 	;Data Transport
 	;*****************
-	STDCALL mrdstr2,dumpstr
+	;STDCALL mrdstr2,dumpstr
 	mov dword [controltoggle],1
 	push MouseRD_structTD_data
 	call uhci_prepareTDchain
@@ -115,14 +115,14 @@ MouseGetReportDescriptor:
 	;dump the report descriptor
 	mov eax,edx
 	and eax,0xffff
-	STDCALL mrdstr4,0,dumpeax
-	STDCALL 0x5600,eax,dumpmem 
+	;STDCALL mrdstr4,0,dumpeax
+	;STDCALL 0x5600,eax,dumpmem
 
 
 
 	;Status Transport
 	;*******************
-	STDCALL mrdstr3,dumpstr
+	;STDCALL mrdstr3,dumpstr
 	mov dword [controltoggle],1
 	push MouseRD_structTD_status
 	call uhci_prepareTDchain

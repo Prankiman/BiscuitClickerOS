@@ -29,14 +29,14 @@ SaveEPnum:
 	and al,0xf          ;mask off the low nibble EP number
 	mov [BULKEPOUT],al  ;save EPOUT
 	and eax,0xff   ;mask off upper bits
-	STDCALL saveEPstr1,2,dumpeax
+	;STDCALL saveEPstr1,2,dumpeax
 	jmp .done
 
 .INendpoint:
 	and al,0xf    
 	mov [BULKEPIN],al ;save EPIN
 	and eax,0xff   
-	STDCALL saveEPstr2,2,dumpeax
+	;STDCALL saveEPstr2,2,dumpeax
 
 .done:
 	ret

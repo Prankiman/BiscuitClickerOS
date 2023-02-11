@@ -50,7 +50,7 @@ TestUnitReady:
 
 	;Command Transport
 	;********************
-	STDCALL tustr1,dumpstr
+	;STDCALL tustr1,dumpstr
 	push FlashTUR_structTD_command
 	call [prepareTDchain]
 	call [runTDchain]
@@ -63,13 +63,13 @@ TestUnitReady:
 
 	;Status Transport
 	;*******************
-	STDCALL tustr2,dumpstr
+	;STDCALL tustr2,dumpstr
 	push SCSI_structTD_status
 	call [prepareTDchain]
 	call [runTDchain]
 
 
-	STDCALL scsiCSW,13,dumpmem  ;dump the Command Status Wrapper returned
+	;STDCALL scsiCSW,13,dumpmem  ;dump the Command Status Wrapper returned
 	call CheckCSWstatus
 
 .done:

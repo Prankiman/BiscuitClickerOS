@@ -47,7 +47,7 @@ uportstr1 db 'Resetting UHCI Port',0
 uhci_portreset:
 
 	push eax  ;save portnum for later
-	STDCALL uportstr1,0,dumpeax
+	;STDCALL uportstr1,0,dumpeax
 
 	;get the port i/o address into dx
 	mov dx,[BASEADD]
@@ -119,7 +119,7 @@ eportstr3 db 'Port is already enabled',0
 
 ehci_portreset:
 
-	STDCALL eportstr1,0,dumpeax
+	;STDCALL eportstr1,0,dumpeax
 
 	mov ecx,eax              ;save ecx=portnum
 	mov esi,[0x5d4]          ;get start of ehci operational regs
@@ -129,7 +129,7 @@ ehci_portreset:
 	;hang if the port is already enabled
 	bt eax,2
 	jnc .setbit8
-	STDCALL eportstr3,putshang
+	;STDCALL eportstr3,putshang
 
 
 
@@ -175,7 +175,7 @@ ehci_portreset:
 
 	;if we got here we looped 10x
 	;and the reset bit8 never went to 0, why not ??
-	STDCALL eportstr2,putshang
+	;STDCALL eportstr2,putshang
 
 .portResetComplete:
 
@@ -329,21 +329,21 @@ uhci_portread:
 	in ax,dx     ;read portsc
 	and eax,0xffff
 	mov ebx,eax  ;copy
-	STDCALL portstr4,0,dumpeax
+	;STDCALL portstr4,0,dumpeax
 
-%if VERBOSEDUMP
+;%if VERBOSEDUMP
 
-	STDCALL portstr9, 12,1,dumpbitfield  ;suspend
-	STDCALL portstr15,10,1,dumpbitfield  ;overcurrent
-	STDCALL portstr8,  9,1,dumpbitfield  ;reset
-	STDCALL portstr12, 8,1,dumpbitfield  ;low speed device 
-	STDCALL portstr7,  4,3,dumpbitfield  ;line status
-	STDCALL portstr14, 3,1,dumpbitfield  ;port enable/disable change
-	STDCALL portstr10, 2,1,dumpbitfield  ;port enable
-	STDCALL portstr13, 1,1,dumpbitfield  ;connect status change
-	STDCALL portstr11, 0,1,dumpbitfield  ;connect status
+	;STDCALL portstr9, 12,1,dumpbitfield  ;suspend
+	;STDCALL portstr15,10,1,dumpbitfield  ;overcurrent
+	;STDCALL portstr8,  9,1,dumpbitfield  ;reset
+	;STDCALL portstr12, 8,1,dumpbitfield  ;low speed device
+	;STDCALL portstr7,  4,3,dumpbitfield  ;line status
+	;STDCALL portstr14, 3,1,dumpbitfield  ;port enable/disable change
+	;STDCALL portstr10, 2,1,dumpbitfield  ;port enable
+	;STDCALL portstr13, 1,1,dumpbitfield  ;connect status change
+	;STDCALL portstr11, 0,1,dumpbitfield  ;connect status
 
-%endif
+;%endif
 
 	popad
 	ret
@@ -360,19 +360,19 @@ ehci_portread:
 	mov esi,[0x5d4]    ;get start of ehci operational regs
 	mov eax,[esi+44h+ecx*4]
 	mov ebx,eax        ;copy
-	STDCALL portstr4,0,dumpeax
+	;STDCALL portstr4,0,dumpeax
 
-%if VERBOSEDUMP
+;%if VERBOSEDUMP
 
-	STDCALL portstr5, 13,1,dumpbitfield  ;port owner 1=companion, 0=ehci
-	STDCALL portstr6, 12,1,dumpbitfield  ;port power
-	STDCALL portstr7, 10,3,dumpbitfield  ;line status
-	STDCALL portstr8,  8,1,dumpbitfield  ;reset
-	STDCALL portstr9,  7,1,dumpbitfield  ;suspend
-	STDCALL portstr10, 2,1,dumpbitfield  ;port enable
-	STDCALL portstr11, 0,1,dumpbitfield  ;current connection status
+	;STDCALL portstr5, 13,1,dumpbitfield  ;port owner 1=companion, 0=ehci
+	;STDCALL portstr6, 12,1,dumpbitfield  ;port power
+	;STDCALL portstr7, 10,3,dumpbitfield  ;line status
+	;STDCALL portstr8,  8,1,dumpbitfield  ;reset
+	;STDCALL portstr9,  7,1,dumpbitfield  ;suspend
+	;STDCALL portstr10, 2,1,dumpbitfield  ;port enable
+	;STDCALL portstr11, 0,1,dumpbitfield  ;current connection status
 
-%endif
+;%endif
 
 	popad
 	ret
@@ -441,7 +441,7 @@ portscanstr4 db 'portnum of full speed device',0
 
 uhci_portscan:
 
-	STDCALL portscanstr1,dumpstr
+	;STDCALL portscanstr1,dumpstr
 
 	;init esi and edi to indicate nothing found
 	mov esi,0xffffffff
@@ -475,9 +475,9 @@ uhci_portscan:
 
 	;dump what we found
 	mov eax,esi
-	STDCALL portscanstr3,0,dumpeax
+	;STDCALL portscanstr3,0,dumpeax
 	mov eax,edi
-	STDCALL portscanstr4,0,dumpeax
+	;STDCALL portscanstr4,0,dumpeax
 
 	ret
 
@@ -486,7 +486,7 @@ uhci_portscan:
 
 ehci_portscan:
 
-	STDCALL portscanstr2,dumpstr
+	;STDCALL portscanstr2,dumpstr
 
 	;init esi and edi to indicate nothing found
 	mov esi,0xffffffff
@@ -520,9 +520,9 @@ ehci_portscan:
 
 	;dump what we found
 	mov eax,esi
-	STDCALL portscanstr3,0,dumpeax
+	;STDCALL portscanstr3,0,dumpeax
 	mov eax,edi
-	STDCALL portscanstr4,0,dumpeax
+	;STDCALL portscanstr4,0,dumpeax
 
 	ret
 

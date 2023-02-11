@@ -90,12 +90,12 @@ MouseSetIdle:
 	;dump the set idle duration and reportID
 	xor eax,eax
 	mov ax,[SetIdleRequest+2]
-	STDCALL msistr3,0,dumpeax
+	;STDCALL msistr3,0,dumpeax
 
 
 	;Command Transport
 	;********************
-	STDCALL msistr1,dumpstr
+	;STDCALL msistr1,dumpstr
 	mov dword [controltoggle],0
 	push MouseSI_structTD_command
 	call uhci_prepareTDchain
@@ -107,7 +107,7 @@ MouseSetIdle:
 
 	;Status Transport
 	;*******************
-	STDCALL msistr2,dumpstr
+	;STDCALL msistr2,dumpstr
 	mov dword [controltoggle],1
 	push MouseSI_structTD_status
 	call uhci_prepareTDchain

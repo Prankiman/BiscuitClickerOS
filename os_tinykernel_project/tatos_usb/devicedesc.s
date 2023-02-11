@@ -99,7 +99,7 @@ FlashGetDeviceDescriptor:
 
 	;Command Transport
 	;********************
-	STDCALL ddstr1,dumpstr
+	;STDCALL ddstr1,dumpstr
 	mov dword [controltoggle],0
 	push FlashDD_structTD_command
 	call [prepareTDchain]
@@ -108,44 +108,44 @@ FlashGetDeviceDescriptor:
 
 	;Data Transport
 	;*****************
-	STDCALL ddstr2,dumpstr
+	;STDCALL ddstr2,dumpstr
 	mov dword [controltoggle],1
 	push FlashDD_structTD_data
 	call [prepareTDchain]
 	call [runTDchain]
 
 
-	STDCALL 0x5000,18,dumpmem  ;dump the descriptor bytes
+	;STDCALL 0x5000,18,dumpmem  ;dump the descriptor bytes
 
 	
 	;dump bMaxPacketEndpoint0
 	mov eax,[0x5000+7]
 	and eax,0xff
-	STDCALL ddstr4,0,dumpeax  
+	;STDCALL ddstr4,0,dumpeax
 
 	;dump the VID Vendor ID  (we keep track of these in /doc/hardware)
 	xor eax,eax
 	mov ax,[0x5000+8]
-	STDCALL ddstr6,0,dumpeax
+	;STDCALL ddstr6,0,dumpeax
 
 	;dump the PID Product ID
 	xor eax,eax
 	mov ax,[0x5000+10]
-	STDCALL ddstr7,0,dumpeax
+	;STDCALL ddstr7,0,dumpeax
 
 
 	;check the first 2 bytes of the device descriptor
 	;should be "12 01" - bail if not because the device is not responding
 	cmp word [0x5000],0x0112
 	jz .validDDreceived
-	STDCALL ddstr5,putshang
+	;STDCALL ddstr5,putshang
 .validDDreceived:
 
 
 
 	;Status Transport
 	;*******************
-	STDCALL ddstr3,dumpstr
+	;STDCALL ddstr3,dumpstr
 	mov dword [controltoggle],1
 	push FlashDD_structTD_status
 	call [prepareTDchain]
@@ -220,7 +220,7 @@ MouseGetDeviceDescriptor:
 
 	;Command Transport
 	;********************
-	STDCALL mddstr1,dumpstr
+	;STDCALL mddstr1,dumpstr
 	mov dword [controltoggle],0
 	push MouseDD_structTD_command
 	call uhci_prepareTDchain
@@ -230,18 +230,18 @@ MouseGetDeviceDescriptor:
 
 	;Data Transport
 	;*****************
-	STDCALL mddstr2,dumpstr
+	;STDCALL mddstr2,dumpstr
 	mov dword [controltoggle],1
 	push MouseDD_structTD_data
 	call uhci_prepareTDchain
 	call uhci_runTDchain
-	STDCALL 0x5500,18,dumpmem  ;to see the device descriptor
+	;STDCALL 0x5500,18,dumpmem  ;to see the device descriptor
 
 
 
 	;Status Transport
 	;*******************
-	STDCALL mddstr3,dumpstr
+	;STDCALL mddstr3,dumpstr
 	mov dword [controltoggle],1
 	push MouseDD_structTD_status
 	call uhci_prepareTDchain

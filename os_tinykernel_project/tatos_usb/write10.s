@@ -71,7 +71,7 @@ write10:
 	;is the flash drive ready ?
 	cmp dword [FLASHDRIVEREADY],1
 	jz .flashisready
-	STDCALL readstr5,putshang
+	;STDCALL readstr5,putshang
 .flashisready:
 
 
@@ -81,7 +81,7 @@ write10:
 	mov eax,512  ;bytes per block
 	mul ecx      ;ecx=qty blocks
 	;eax = qtyblocks * 512 = dCBWDataTransferLength
-	STDCALL wrtstr4,0,dumpeax
+	;STDCALL wrtstr4,0,dumpeax
 	mov [Write10Request+8],eax
 	mov [Write10_structTD_data+4],eax
 
@@ -105,7 +105,7 @@ write10:
 
 	;Command Transport
 	;*********************
-	STDCALL wrtstr1,dumpstr
+	;STDCALL wrtstr1,dumpstr
 	push Write10_structTD_command
 	call [prepareTDchain]
 	call [runTDchain]
@@ -114,7 +114,7 @@ write10:
 
 	;Data Transport
 	;*****************
-	STDCALL wrtstr2,dumpstr
+	;STDCALL wrtstr2,dumpstr
 	push Write10_structTD_data
 	call [prepareTDchain]
 	call [runTDchain]
@@ -123,13 +123,13 @@ write10:
 
 	;Status Transport
 	;*****************
-	STDCALL wrtstr3,dumpstr
+	;STDCALL wrtstr3,dumpstr
 	push SCSI_structTD_status
 	call [prepareTDchain]
 	call [runTDchain]
 
 
-	STDCALL scsiCSW,13,dumpmem  ;dump the Command Status Wrapper returned
+	;STDCALL scsiCSW,13,dumpmem  ;dump the Command Status Wrapper returned
 	call CheckCSWstatus
 	
 

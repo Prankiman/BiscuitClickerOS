@@ -142,7 +142,7 @@ FlashGetConfigDescriptor:
 
 	;Command Transport
 	;*********************
-	STDCALL configstr1,dumpstr
+	;STDCALL configstr1,dumpstr
 	mov dword [controltoggle],0
 	push FlashCD_structTD_command
 	call [prepareTDchain]
@@ -152,7 +152,7 @@ FlashGetConfigDescriptor:
 
 	;Data Transport
 	;*******************
-	STDCALL configstr2,dumpstr
+	;STDCALL configstr2,dumpstr
 	mov dword [controltoggle],1
 	push FlashCD_structTD_data
 	call [prepareTDchain]
@@ -160,19 +160,19 @@ FlashGetConfigDescriptor:
 
 
 	;lets dump some important stuff
-	STDCALL 0x5020,[qtyconfigdata],dumpmem  ;to see all the config data
+	;STDCALL 0x5020,[qtyconfigdata],dumpmem  ;to see all the config data
 	mov ax,[WTOTALLENGTH]
-	STDCALL configstr4,1,dumpeax 
+	;STDCALL configstr4,1,dumpeax
 	mov al,[BCONFIGURATIONVALUE]
-	STDCALL configstr5,2,dumpeax
+	;STDCALL configstr5,2,dumpeax
 	mov al,[BNUMINTERFACES]
-	STDCALL configstr6,2,dumpeax
+	;STDCALL configstr6,2,dumpeax
 
 
 
 	;Status Transport
 	;*****************
-	STDCALL configstr3,dumpstr
+	;STDCALL configstr3,dumpstr
 	mov dword [controltoggle],1
 	push FlashCD_structTD_status
 	call [prepareTDchain]
@@ -287,7 +287,7 @@ MouseGetConfigDescriptor:
 
 	;Command Transport
 	;*********************
-	STDCALL mconfigstr1,dumpstr
+	;STDCALL mconfigstr1,dumpstr
 	mov dword [controltoggle],0
 	push MouseCD_structTD_command
 	call uhci_prepareTDchain
@@ -296,33 +296,33 @@ MouseGetConfigDescriptor:
 
 	;Data Transport
 	;*******************
-	STDCALL mconfigstr2,dumpstr
+	;STDCALL mconfigstr2,dumpstr
 	mov dword [controltoggle],1
 	push MouseCD_structTD_data
 	call uhci_prepareTDchain
 	call uhci_runTDchain
 
 	;dump some data
-	STDCALL 0x5520,[qtyconfigdata],dumpmem  ;to see the data
+	;STDCALL 0x5520,[qtyconfigdata],dumpmem  ;to see the data
 	mov ax,[MOUSEWTOTALLENGTH]
 	and eax,0xffff
-	STDCALL configstr4,0,dumpeax ;dump the WTOTALLENGTH
+	;STDCALL configstr4,0,dumpeax ;dump the WTOTALLENGTH
 	mov al,[MOUSEBCONFIGVALUE]
 	and eax,0xff
-	STDCALL configstr5,0,dumpeax
+	;STDCALL configstr5,0,dumpeax
 	mov al,[MOUSEBNUMINTERFACES]
 	and eax,0xff
-	STDCALL configstr6,0,dumpeax
+	;STDCALL configstr6,0,dumpeax
 	mov al,[0x552f]  ;interface subclass, 01=boot
 	and eax,0xff
-	STDCALL mconfigstr4,0,dumpeax
+	;STDCALL mconfigstr4,0,dumpeax
 
 
 
 
 	;Status Transport
 	;*****************
-	STDCALL mconfigstr3,dumpstr
+	;STDCALL mconfigstr3,dumpstr
 	mov dword [controltoggle],1
 	push MouseCD_structTD_status
 	call uhci_prepareTDchain
@@ -336,7 +336,7 @@ MouseGetConfigDescriptor:
 	and al,0xf  ;mask off bits3:0
 	mov [MOUSEPIN],al 
 	and eax,0xff
-	STDCALL mconfigstr5,0,dumpeax
+	;STDCALL mconfigstr5,0,dumpeax
 
 
 .done:

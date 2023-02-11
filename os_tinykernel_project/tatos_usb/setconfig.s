@@ -64,7 +64,7 @@ SetConfiguration:
 
 	;Command Transport
 	;******************
-	STDCALL setconfigstr1,dumpstr
+	;STDCALL setconfigstr1,dumpstr
 	mov dword [controltoggle],0
 	push FlashSC_structTD_command
 	call [prepareTDchain]
@@ -77,7 +77,7 @@ SetConfiguration:
 	
 	;Status Transport
 	;*******************
-	STDCALL setconfigstr2,dumpstr
+	;STDCALL setconfigstr2,dumpstr
 	mov dword [controltoggle],1
 	push FlashSC_structTD_status
 	call [prepareTDchain]
@@ -136,7 +136,7 @@ MouseSetConfiguration:
 
 	;Command Transport
 	;******************
-	STDCALL msetconfigstr1,dumpstr
+	;STDCALL msetconfigstr1,dumpstr
 	mov dword [controltoggle],0
 	push MouseSC_structTD_command
 	call uhci_prepareTDchain
@@ -148,7 +148,7 @@ MouseSetConfiguration:
 	
 	;Status Transport
 	;*******************
-	STDCALL msetconfigstr2,dumpstr
+	;STDCALL msetconfigstr2,dumpstr
 	mov dword [controltoggle],1
 	push MouseSC_structTD_status
 	call uhci_prepareTDchain

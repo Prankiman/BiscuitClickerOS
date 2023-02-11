@@ -111,7 +111,7 @@ initUHCI:
 
 
 	;init UHCI
-	STDCALL usbUstr0,dumpstr 
+	;STDCALL usbUstr0,dumpstr
 
 
 	mov eax,[ebp+8]
@@ -124,8 +124,8 @@ initUHCI:
 	;VID is in loword and DID is in hiword
 	mov eax,[ebp+8]
 	mov ebx,0  ;register/offset 
-	call [PCIREADDWORD]
-	STDCALL usbUstr1,0,[DUMPEAX]
+	call pciReadDword
+	;STDCALL usbUstr1,0,[DUMPEAX]
 
 
 
@@ -133,7 +133,7 @@ initUHCI:
 	;PCI Config: command register  (byte offset 4-5)
 	mov eax,[ebp+8]
 	mov ebx,4  ;register/offset 
-	call [PCIREADDWORD]
+	call pciReadDword
 	;returns status reg in hiword and command reg in loword
 
 	;set bus master enable and i/0 space enable bits
@@ -143,21 +143,21 @@ initUHCI:
 	mov ecx,eax       ;ecx=value to be written
 	mov eax,[ebp+8]   ;pci_config_address
 	mov ebx,4         ;register/offset 
-	call [PCIWRITEDWORD]
+	call pciWriteDword
 
 	;as a test see if it worked
 	mov eax,[ebp+8]  
 	mov ebx,4           ;register/offset 
-	call [PCIREADDWORD]  
+	call pciReadDword
 	mov ebx,eax         ;copy
 	and eax,0xffff
-	STDCALL usbUstr6,0,[DUMPEAX]
+	;STDCALL usbUstr6,0,[DUMPEAX]
 
 
 	;PCI Config: status register (byte offset 6-7)
 	mov eax,ebx
 	shr eax,16
-	STDCALL usbUstr7,0,[DUMPEAX]
+	;STDCALL usbUstr7,0,[DUMPEAX]
 
 
 
@@ -165,10 +165,10 @@ initUHCI:
 	;PCI Config: RevisionID and CLASSC Class Code Register (byte offset 8)
 	mov eax,[ebp+8]
 	mov ebx,0x8  ;address offset 
-	call [PCIREADDWORD]
+	call pciReadDword
 	;returns class in hibyte then subclass then interface then revisionID
 	;we expect 0c0300 for SerielBusController/usb/uhci
-	STDCALL usbUstr2,0,[DUMPEAX]
+	;STDCALL usbUstr2,0,[DUMPEAX]
 
 
 
@@ -179,8 +179,8 @@ initUHCI:
 	;the hibyte is reserved
 	mov eax,[ebp+8]
 	mov ebx,0xc  ;address offset
-	call [PCIREADDWORD]
-	STDCALL usbUstr3,0,[DUMPEAX]
+	call pciReadDword
+	;STDCALL usbUstr3,0,[DUMPEAX]
 	
 
 
@@ -192,9 +192,9 @@ initUHCI:
 	;the BASEADD is then 0x7120  (USBBA with bit0 cleared)
 	mov eax,[ebp+8]
 	mov ebx,0x20  ;20=address offset for USBBA
-	call [PCIREADDWORD]
+	call pciReadDword
 	mov [0x52c],eax  ;save USBBA
-	STDCALL usbUstr4,0,[DUMPEAX]
+	;STDCALL usbUstr4,0,[DUMPEAX]
 
 
 	;save the "Index Register Base Address" for usb transactions
@@ -202,7 +202,7 @@ initUHCI:
 	;I guess the bios sets this value but we could change it
 	and eax,0xfffffffe
 	mov [BASEADD],ax
-	STDCALL usbUstr5,0,[DUMPEAX]
+	;STDCALL usbUstr5,0,[DUMPEAX]
 
 
 
@@ -241,7 +241,9 @@ initUHCI:
 
 	;pause for 1 sec
 	mov eax,1000
-	call [0x10060]  ;sleep
+
+	call sleep
+	;call [0x10060]  ;sleep
 
 
 	;Sep 2009-init our Queue Heads QH
@@ -344,7 +346,7 @@ initEHCI:
 
 
 	;init EHCI
-	STDCALL usbinitstr0,dumpstr
+	;STDCALL usbinitstr0,dumpstr
 
 
 	mov eax,[0x568]
@@ -354,9 +356,9 @@ initEHCI:
 	;PCI Config: controller VID and DID
 	mov eax,[0x568]  ;we store the EHCI bus:dev:fun dword @ 0x568
 	mov ebx,0  ;register/offset 
-	call [PCIREADDWORD]  
+	call pciReadDword
 	;dump the vid:did
-	STDCALL usbinitstr3,0,[DUMPEAX]
+	;STDCALL usbinitstr3,0,[DUMPEAX]
 
 	;returns eax=0x31041106 for our Via VT6212 addon card EHCI controller 
 	;VID=0x1106 and DID=0x3104
@@ -369,9 +371,9 @@ initEHCI:
 	;bit[0]=i/0 space enable/disable
 	mov eax,[0x568]  
 	mov ebx,4  ;register/offset 
-	call [PCIREADDWORD]  
+	call pciReadDword
 	;we get the Status in the hiword and the Command in the Loword
-	STDCALL usbinitstr9,0,[DUMPEAX]
+	;STDCALL usbinitstr9,0,[DUMPEAX]
 
 	;set bus master enable and memory space enable bits
 	or eax,110b  
@@ -380,15 +382,15 @@ initEHCI:
 	mov ecx,eax
 	mov eax,[0x568]  
 	mov ebx,4  ;register/offset 
-	call [PCIWRITEDWORD]
+	call pciWriteDword
 
 	;as a test see if it worked
 	;if you do not set the memory space enable bit
 	;then any attempt to read the Capability registers below will result in ffffffff
 	mov eax,[0x568]  
 	mov ebx,4  ;register/offset 
-	call [PCIREADDWORD]  
-	STDCALL usbinitstr9,0,[DUMPEAX]
+	call pciReadDword
+	;STDCALL usbinitstr9,0,[DUMPEAX]
 
 
 
@@ -396,10 +398,10 @@ initEHCI:
 	;PCI Config: CLASSC Class Code Register
 	mov eax,[0x568]
 	mov ebx,0x8  ;address offset 
-	call [PCIREADDWORD]  
+	call pciReadDword
 	;returns class in hibyte then subclass then interface then revisionID
 	;for Via VT6212 ehci we get 0c032065 
-	STDCALL usbinitstr4,0,[DUMPEAX]
+	;STDCALL usbinitstr4,0,[DUMPEAX]
 
 
 
@@ -408,8 +410,8 @@ initEHCI:
 	;there are a couple differant types but 00 is most std
 	mov eax,[0x568]
 	mov ebx,0x0c  ;offset
-	call [PCIREADDWORD]  
-	STDCALL usbinitstr6,0,[DUMPEAX]
+	call pciReadDword
+	;STDCALL usbinitstr6,0,[DUMPEAX]
 
 
 
@@ -418,9 +420,9 @@ initEHCI:
 	;the ehci controller is memory mapped like video
 	mov eax,[0x568]
 	mov ebx,0x10  ;10=address offset for MemoryBaseAddress
-	call [PCIREADDWORD]  
+	call pciReadDword
 	mov [0x5d0],eax  ;save the EHCIBAR
-	STDCALL usbinitstr5,0,[DUMPEAX]
+	;STDCALL usbinitstr5,0,[DUMPEAX]
 	;Via VT6212 returns 0xf4008000 (this is page aligned)
 	;the bios should give us a huge virtual memory address
 	;thats outside the range of real memory
@@ -432,8 +434,8 @@ initEHCI:
 	;bit24 must be set and bit16 must be clear for os to have control
 	mov eax,[0x568]
 	mov ebx,0x68 
-	call [PCIREADDWORD]  
-	STDCALL usbinitstr13,0,[DUMPEAX]
+	call pciReadDword
+	;STDCALL usbinitstr13,0,[DUMPEAX]
 
 	;set bit24 to tell bios that the OS wants control of ehci
 	or eax,0x1000000
@@ -442,17 +444,17 @@ initEHCI:
 	mov ecx,eax
 	mov eax,[0x568]  
 	mov ebx,0x68  ;register/offset 
-	call [PCIWRITEDWORD]
+	call pciWriteDword
 
 	;pause 
 	mov eax,50
-	call [0x10060]  ;sleep
+	call sleep;[0x10060]  ;sleep
 
 	;see what we got
 	mov eax,[0x568]
 	mov ebx,0x68 
-	call [PCIREADDWORD]  
-	STDCALL usbinitstr13,0,[DUMPEAX]
+	call pciReadDword
+	;STDCALL usbinitstr13,0,[DUMPEAX]
 
 
 
@@ -460,8 +462,8 @@ initEHCI:
 	;this register controls all the SMI's (System Management Interrupts)
 	mov eax,[0x568]
 	mov ebx,0x6c 
-	call [PCIREADDWORD]  
-	STDCALL usbinitstr14,0,[DUMPEAX]
+	call pciReadDword
+	;STDCALL usbinitstr14,0,[DUMPEAX]
 
 
 
@@ -480,7 +482,7 @@ initEHCI:
 	mov esi,[0x5d0]
 	mov al,[esi]
 	and eax,0xff
-	STDCALL usbinitstr7,0,[DUMPEAX]
+	;STDCALL usbinitstr7,0,[DUMPEAX]
 
 
 	;compute and save the start of the operational registers
@@ -502,13 +504,13 @@ initEHCI:
 	mov esi,[0x5d0]
 	mov eax,[esi+4]
 	mov ebx,eax   ;save a copy 
-	STDCALL usbinitstr8,0,[DUMPEAX]
+	;STDCALL usbinitstr8,0,[DUMPEAX]
 
 	;bits[15:12]=Number of companion controllers  N_CC
 	mov eax,ebx
 	shr eax,12
 	and eax,111b
-	STDCALL usbinitstr10,0,[DUMPEAX]
+	;STDCALL usbinitstr10,0,[DUMPEAX]
 
 
 	;display an error message if N_CC==0
@@ -517,7 +519,7 @@ initEHCI:
 	;and since tatOS depends on a uhci companion controller for the mouse...
 	cmp eax,0
 	jnz .haveCompanions
-	STDCALL usbcompstr5,dumpstr
+	;STDCALL usbcompstr5,dumpstr
 .haveCompanions:
 
 
@@ -525,24 +527,24 @@ initEHCI:
 	mov eax,ebx
 	shr eax,8
 	and eax,1111b
-	STDCALL usbinitstr11,0,[DUMPEAX]
+	;STDCALL usbinitstr11,0,[DUMPEAX]
 
 	;bits[7]  = Port Routing Rules
 	mov eax,ebx
 	shr eax,7
 	and eax,1
-	STDCALL usbinitstr11a,0,[DUMPEAX]
+	;STDCALL usbinitstr11a,0,[DUMPEAX]
 
 	;bits[4] = Port Power Control 
 	mov eax,ebx
 	shr eax,4
 	and eax,1
-	STDCALL usbinitstr11b,0,[DUMPEAX]
+	;STDCALL usbinitstr11b,0,[DUMPEAX]
 
 	;bits[3:0] = Number of hispeed 2.0 ports  N_Ports
 	mov eax,ebx
 	and eax,111b
-	STDCALL usbinitstr12,0,[DUMPEAX]
+	;STDCALL usbinitstr12,0,[DUMPEAX]
 
 
 
@@ -551,12 +553,12 @@ initEHCI:
 	;Get the Capability Parameters (offset 08)
 	mov esi,[0x5d0]
 	mov eax,[esi+8]
-	STDCALL usbinitstr15,0,[DUMPEAX]
+	;STDCALL usbinitstr15,0,[DUMPEAX]
 
 	
 	;dump bit0 which indicates if this controller uses 64 bit addressing
 	and eax,1
-	STDCALL usbinitstr19,0,[DUMPEAX]
+	;STDCALL usbinitstr19,0,[DUMPEAX]
 
 
 	
@@ -711,7 +713,7 @@ initEHCI:
 
 	;dump the port routing
 	mov eax,[esi+40h]
-	STDCALL usbinitstr24,0,[DUMPEAX]
+	;STDCALL usbinitstr24,0,[DUMPEAX]
 
 
 
@@ -727,7 +729,7 @@ initEHCI:
 	mov esi,[0x5d4]
 .portCheck:
 	mov eax,[esi+44h+ecx*4]    ;get PORTSC(ecx) register value
-	STDCALL usbinitstr20,0,dumpeax
+	;STDCALL usbinitstr20,0,dumpeax
 	inc ecx
 	cmp ecx,4   ;max qty ports to dump
 	jb .portCheck
@@ -754,20 +756,20 @@ initEHCI:
 
 
 	mov eax,500
-	call [0x10060]  ;sleep
+	call sleep;[0x10060]  ;sleep
 
 
 
 	;read the USB2 status register
 	mov esi,[0x5d4]
 	mov eax,[esi+4]
-	STDCALL usbinitstr17,0,[DUMPEAX]
+	;STDCALL usbinitstr17,0,[DUMPEAX]
 
 
 	;read the command register
 	mov esi,[0x5d4]
 	mov eax,[esi]
-	STDCALL usbinitstr16,0,[DUMPEAX]
+	;STDCALL usbinitstr16,0,[DUMPEAX]
 	;via reports 0x80021 = run, async enable
 
 
@@ -810,7 +812,7 @@ initEHCI:
 
 	;dump the FUN
 	mov eax,[FUN]
-	STDCALL usbcompstr1,0,dumpeax
+	;STDCALL usbcompstr1,0,dumpeax
 
 	;build new bus:dev:Fun 
 	mov eax,[BUSDEV]
@@ -818,7 +820,7 @@ initEHCI:
 	shl ebx,8
 	or eax,ebx
 	mov [BUSDEVFUN],eax
-	STDCALL usbcompstr4,0,dumpeax
+	;STDCALL usbcompstr4,0,dumpeax
 
 	;check for valid VID:DID of companion controller
 	mov ebx,0  ;register/offset 
@@ -831,7 +833,7 @@ initEHCI:
 	mov eax,[BUSDEVFUN] 
 	mov ebx,0x8  ;address offset 
 	call pciReadDword
-	STDCALL usbcompstr3,0,dumpeax
+	;STDCALL usbcompstr3,0,dumpeax
 
 	;clear out the revID and check for 0c0300=uhci
 	mov ebx,eax               ;ebx=0c0300xx if uhci companion

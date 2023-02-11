@@ -36,6 +36,10 @@
 
 bits 32
 
+%define BASEADD           0x530
+%define USBERROR 0x548
+%define MOUSEY            0x558
+%define MOUSEX            0x554
 
 ;storage for function pointers
 ;pointers are assigned at the beginning of initusbmass and initusbmouse
@@ -167,31 +171,40 @@ db 0x55,0x53,0x42,0x53,0xdd,0xcc,0xbb,0xaa,0,0,0,0,0
 
 
 ;USB-SCSI
-%include "usb/initusbmass.s"
-%include "usb/initusbmouse.s"
-%include "usb/devicedesc.s"
-%include "usb/configdesc.s"
-%include "usb/reportdesc.s"
-%include "usb/setprotocol.s"
-%include "usb/setidle.s"
-%include "usb/interrupt.s"
-%include "usb/setaddress.s"
-%include "usb/setconfig.s"
-%include "usb/capacity.s"
-%include "usb/inquiry.s"
-%include "usb/testunit.s"
-%include "usb/requestsense.s"
-%include "usb/read10.s"
-%include "usb/write10.s"
+%include "tatos_usb/pci.s"
+%include "tatos_usb/initusbmass.s"
+%include "tatos_usb/initusbmouse.s"
+%include "tatos_usb/devicedesc.s"
+%include "tatos_usb/configdesc.s"
+%include "tatos_usb/reportdesc.s"
+%include "tatos_usb/setprotocol.s"
+%include "tatos_usb/setidle.s"
+%include "tatos_usb/interrupt.s"
+%include "tatos_usb/setaddress.s"
+%include "tatos_usb/setconfig.s"
+%include "tatos_usb/capacity.s"
+%include "tatos_usb/inquiry.s"
+%include "tatos_usb/testunit.s"
+%include "tatos_usb/requestsense.s"
+%include "tatos_usb/read10.s"
+%include "tatos_usb/write10.s"
 
 ;UHCI/EHCI-hdwre
-%include "usb/status.s"
-%include "usb/port.s"
-%include "usb/run.s"
-%include "usb/checkcsw.s"
-%include "usb/saveEP.s"
-%include "usb/prepareTD.s"
-%include "usb/controller.s"
+%include "tatos_usb/status.s"
+%include "tatos_usb/port.s"
+%include "tatos_usb/run.s"
+%include "tatos_usb/checkcsw.s"
+%include "tatos_usb/saveEP.s"
+%include "tatos_usb/prepareTD.s"
+%include "tatos_usb/controller.s"
+
+sleep:
+    pusha
+sleep.1:
+    dec eax
+    jnz sleep.1
+    popa
+    ret
 
 
 

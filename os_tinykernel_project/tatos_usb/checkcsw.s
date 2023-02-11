@@ -20,6 +20,7 @@ cswstr2 db 'CSW bCSWStatus = FAIL-PHASE ERROR',0
 cswstr3 db 'CSW bCSWStatus = FAIL-Reserved',0
 ;********************************************
 
+checkc:
 CheckCSWstatus:
 
 	mov al, [scsiCSW+12]  ;bCSWStatus
@@ -33,7 +34,7 @@ CheckCSWstatus:
 
 
 	;al>2 : failed reserved
-	STDCALL cswstr3,dumpstr 
+	;STDCALL cswstr3,dumpstr
 	clc
 	jmp .done
 
@@ -42,12 +43,12 @@ CheckCSWstatus:
 	jmp .done
 
 .commandfailed:
-	STDCALL cswstr1,dumpstr 
+	;STDCALL cswstr1,dumpstr
 	clc
 	jmp .done
 
 .phaseerror:
-	STDCALL cswstr2,dumpstr 
+	;STDCALL cswstr2,dumpstr
 	clc
 	jmp .done
 
@@ -79,7 +80,7 @@ CheckCSWSignatureTag:
 	cld
 	repe cmpsb
 	je .done
-	STDCALL checkcsw,dumpstr 
+	;STDCALL checkcsw,dumpstr
 
 .done:
 	ret

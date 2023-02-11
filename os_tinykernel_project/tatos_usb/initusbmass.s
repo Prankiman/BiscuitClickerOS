@@ -94,7 +94,7 @@ initusbmass:
 
 	;if we got here we have neither EHCI or UHCI - out of luck
 	;the only other choice is OHCI which we dont support
-	STDCALL mpdstr8,putshang
+	;STDCALL mpdstr8,putshang
 
 
 
@@ -104,8 +104,8 @@ initusbmass:
 	;*************************************
 .useEHCI:
 	;set up pointers to EHCI specific functions
-	STDCALL mpdstr12,dumpstr
-	STDCALL mpdstr12,putmessage
+	;STDCALL mpdstr12,dumpstr
+	;STDCALL mpdstr12,putmessage
 	mov dword [portreset],     ehci_portreset
 	mov dword [portscan],      ehci_portscan
 	mov dword [portdump],      ehci_portdump
@@ -124,8 +124,8 @@ initusbmass:
 
 .useUHCI:
 	;set up pointers to UHCI specific functions
-	STDCALL mpdstr11,dumpstr
-	STDCALL mpdstr11,putmessage
+	;STDCALL mpdstr11,dumpstr
+	;STDCALL mpdstr11,putmessage
 	mov dword [portreset],     uhci_portreset
 	mov dword [portscan],      uhci_portscan
 	mov dword [portdump],      uhci_portdump
@@ -138,7 +138,7 @@ initusbmass:
 
 .FlashPortEnumeration:
 
-	STDCALL mpdstr13,putmessage
+	;STDCALL mpdstr13,putmessage
 
 	call [portdump]
 
@@ -150,7 +150,7 @@ initusbmass:
 	jnz .resetport
 
 	;Fatal-could not find the flash
-	STDCALL mpdstr9,putshang
+	;STDCALL mpdstr9,putshang
 
 .resetport:
 	call [portreset]
@@ -168,7 +168,7 @@ initusbmass:
 	;Some drivers request just 8 bytes then check bMaxPacketSize0=0x40 for endpoint 0
 	;after getting the 18 bytes you might want to make sure that bNumConfigurations=1
 	;sometimes this fails the first time
-	STDCALL mpdstr14,putmessage
+	;STDCALL mpdstr14,putmessage
 	call FlashGetDeviceDescriptor
 
 
@@ -191,13 +191,13 @@ initusbmass:
 	;we dont know how to handle anything else
 	cmp byte [BNUMINTERFACES],1
 	jz .getremainingdescriptors
-	STDCALL mpdstr6,putshang
+	;STDCALL mpdstr6,putshang
 .getremainingdescriptors:
 
 
 	;now we get the configuration, interface and
 	;all endpoint descriptors all in one shot
-	STDCALL mpdstr15,putmessage
+	;STDCALL mpdstr15,putmessage
 	xor edx,edx
 	mov dx,[WTOTALLENGTH]
 	call FlashGetConfigDescriptor
@@ -206,21 +206,21 @@ initusbmass:
 	;make sure usb device is mass storage class
 	cmp byte [BINTERFACECLASS],0x08
 	jz .checkSCSI
-	STDCALL mpdstr1,putshang 
+	;STDCALL mpdstr1,putshang
 
 
 .checkSCSI:
 	;make sure device responds to SCSI commands
 	cmp byte [BINTERFACESUBCLASS],0x06
 	jz .checkProtocol
-	STDCALL mpdstr2,putshang 
+	;STDCALL mpdstr2,putshang
 
 
 .checkProtocol:
 	;make sure device is "bulk only transport"
 	cmp byte [BINTERFACEPROTOCOL],0x50
 	jz .getEndpointNums
-	STDCALL mpdstr3,putshang 
+	;STDCALL mpdstr3,putshang
 
 
 	
@@ -242,13 +242,13 @@ initusbmass:
 	mov bl,[BULKEPOUT]
 	cmp al,0
 	jnz .checkEPOUT
-	STDCALL mpdstr4,putshang 
+	;STDCALL mpdstr4,putshang
 
 
 .checkEPOUT:
 	cmp bl,0
 	jnz .checkforEquality
-	STDCALL mpdstr5,putshang 
+	;STDCALL mpdstr5,putshang
 
 
 
@@ -265,19 +265,19 @@ initusbmass:
 	;we saved the first endpoint wMaxPacketSize at [0x5032+4]
 	mov ax,[0x5032+4]
 	and eax,0xffff
-	STDCALL mpdstr7,0,dumpeax
+	;STDCALL mpdstr7,0,dumpeax
 	;we saved the 2nd endpoint wMaxPacketSize at [0x5039+4]
 	mov ax,[0x5039+4]
 	and eax,0xffff
-	STDCALL mpdstr7,0,dumpeax
+	;STDCALL mpdstr7,0,dumpeax
 
 	
 
 
-	STDCALL mpdstr16,putmessage
+	;STDCALL mpdstr16,putmessage
 	call SetAddress
 
-	STDCALL mpdstr17,putmessage
+	;STDCALL mpdstr17,putmessage
 	call SetConfiguration
 
 
@@ -288,26 +288,26 @@ initusbmass:
 	mov dword  [bulktogglein] ,0
 	mov dword  [bulktoggleout],0
 
-	STDCALL mpdstr18,putmessage
+	;STDCALL mpdstr18,putmessage
 	call Inquiry
 
-	STDCALL mpdstr19,putmessage
+	;STDCALL mpdstr19,putmessage
 	call TestUnitReady
 
-	STDCALL mpdstr20,putmessage
+	;STDCALL mpdstr20,putmessage
 	call RequestSense
 
-	STDCALL mpdstr19,putmessage
+	;STDCALL mpdstr19,putmessage
 	call TestUnitReady
 
-	STDCALL mpdstr20,putmessage
+	;STDCALL mpdstr20,putmessage
 	call RequestSense
 
-	STDCALL mpdstr21,putmessage
+	;STDCALL mpdstr21,putmessage
 	call ReadCapacity
 
 	;done-ready for read10/write10 
-	STDCALL mpdstr22,putmessage
+	;STDCALL mpdstr22,putmessage
 	mov dword [FLASHDRIVEREADY],1
 	
 .done:

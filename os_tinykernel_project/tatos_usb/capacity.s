@@ -74,7 +74,7 @@ ReadCapacity:
 
 	;Command Transport
 	;********************
-	STDCALL rcstr1,dumpstr
+	;STDCALL rcstr1,dumpstr
 	push FlashRC_structTD_command
 	call [prepareTDchain]
 	call [runTDchain]
@@ -83,33 +83,33 @@ ReadCapacity:
 
 	;Data Transport
 	;*****************
-	STDCALL rcstr2,dumpstr
+	;STDCALL rcstr2,dumpstr
 	push FlashRC_structTD_data
 	call [prepareTDchain]
 	call [runTDchain]
 
-	STDCALL 0x5100,8,dumpmem  ;dump the capacity bytes
+	;STDCALL 0x5100,8,dumpmem  ;dump the capacity bytes
 
 	;display the LBAmax
 	mov eax,[0x5100]
 	bswap eax
-	STDCALL rcstr4,0,dumpeax
+	;STDCALL rcstr4,0,dumpeax
 
 	;display the bytes per block
 	mov eax,[0x5104]
 	bswap eax
-	STDCALL rcstr5,0,dumpeax
+	;STDCALL rcstr5,0,dumpeax
 
 
 
 	;Status Transport
 	;*******************
-	STDCALL rcstr3,dumpstr
+	;STDCALL rcstr3,dumpstr
 	push SCSI_structTD_status
 	call [prepareTDchain]
 	call [runTDchain]
 
-	STDCALL scsiCSW,13,dumpmem  ;dump the Command Status Wrapper returned
+	;STDCALL scsiCSW,13,dumpmem  ;dump the Command Status Wrapper returned
 	call CheckCSWstatus
 
 .done:

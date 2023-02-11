@@ -127,9 +127,9 @@ times 10 db 0
 ;input:none
 ;return: none
 showmousereportstr4:
-db 'USB Show Mouse Report',NL 
-db 'Move the mouse, click buttons, scroll, observe the report',NL
-db 'Observe which byte identifies the button click',NL
+db 'USB Show Mouse Report',0
+db 'Move the mouse, click buttons, scroll, observe the report',0
+db 'Observe which byte identifies the button click',0
 db 'Press spacebar to set button click byte index',0
 showmousereportstr5:
 db  'Enter Button Click Byte Index (0 for first byte, 1 for second...)',0  
@@ -137,9 +137,9 @@ db  'Enter Button Click Byte Index (0 for first byte, 1 for second...)',0
 
 usbShowMouseReport:
 
-	call backbufclear
-	STDCALL 100,50,showmousereportstr4,0xefff,putsml 
-	call swapbuf
+	;call backbufclear
+	;STDCALL 100,50,showmousereportstr4,0xefff,putsml
+	;call swapbuf
 
 .queueUpInterruptRequest:
 
@@ -157,18 +157,18 @@ usbShowMouseReport:
 	
 
 .ShowMouseReport:
-	STDCALL 100,200,0xfeef,mousereportbuf,5,putmem
-	call swapbuf
+	;STDCALL 100,200,0xfeef,mousereportbuf,5,putmem
+	;call swapbuf
 	jmp .queueUpInterruptRequest
 
 .assignButtonClickByteIndex:
-	mov byte [CLIPBOARD],0
+	;mov byte [CLIPBOARD],0
 	push showmousereportstr5
-	push CLIPBOARD
-	call comprompt
+	;push CLIPBOARD
+	;call comprompt
 	jnz .done
-	mov eax,CLIPBOARD
-	call str2eax
+	;mov eax,CLIPBOARD
+	;call str2eax
 	;save the index of the button click byte
 	;usbcheckmouse needs this value
 	;for Logitech and Microsoft the button click is the first byte so eax=00

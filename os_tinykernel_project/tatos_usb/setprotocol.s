@@ -69,7 +69,7 @@ MouseSetProtocol:
 
 	;Command Transport
 	;********************
-	STDCALL mspstr1,dumpstr
+	;STDCALL mspstr1,dumpstr
 	mov dword [controltoggle],0
 	push MouseSP_structTD_command
 	call uhci_prepareTDchain
@@ -81,7 +81,7 @@ MouseSetProtocol:
 
 	;Status Transport
 	;*******************
-	STDCALL mspstr2,dumpstr
+	;STDCALL mspstr2,dumpstr
 	mov dword [controltoggle],1
 	push MouseSP_structTD_status
 	call uhci_prepareTDchain
