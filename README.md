@@ -17,7 +17,7 @@ if running on qemu ~~make sure to set boot disk storage type as usb and enable u
 ~~```~~
 
 ```bash
-qemu-system-i386  -drive if=none,id=usbstick,format=raw,file=./boot.iso
+qemu-system-i386  -drive format=raw,file=./boot.iso
 ```
 
 # RECOURSES
