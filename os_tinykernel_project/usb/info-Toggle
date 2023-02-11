@@ -1,0 +1,38 @@
+;tatOS/usb/Toggle.info
+
+
+Data Toggle Info
+********************
+
+DATA0=0, DATA1=1
+this can really mess up your usb transactions if not done correctly
+
+Here are some rules as I see them:
+
+1) each endpoint maintains its own toggle which alternates between 0 and 1 with each TD
+
+2) on reset host and device set there toggles to 0
+
+3) control transfers have rigid rules for toggle:
+	* command transport = first TD uses DATA0 then alternates
+	* data transport    = first TD uses DATA1 then alternates
+	* status transport  = first TD uses DATA1 then alternates
+
+4) for bulk transfers you must use a global dataIN and dataOUT variable and alternate
+this even across transactions and phases. 
+i.e. if the previous status transport was an IN=1 then 
+the next data transport if IN must be 0
+
+5) if NAK do not toggle, instead retry with same
+
+tatOS is very dumb about usb error checking.  Future versions may include more.
+For now you can view the status of each TD in the "dump".
+If communication between the controller and your device gets screwed up
+we have no option other than to reset the port and device and start over (shell F12). 
+At least you have manual control to do this without the need to reboot. 
+In general my usb transactions complete 100% without problems. This is likely because 
+I dont put much demand on the bus (i.e. Im not streaming audio, shaking the mouse and 
+reading my flash drive all at the same time).
+
+
+

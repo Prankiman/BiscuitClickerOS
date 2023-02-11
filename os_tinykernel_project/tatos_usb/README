@@ -1,0 +1,69 @@
+README-USB
+
+Jan 2009
+You may plug your flash drive and mouse into any root port
+The flash drive works on uhci or ehci
+The mouse works on uhci only, this means ehci with uhci companion controllers
+
+Nov 2009
+Added code for ehci
+You now must init your flash drive and mouse from the shell (F12). 
+You can boot your computer with or without the devices plugged in.  
+
+Sept 2009
+The code has been cleaned up and an HID driver added for the low speed usb mouse. 
+The prepareTDchain() and runTDchain() functions are used extensively to build the 
+transfer descriptor chains and run them. 
+
+No error checking
+In general there is no error checking of the TD command/status. If something goes wrong your only option is to re-init the device. 
+
+Dump (shell f12)
+The dump is now used extensively to provide feedback of the transactions. 
+After startup view the dump to see results of controller init.
+After initting a device view the dump to see the results of the transactions.
+View the dump messages if you think something has gone amuck. 
+
+Hubs
+This code does not support usb hubs. 
+A hub is like an adapter allowing you to plug multiple usb devices into the hub. 
+You must plug your flash drive and mouse directly into the "root" ports
+
+Controller Init 
+The code to get the pci bus:dev:fun of the controller and its BASE address, reset the 
+controller, fill the framelist... and assign Queue heads has been moved to 
+/boot/usbinit.s  This all has to be done before getting a pen drive or mouse ready
+for usb transactions.
+
+String Descriptor
+tatOS does not have any support for reading the usb string descriptors.
+These are unicode strings and we dont have support for unicode yet.
+
+How can you tell what controller you have UHCI or EHCI ?  
+Well on boot tatOS will use the bios to check for UHCI and EHCI and display a message. 
+If your computer already has Linux installed do "lspci -v" from a terminal. 
+In Windows look at start->settings->controlpanel->system->device manager.
+
+You will see 2 methods of conducting the transactions and both seem to work equally well.
+
+Method 1 is to build command->data->status td's and attach them to the frame list and then check all three at the end.
+
+Method 2 will attach just the command then check, then the data and check, then status and check.
+
+I guess most modern pen drives are usb 2.0 compliant (EHCI=480 MBits/sec) but they work just fine on the slower UHCI=12 MBits/sec. See the file /doc/hardware for a list of pen drives that I have tested and gotten to work. The main differance in how they work is that the UHCI controller can only read/write 64 bytes per memory access but the EHCI controller can do 512 bytes.
+
+If you try write10 and then read it back as a check but it does not appear that write10 worked even though the little led on your pen drive was flashing, maybe you have a "lock" switch on the device which prevents write10 from doing its thing. There is no code for checking if a device is write protected. In this case write10 will silently fail.
+
+I guess usb 3.0 is coming out soon. No support for that yet though.
+
+tatOS should be considered a minimal implementation of usb. 
+I strive for consistant functionality not speed or performance.
+In short I got UHCI to work then modified the base code slighly to get it to work on EHCI.  
+I think more could be done, but limitations of time and mental faculty prevent me.  
+Writting your own OS is a big job and you have to pick and choose. 
+Any suggestions for improvement of this usb code are welcome.
+
+
+Tom Timmermann
+tatOS
+

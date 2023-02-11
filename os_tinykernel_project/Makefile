@@ -1,5 +1,5 @@
-C_SOURCES = $(wildcard *.c)
-HEADERS = $(wildcard *.h)
+C_SOURCES = $(wildcard *.c usb/*.c)
+HEADERS = $(wildcard *.h usb/*.h)
 
 OBJ = ${C_SOURCES:.c=.o}
 
