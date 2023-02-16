@@ -2,8 +2,7 @@
 
 ;code to read blocks off the usb flash drive via the UHCI/EHCI controller
 ;before attempting this function or write10
-;you have to go thru the entire init sequence in initusbmass.s successfully
-
+;you have to go thru the entire init sequence in initusbmass.s successfullys
 
 align 0x10
 
@@ -76,7 +75,7 @@ readstr5 db 'Flash Drive Not Ready',0
 
 ;input:
 ;ebx = lba of first block/sector to read  (0->LBAmax)
-;ecx = qty blocks to read
+;ecx = amount of blocks to read
 ;edi = destination memory address
 
 ;return

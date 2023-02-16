@@ -16,6 +16,14 @@ if running on qemu ~~make sure to set boot disk storage type as usb and enable u
 ~~    -device usb-mouse,pcap=mouse.pcap~~
 ~~```~~
 
+
+~~```~~
+~~    qemu-system-i386  -drive if=none,id=usbstick,format=raw,file=./boot.iso   \~~
+~~    -usb                                                        \~~
+~~    -device usb-ehci,id=ehci                                    \~~
+~~    -device usb-storage,bus=ehci.0,drive=usbstick~~
+~~```~~
+
 ```bash
 qemu-system-i386  -drive format=raw,file=./boot.iso
 ```

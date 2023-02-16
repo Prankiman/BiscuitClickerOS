@@ -3,7 +3,6 @@
 
 ;code to copy an array of bytes from memory to your pen drive
 
-
 align 0x10
 
 

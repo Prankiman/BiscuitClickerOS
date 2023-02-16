@@ -31,7 +31,6 @@
 ;including populating the framelist and async list
 ;see /boot/usbinit.s
 
-
 mpdstr1 db 'USB device is not 0x08 mass storage class',0
 mpdstr2 db 'USB device subclass is not 0x06 for SCSI commands',0
 mpdstr3 db 'USB device protocol is not 0x50 bulk-only transport',0
@@ -58,8 +57,6 @@ mpdstr22 db 'Done initusbmass',0
 
 ;*******************************************************************
 
-
-
 initusbmass:
 
 
@@ -72,6 +69,8 @@ initusbmass:
 	;I think this is because companion controllers do not have bus master
 	;and enable bits set in the pci config registers
 	;jmp .useUHCI
+
+	jmp .useEHCI
 
 
 

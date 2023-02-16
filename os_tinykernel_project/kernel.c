@@ -9,6 +9,7 @@
 #include "int32_test.h"
 #include "pci.h"
 #include "stackalloc.h"
+#include "usbmass.h"
 
 u8 lclick = 0;
 u8 keypress = 0;
@@ -59,10 +60,14 @@ void main_loop(){
         }
         if(keypress){
             if(lclick)  {
+
+                read_usb((u16) 0x30, (u16)1, clicks);
                 read_48((u8)1,(u8)0, (u64)0x30, boot_drive, clicks); //**
                 //read_48((u8)1,(u8)0, (u64)0x10, (u8) 0x80, clicks);
             }
             else{
+
+                write_usb((u16) 0x30, (u16)1, clicks);
                 write_48((u8)1,(u8)0, (u64)0x30, boot_drive, clicks); //**
                 //write_48((u8)1,(u8)0, (u64)0x10, (u8) 0x80, clicks);
             }
@@ -86,7 +91,7 @@ void main() {
 	
     for(u32 i = 0; i < 0xfff; i++)
         __asm__("pause");
-	
+
     clicks = (u16 *)alloc(1026);
 
     init_screen();
@@ -94,6 +99,8 @@ void main() {
     //int32_test();//works meaning virtual 8086 mode is possible
 
     isr_install();
+
+    initusbmass();
 
     keyboard_init();
     mouse_install();
@@ -105,7 +112,8 @@ void main() {
    
    draw_screen();
     
-   read_48((u8)1,(u8)0, (u64)0x30, boot_drive, clicks); // ** LBA 0x10 used to work but no longer does as the memory has been taken up 
+   read_usb((u16) 0x30, (u16)1, clicks);
+   read_48((u8)1,(u8)0, (u64)0x30, boot_drive, clicks); // ** LBA 0x10 used to work but no longer does as the memory has been taken up
 
     main_loop();
 }

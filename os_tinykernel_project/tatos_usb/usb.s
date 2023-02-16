@@ -32,7 +32,9 @@
 ;the EHCI controller is found on the newer desktop computers
 ;the OHCI USB controller is unsupported.
 ;the xHCI which is the newest usb 3.0 super-dooper-speed is unsupported
-
+global write10
+global read10
+global initusbmass
 
 bits 32
 

@@ -15,9 +15,12 @@ kernel.bin: enter_kernel.o irqs.o isrs.o v8086.o int32.o tatos_usb/usb.o ${OBJ}
 
 
 %.o: %.c ${HEADERS}
-	gcc -march=i386 -elf_i386 -m32 -std=c11 -O2 -g -Wall -Wextra -Wpedantic -Wstrict-aliasing -Wno-pointer-arith -Wno-unused-parameter -nostdlib -nostdinc -ffreestanding -fno-pie -fno-stack-protector -fno-builtin-function -fno-builtin -c $< -o $@
+	gcc -march=i386 -elf_i386 -m32 -std=c11 -O2 -g -Wall -Wextra -Wpedantic -Wstrict-aliasing -Wno-pointer-arith -Wno-unused-parameter -nostdlib -nostdinc -ffreestanding -fno-pie -fno-stack-protector -fno-builtin-function -fno-builtin -fomit-frame-pointer -c $< -o $@
 
 %.o: %.asm
+	nasm $< -f elf32 -o $@
+
+%.o: %.s
 	nasm $< -f elf32 -o $@
 
 %.bin: %.asm
